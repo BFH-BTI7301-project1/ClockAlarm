@@ -1,0 +1,48 @@
+% !BIB TS-program = biber
+% !BIB program = biber
+\documentclass{sgreport}
+
+\usepackage[english]{babel}
+\usepackage{lipsum}
+\usepackage{hyperref}
+\usepackage[toc]{glossaries}
+\usepackage[
+backend=biber,
+style=alphabetic,
+sorting=ynt
+]{biblatex}
+\addbibresource{bibliography/p1_bib.bib}
+
+\makeglossaries
+
+\begin{document}
+\input{glossary/glossary.tex}
+
+\university{Bern University of Applied Sciences}
+\project{Project 1}
+\title{Requirements ClockAlarm}
+\author{Loïc Charrière, Samuel Gauthier}
+\supervisor{Claude Fuhrer}
+
+\maketitle
+
+\tableofcontents
+
+\input{chapters/chapter_1.tex}
+\input{chapters/chapter_2.tex}
+\input{chapters/chapter_3.tex}
+\input{chapters/chapter_4.tex}
+\input{chapters/chapter_5.tex}
+
+%\clearpage
+
+\printglossaries
+\printbibliography
+%\printbibliography[
+%heading=bibintoc,
+%title={Whole bibliography}
+%]
+%\bibliographystyle{IEEEtran}
+%\bibliography{bibliography/p1_bib}{}
+
+\end{document} 
