@@ -7,14 +7,14 @@
 %\RequirePackage[top=3cm, bottom=3cm, left=3cm, right=2cm, showframe]{geometry}
 %%%%%%%%%% For Dev Only
 
-\RequirePackage[top=3cm, bottom=3cm, left=3.5cm, right=2.5cm]{geometry}
+\RequirePackage[top=3cm, bottom=3cm, left=3.5cm, right=3.5cm]{geometry}
 %\RequirePackage{graphicx}
 \RequirePackage[utf8]{inputenc}
 %\RequirePackage{titlesec}
 %\RequirePackage[flushmargin,hang]{footmisc}
 \RequirePackage{fancyhdr}
 \pagestyle{fancy}
-\RequirePackage[Bjornstrup]{fncychap}
+%\RequirePackage[Sonny]{fncychap}
 
 
 %%%%%%%%%% Redefine Header and Footer
