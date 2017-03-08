@@ -22,3 +22,6 @@ colours of the pop-up windows, iCalendar import.
 # Useful links
 * Complete Python guide (including best practises for structuring a project, code styling PEP8, writing documentation, etc.): [The Hitchhiker’s Guide to Python](http://docs.python-guide.org/en/latest/)
 * Everything about latex: [Latex wikibook](https://en.wikibooks.org/wiki/LaTeX)
+* [Beginner's Guide to Python](https://wiki.python.org/moin/BeginnersGuide)
+* [Python for Java Programmers](http://python4java.necaiseweb.org/Main/TableOfContents)
+* [Python for the busy Java Developer](https://antrix.net/static/pages/python-for-java/online/)
