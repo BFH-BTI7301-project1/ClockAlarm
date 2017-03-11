@@ -2,12 +2,12 @@
 Always save all the files in UTF8 format.
 
 ## Template
-The `repport_requirements.tex` file uses a custom made template: `sgreport.cls`.
+The `report_requirements.tex` file uses a custom made template: `sgreport.cls`.
 
-To get correct references and page numbers in the output pdf compile the `repport_requirements.tex` file twice.
+To get correct references and page numbers in the output pdf compile the `report_requirements.tex` file twice.
 
 ## Add a chapter
-Create a new file `chapter_X.tex` under `chapters/` and include it in the main `repport_requirements.tex` file with the command `\include{chapter_X}`
+Create a new file `chapter_X.tex` under `chapters/` and include it in the main `report_requirements.tex` file with the command `\include{chapter_X}`
 
 ## Glossary
 The glossary file `glossarry.tex` is located under `glossary/`
@@ -33,7 +33,7 @@ To create a new glossary entry insert in `glossarry.tex` either:
 }
 ```
 
-Then build the `repport_requirements`, build glossary using makeglossary (`makeglossary repport_requirements`), build `repport_requirements` again.
+Then build the `report_requirements`, build glossary using makeglossary (`makeglossary report_requirements`), build `report_requirements` again.
 
 See the [Wikibook section about glossaries][WGL] to see how to use a term in the document. 
 
@@ -59,10 +59,10 @@ To cite the book just insert `\cite{ab94}` in the document
 Then build the bibliography:
 
 ```shell
-$ latex repport_requirements
-$ biber repport_requirements
-$ latex repport_requirements
-$ latex repport_requirements
+$ latex report_requirements
+$ biber report_requirements
+$ latex report_requirements
+$ latex report_requirements
 ```
 Usually there is a macro in your favourite LaTeX editor to build bibliographies. Make sure that you use biber and not bibtex. Look here on how to [configure your editor][COE]
  
