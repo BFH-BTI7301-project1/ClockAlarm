@@ -1,2 +1,30 @@
 \chapter{System and Context Boundaries}
-\lipsum[4-7]
+
+\section{Stakeholder}
+\input{boundaries/stakeholders.tex}
+
+\section{Actors}
+\input{boundaries/actors.tex}
+
+\newpage
+\section{System context}
+\begin{figure}[h]
+	\centering
+	\caption{System context}
+	\includegraphics[width=0.7\textwidth]{systemcontext_diagram.png}
+\end{figure}
+
+\section{System boundary}
+In addition to the elements above, special attention should be given to the following points.
+\begin{itemize}
+	\item The must-have goal isn't to add functionality to the existing software kAlarm, but to create a similar and cross-platform product.
+	\item The existence of a database and an administrator could be dropped and go out of context.
+	\item The software isn't meant to be an alternative to an agenda. It behaves like a list of tasks and reminders.
+\end{itemize}
+
+\section{Context boundary}
+In addition to the logical considerations and those stated above, the following points should be taken into account.
+\begin{itemize}
+	\item The software is responsible for asking the messaging software to send to emails. This means that the way emails are sent isn't part of the environment.
+	\item The software bases its alarms on the internal time. The accuracy of the time and of the time zone with respect to the geographical position of the machine is not part of the environment.
+\end{itemize}
