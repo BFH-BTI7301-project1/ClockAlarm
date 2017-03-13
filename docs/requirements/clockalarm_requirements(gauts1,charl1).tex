@@ -1,0 +1,48 @@
+% !BIB TS-program = biber
+% !BIB program = biber
+\documentclass{sgreport}
+
+\usepackage[english]{babel}
+\usepackage{lipsum}
+\usepackage{gitinfo2}
+\usepackage{hyperref}
+\usepackage[toc]{glossaries}
+\usepackage[
+backend=biber,
+style=numeric-comp,
+sorting=ynt
+]{biblatex}
+\usepackage{graphicx}
+\graphicspath{ {images/} }
+
+\addbibresource{bibliography/p1_bib.bib}
+
+\makeglossaries
+
+\begin{document}
+\input{glossary/glossary.tex}
+
+\university{Bern University of Applied Sciences}
+\project{Project 1 - ClockAlarm}
+\title{Requirements (version\gitRels)}
+\author{Loïc Charrière, Samuel Gauthier}
+\supervisor{Claude Fuhrer}
+
+\maketitle
+
+\tableofcontents
+
+\input{chapters/document_goal.tex}
+\input{chapters/project_vision.tex}
+\input{chapters/project_goals.tex}
+\input{chapters/system_and_context_boundaries.tex}
+%\clearpage
+
+\printglossaries
+
+\printbibliography[
+heading=bibintoc,
+title={Bibliography}
+]
+
+\end{document} 
