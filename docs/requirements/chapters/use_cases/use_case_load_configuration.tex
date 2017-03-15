@@ -1,13 +1,19 @@
-\section{Use Case \arabic{subsection}: Load Configuration}
+\subsection{Load Configuration}
 
 \subsubsection{Scope}
-
+ClockAlarm application configuration phase
 \subsubsection{Primary actor}
 User
 \subsubsection{Precondition}
-
+The application has to be started
 \subsubsection{Postcondition}
 
 \subsubsection{Main success scenario}
-
+\begin{enumerate}
+\item The user selects a file to be loaded
+\item The application checks if the file is a valid configuration file
+\item The application replaces the configuration with the one in the specified file
+\item The application saves the new configuration
+\item The application notifies the user that the configuration has been loaded sucessfully
+\end{enumerate}
 \subsubsection{Extension}
