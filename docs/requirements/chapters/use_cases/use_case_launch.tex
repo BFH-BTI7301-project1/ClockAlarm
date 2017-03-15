@@ -1,0 +1,80 @@
+\subsection{Launch ClockAlarm manager (no login)}
+In the case of an application without shared database and user accounts.
+\subsubsection{Scope}
+A computer running any common operating system (Windows, Mac OS, Linux).
+\subsubsection{Primary actor}
+User or Administrator
+\subsubsection{Precondition}
+The computer is on and the user is logged on his computer user session. The ClockAlarm application is correctly installed.
+\subsubsection{Postcondition}
+ClockAlarm is running and the manager window is open. The user is logged on his personnal ClockAlarm session.
+\subsubsection{Main success scenario}
+\begin{enumerate}
+	\item The user launches the ClockAlarm application.
+	\item \label{itm:start} The application starts and loads configurations and alarms from the user's personal files folder.
+	\item \label{itm:winopen} The manager window opens and displays the main window.
+\end{enumerate}
+\subsubsection{Extension}
+\begin{enumerate}
+	\item[\ref{itm:start}] The application il allready running in background.
+	\begin{enumerate}[i]
+		\item Goto point \ref{itm:winopen}.
+	\end{enumerate}
+	
+	\item[\ref{itm:start}] Configurations or alerts can not be loaded (e.g. first use of the program).
+	\begin{enumerate}[i]
+		\item The application creates a new default configuration file and an empty alert file.
+		\item Goto point \ref{itm:start}.
+	\end{enumerate}
+\end{enumerate}
+
+\subsection{Launch ClockAlarm manager (with login)}
+In the case of an application with a shared database and user accounts.
+\\ \textbf{This solution is unlikely to be kept.}
+\\For this reason, not all scenarios, especially those related to the connection with the server, will be treated here.
+\subsubsection{Scope}
+A computer running any common operating system (Windows, Mac OS, Linux).
+\subsubsection{Primary actor}
+User or Administrator
+\subsubsection{Precondition}
+The computer is on and the user is logged on his computer user session. The ClockAlarm application is correctly installed.
+\\ The user has a registered user account on the server.
+\subsubsection{Postcondition}
+ClockAlarm is running and the manager window is open. The user is logged on his personnal ClockAlarm session.
+\subsubsection{Main success scenario}
+\begin{enumerate}
+	\item The user launches the ClockAlarm application.
+	\item \label{itm:start} The application starts. 
+	\item \label{itm:check} The user is asked to enter his credentials and the program tries to check these.
+	\item The application is connected to the server.
+	\item \label{itm:load} The application loads configurations and alarms from the server database.
+	\item \label{itm:winopen} The manager window opens and displays the main window.
+\end{enumerate}
+\subsubsection{Extension}
+\begin{enumerate}
+	\item[\ref{itm:start}] The application il allready running in background.
+	\begin{enumerate}[i]
+		\item Goto point \ref{itm:winopen}.
+	\end{enumerate}
+	
+	\item[\ref{itm:check}] The credentials are incorrect.
+	\begin{enumerate}[i]
+		\item The connection to the server is denied.
+		\item The user is asked to give his credentials again.
+		\item Goto point \ref{itm:check}.
+	\end{enumerate}
+	
+		\item[\ref{itm:check}] The user isn't registered.
+	\begin{enumerate}[i]
+		\item The connection to the server is denied.
+		\item The user is redirected to a page to an account creation page.
+		\item The user creates a new account on the server.
+		\item Goto point \ref{itm:check}.
+	\end{enumerate}
+	
+	\item[\ref{itm:load}] Configurations or alerts can not be loaded (e.g. first use of the account).
+	\begin{enumerate}[i]
+		\item The application creates and upload a new default configuration file and an empty alert file.
+		\item Goto point \ref{itm:start}.
+	\end{enumerate}
+\end{enumerate}
