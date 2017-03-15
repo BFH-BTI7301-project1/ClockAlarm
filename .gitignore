@@ -136,3 +136,6 @@ fabric.properties
 
 # IDE specific files
 .idea/*
+
+# Microsoft Visio files
+*.vsdx
