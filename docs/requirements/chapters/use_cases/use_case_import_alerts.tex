@@ -1,0 +1,32 @@
+\subsection{Import Alerts}
+Load ClockAlarm alerts from an external file.
+\subsubsection{Scope}
+ClockAlarm application user interface.
+\subsubsection{Primary actor}
+User
+\subsubsection{Precondition}
+The application has to be started.
+\subsubsection{Postcondition}
+New alerts from the given file are added to the alert list.
+\subsubsection{Main success scenario}
+\begin{enumerate}
+	\item The User selects a file to import.
+	\item \label{itm:second} The application checks if the file is a valid alert file.
+	\item \label{itm:third} The application asks the User which alerts he wants to import.
+	\item The application adds the alerts to the User alert list.
+	\item The application saves the alert list.
+	\item The application notifies the user that the alerts have been imported successfully.
+\end{enumerate}
+\subsubsection{Extension}
+\begin{enumerate}
+	\item[\ref{itm:second}.] The application detects that the file is invalid.
+	\begin{enumerate}[i]
+		\item The application notifies the user that the file is invalid.
+		\item The user chooses if he wants to select another file.
+	\end{enumerate}
+	\item[\ref{itm:third}.] The application detects that the User has chosen no alerts.
+	\begin{enumerate}[i]
+		\item The application notifies the User that no alerts were chosen to import.
+		\item The User chooses if he wants to select alerts to be imported.
+	\end{enumerate}
+\end{enumerate}
