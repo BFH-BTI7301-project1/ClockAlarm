@@ -1,0 +1,30 @@
+\subsection{Export Alerts}
+Export ClockAlarm alerts to a file.
+\subsubsection{Scope}
+ClockAlarm application user interface.
+\subsubsection{Primary actor}
+User
+\subsubsection{Precondition}
+The application has to be started.
+\subsubsection{Postcondition}
+Alerts are saved to a file whose path was chosen by the User.
+\subsubsection{Main success scenario}
+\begin{enumerate}
+	\item \label{itm:first} The User is asked where he wants to save the file.
+	\item \label{itm:second} The User selects the alerts he wants to export.
+	\item The application exports the alerts to the file.
+	\item The application notifies the User that the alerts have been exported successfully.
+\end{enumerate}
+\subsubsection{Extension}
+\begin{enumerate}
+	\item[\ref{itm:first}.] The application detects that it has not enough privileges to write to the specified folder.
+	\begin{enumerate}[i]
+		\item The application notifies the User that it has not enough privileges to write to the specified folder.
+		\item The User chooses if he wants to select another folder.
+	\end{enumerate}
+	\item[\ref{itm:second}.] The application detects that the User has chosen no alerts.
+	\begin{enumerate}[i]
+		\item The application notifies the User that no alerts were chosen to export.
+		\item The User chooses if he wants to select alerts to be exported.
+	\end{enumerate}
+\end{enumerate}
