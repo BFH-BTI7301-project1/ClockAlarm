@@ -1,0 +1,24 @@
+\subsection{Edit Default Configuration}
+Edit the default configuration of the ClockAlarm application.
+\subsubsection{Scope}
+ClockAlarm application configuration phase.
+\subsubsection{Primary actor}
+User
+\subsubsection{Precondition}
+The application has to be started.
+\subsubsection{Postcondition}
+The application configuration is edited.
+\subsubsection{Main success scenario}
+\begin{enumerate}
+	\item The User edits the configuration
+	\item \label{itm:second} The application checks if the User entered configuration is valid
+	\item The application saves the configuration.
+\end{enumerate}
+\subsubsection{Extension}
+\begin{enumerate}
+	\item[\ref{itm:second}.] The application detects that the User entered configuration is invalid
+		\begin{enumerate}[i]
+			\item The application notifies the User that the entered configuration is invalid.
+			\item The User chooses if he wants to edit the configuration.
+		\end{enumerate}
+\end{enumerate}
