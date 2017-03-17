@@ -1,0 +1,70 @@
+\subsection{Edit an alert: simple and periodic alert}
+
+\subsubsection{Scope}
+The ClockAlarm manager window.
+\subsubsection{Primary actor}
+User
+\subsubsection{Precondition}
+ClockAlarm is running. The configurations and existing alerts are loaded. The user is on the main window.
+\\A simple(resp. periodic) alert is already set.
+\subsubsection{Postcondition}
+The selected alert is updated and ready to alert the user at the chosen time.
+\subsubsection{Main success scenario}
+\begin{enumerate}
+	\item The user selects the alert he wishes to modify.
+	\item \label{itm:edit} The user browse the menu and selects''file \textgreater edit alert''. The simple (resp. periodic) alert edition window is displayed. 
+	\item \label{itm:enter} The current settings are displayed. The user edits his alert. The message to be displayed as well as the time of display (and the periodicity for the periodic alert) are mandatory. \\The user can, if desired, assign or reassign a category, color, sound and font to the alert.
+	\item \label{itm:validate} The user validates his modifications. It is redirected to the main window.
+\end{enumerate}
+\subsubsection{Extension}
+\begin{enumerate}
+	\item[\ref{itm:edit}] No alert is selected.
+	\begin{enumerate}[i]
+		\item Nothing happens.
+	\end{enumerate}
+	
+	\item[\ref{itm:enter}] The user changes the alert category.
+	\begin{enumerate}[i]
+		\item The user is asked if he also wants to use the parameters of the category.
+	\end{enumerate}
+	
+	\item[\ref{itm:validate}] The user does not complete the category and settings.
+	\begin{enumerate}[i]
+		\item The default settings are used and the alert does not belong to any category.
+	\end{enumerate}
+	
+	\item[\ref{itm:validate}] The user complete the category, but not the settings.
+	\begin{enumerate}[i]
+		\item The parameters of the category are used.
+	\end{enumerate}
+	
+	\item[\ref{itm:validate}] One of the parameter is invalid (for example, the time entered is earlier than the current time).
+	\begin{enumerate}[i]
+		\item The user is asked to check his entries. Back to point \ref{itm:enter}.
+	\end{enumerate}
+\end{enumerate}
+
+\subsection{Edit an alert: e-mail sender}
+
+\subsubsection{Scope}
+The ClockAlarm manager window.
+\subsubsection{Primary actor}
+User
+\subsubsection{Precondition}
+ClockAlarm is running. The configurations and existing alerts are loaded. The user is on the main window.
+\\An e-mail sender is already set.
+\subsubsection{Postcondition}
+The selected e-mail sender is updated and ready to send an e-mail at the scheduled time.
+\subsubsection{Main success scenario}
+\begin{enumerate}
+	\item The user selects the e-mail sender he wishes to modify.
+	\item \label{itm:edit} The user browse the menu and selects''file \textgreater edit alert''. The e-mail sender edition window is displayed. 
+	\item \label{itm:enter} The current settings are displayed. The user edits his e-mail. He can edit the recipient, subject, and body of the message. He can also edit the time of sending and the path to an attachment.
+	\item \label{itm:validate} The user validates his modifications. It is redirected to the main window.
+\end{enumerate}
+\subsubsection{Extension}
+	\item[\ref{itm:validate}] One of the parameters is invalid (time entered earlier than current time, invalid recipient e-mail address, empty object).
+	\begin{enumerate}[i]
+		\item The user is asked to check his entries. Back to point \ref{itm:enter}.
+	\end{enumerate}
+\end{enumerate}
