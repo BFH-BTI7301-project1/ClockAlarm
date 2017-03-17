@@ -1,4 +1,5 @@
 As an [actor] I want [action] so that [achievement].
+\newcounter{counter}
 
 \subsection{As a User}
 \subsubsection{Alerts functionality}
@@ -9,28 +10,36 @@ As an [actor] I want [action] so that [achievement].
 	\item I want to delete the existing alerts when needed
 	\item I want to postpone an alarm so that i'm notified again later (snooze)
 	\item I want to mute an alert so that i'm not notified
+	\setcounter{counter}{\value{enumi}}
 \end{enumerate}
 \subsubsection{Managing alerts}
-\begin{enumerate}[resume]
+\begin{enumerate}
+	\setcounter{enumi}{\value{counter}}
 	\item I want to create categories of alerts, so that I can sort my alerts
 	\item I want to edit my categories, in a way my alerts remain categorised
 	\item I want to delete categories of alerts, so that my list of categories stay concise
 	\item I want to assign color identity to my different categories, some that I can easily find them
 	\item I want to personalize the default color, font and sound of my alarms in the software configurations
 	\item I want to mute an alert catogory so that i'm not notified by any alert in this category
+	\setcounter{counter}{\value{enumi}}
 \end{enumerate}
 \subsubsection{Persistence}
-\begin{enumerate}[resume]
+\begin{enumerate}
+	\setcounter{enumi}{\value{counter}}
 	\item I want to retrieve the correct state of my alerts after turning my computer down and back on
 	\item I want to be alerted at any times, as soon as I'm loged on my computer session
+	\setcounter{counter}{\value{enumi}}
 \end{enumerate}
 \subsubsection{Exportability}
-\begin{enumerate}[resume]
+\begin{enumerate}
+	\setcounter{enumi}{\value{counter}}
 	\item I want to export my alerts so that I can't import then on an other computer with ClockAlarm installed
 	\item I want to import an alerts file, so that I can retrieve previously exported alerts
 	\item I want to load configuration files, so that I can use predifined color and sound themes
+	\setcounter{counter}{\value{enumi}}
 \end{enumerate}
 \subsubsection{Pivacy}
-\begin{enumerate}[resume]
+\begin{enumerate}
+	\setcounter{enumi}{\value{counter}}
 	\item I want my alerts to remain private, so that nobody except me knows about them
 \end{enumerate}
