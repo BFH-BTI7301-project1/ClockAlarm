@@ -1,5 +1,5 @@
-\subsection{Load Configuration}
-Load a ClockAlarm application configuration from an external file.
+\subsection{Import Configuration}
+Import a ClockAlarm application configuration from an external file.
 \subsubsection{Scope}
 ClockAlarm application configuration phase.
 \subsubsection{Primary actor}
@@ -10,17 +10,17 @@ The application has to be started.
 The application configuration is replaced with the one in the given file.
 \subsubsection{Main success scenario}
 \begin{enumerate}
-	\item The User selects a file to be loaded.
+	\item The User selects a file to be imported.
 	\item \label{itm:second} The application checks if the file is a valid configuration file.
 	\item The application replaces the configuration with the one specified in the file.
 	\item The application saves the new configuration.
-	\item The application notifies the user that the configuration has been loaded successfully.
+	\item The application notifies the User that the configuration has been imported successfully.
 \end{enumerate}
 \subsubsection{Extension}
 \begin{enumerate}
 	\item[\ref{itm:second}.] The application detects that the file is invalid.
 		\begin{enumerate}[i]
-			\item The application notifies the user that the file is invalid.
-			\item The user chooses if he wants to select another file.
+			\item The application notifies the User that the file is invalid.
+			\item The User chooses if he wants to select another file.
 		\end{enumerate}
 \end{enumerate}
