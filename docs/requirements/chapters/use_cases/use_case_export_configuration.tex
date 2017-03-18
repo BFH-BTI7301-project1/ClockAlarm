@@ -10,13 +10,13 @@ The application has to be started.
 The application configuration is exported to a file whose path was chosen by the User.
 \subsubsection{Main success scenario}
 \begin{enumerate}
-	\item \label{itm:first} The User is asked where he wants to save the file.
+	\item\label{itm:ucec_save_file} The User is asked where he wants to save the file.
 	\item The application exports the configuration to the file.
 	\item The application notifies the User that the configuration has been exported successfully.
 \end{enumerate}
 \subsubsection{Extension}
 \begin{enumerate}
-	\item[\ref{itm:first}.] The application detects that it has not enough privileges to write to the specified folder.
+	\item[\ref{itm:ucec_save_file}.] The application detects that it has not enough privileges to write to the specified folder.
 	\begin{enumerate}[i]
 		\item The application notifies the User that it has not enough privileges to write to the specified folder.
 		\item The User chooses if he wants to select another folder.

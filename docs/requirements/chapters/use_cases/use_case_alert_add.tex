@@ -1,4 +1,4 @@
-\subsection{Setup a new alert : Simple alert}
+\subsection{Setup a new alert: Simple alert}
 A simple alert displays a message to the user at the requested time.
 \subsubsection{Scope}
 The ClockAlarm manager window.
@@ -10,27 +10,27 @@ ClockAlarm is running. The configurations and existing alerts are loaded. The us
 A new simple alert is added to the alert list and is ready to warn the user at the right time.
 \subsubsection{Main success scenario}
 \begin{enumerate}
-	\item The user browse the menu and selects "new alert \textgreater simple alert''. The simple alert creation window is displayed. 
-	\item \label{itm:enter} The user sets his alert. The message to be displayed as well as the time of display are mandatory. \\The user can, if desired, assign a category to the alert, or set the color, sound and font of the alert.
-	\item \label{itm:validate} The user validates his alert. It is redirected to the main window.
+	\item The user browse the menu and selects ``ew alert \textgreater~simple alert''. The simple alert creation window is displayed. 
+	\item\label{itm:ucaa_enter_sa} The user sets his alert. The message to be displayed as well as the time of display are mandatory. \\The user can, if desired, assign a category to the alert, or set the color, sound and font of the alert.
+	\item\label{itm:ucaa_validate_sa} The user validates his alert. It is redirected to the main window.
 \end{enumerate}
 \subsubsection{Extension}
 \begin{enumerate}
-	\item[\ref{itm:validate}] The user does not complete the category and settings.
+	\item[\ref{itm:ucaa_validate_sa}] The user does not complete the category and settings.
 	\begin{enumerate}[i]
 		\item The default settings are used and the alert does not belong to any category.
 	\end{enumerate}
-	\item[\ref{itm:validate}] The user complete the category, but not the settings.
+	\item[\ref{itm:ucaa_validate_sa}] The user complete the category, but not the settings.
 	\begin{enumerate}[i]
 		\item The parameters of the category are used.
 	\end{enumerate}
-	\item[\ref{itm:validate}] One of the parameters is invalid (for example, the time entered is earlier than the current time).
+	\item[\ref{itm:ucaa_validate_sa}] One of the parameters is invalid (for example, the time entered is earlier than the current time).
 	\begin{enumerate}[i]
-		\item The user is asked to check his entries. Back to point \ref{itm:enter}.
+		\item The user is asked to check his entries. Back to point~\ref{itm:ucaa_enter_sa}.
 	\end{enumerate}
 \end{enumerate}
 
-\subsection{Setup a new alert : Periodic alert}
+\subsection{Setup a new alert: Periodic alert}
 A periodic alert displays a message to the user at the requested periodic time.
 \subsubsection{Scope}
 The ClockAlarm manager window.
@@ -42,27 +42,27 @@ ClockAlarm is running. The configurations and existing alerts are loaded. The us
 A new periodic alert is added to the alert list and is ready to warn the user whenever it occures.
 \subsubsection{Main success scenario}
 \begin{enumerate}
-	\item The user browse the menu and selects "new alert \textgreater periodic alert''. The periodic alert creation window is displayed. 
-	\item \label{itm:enter} The user sets his alert. The message to be displayed, the time of display as well as the periodicity are mandatory. \\The user can, if desired, assign a category to the alert, or set the color, sound and font of the alert.
-	\item \label{itm:validate} The user validates his alert. It is redirected to the main window.
+	\item The user browse the menu and selects ``new alert \textgreater~periodic alert''. The periodic alert creation window is displayed. 
+	\item\label{itm:ucaa_enter_pa} The user sets his alert. The message to be displayed, the time of display as well as the periodicity are mandatory. \\The user can, if desired, assign a category to the alert, or set the color, sound and font of the alert.
+	\item\label{itm:ucaa_validate_pa} The user validates his alert. It is redirected to the main window.
 \end{enumerate}
 \subsubsection{Extension}
 \begin{enumerate}
-	\item[\ref{itm:validate}] The user does not complete the category and settings.
+	\item[\ref{itm:ucaa_validate_pa}] The user does not complete the category and settings.
 	\begin{enumerate}[i]
 		\item The default settings are used and the alert does not belong to any category.
 	\end{enumerate}
-	\item[\ref{itm:validate}] The user complete the category, but not the settings.
+	\item[\ref{itm:ucaa_validate_pa}] The user complete the category, but not the settings.
 	\begin{enumerate}[i]
 		\item The parameters of the category are used.
 	\end{enumerate}
-	\item[\ref{itm:validate}] One of the parameters is invalid (for example, the time entered is earlier than the current time).
+	\item[\ref{itm:ucaa_validate_pa}] One of the parameters is invalid (for example, the time entered is earlier than the current time).
 	\begin{enumerate}[i]
-		\item The user is asked to check his entries. Back to point \ref{itm:enter}.
+		\item The user is asked to check his entries. Back to point~\ref{itm:ucaa_enter_pa}.
 	\end{enumerate}
 \end{enumerate}
 
-\subsection{Setup a new alert : e-mail sender}
+\subsection{Setup a new alert: e-mail sender}
 An e-mail sender send an e-mail at the requested time.
 \subsubsection{Scope}
 The ClockAlarm manager window.
@@ -74,14 +74,14 @@ ClockAlarm is running. The configurations and existing alerts are loaded. The us
 An e-mail is configured and ready to be sent at the scheduled time.
 \subsubsection{Main success scenario}
 \begin{enumerate}
-	\item The user browse the menu and selects "new alert \textgreater e-mail sender''. The e-mail sender creation window is displayed. 
-	\item \label{itm:enter} The user sets his e-mail. He enters the recipient, subject, and body of the message. He also sets the time of sending. \\The user can, if he wants to, enter the path to an attachment.
-	\item \label{itm:validate} The user validates his e-mail. It is redirected to the main window.
+    \item The user browse the menu and selects ``new alert \textgreater~e-mail sender''. The e-mail sender creation window is displayed. 
+	\item\label{itm:ucaa_enter_es} The user sets his e-mail. He enters the recipient, subject, and body of the message. He also sets the time of sending. \\The user can, if he wants to, enter the path to an attachment.
+	\item\label{itm:ucaa_validate_es} The user validates his e-mail. It is redirected to the main window.
 \end{enumerate}
 \subsubsection{Extension}
 \begin{enumerate}
-	\item[\ref{itm:validate}] One of the parameters is invalid (time entered earlier than current time, invalid recipient e-mail address, empty object).
+	\item[\ref{itm:ucaa_validate_es}] One of the parameters is invalid (time entered earlier than current time, invalid recipient e-mail address, empty object).
 	\begin{enumerate}[i]
-		\item The user is asked to check his entries. Back to point \ref{itm:enter}.
+		\item The user is asked to check his entries. Back to point~\ref{itm:ucaa_enter_es}.
 	\end{enumerate}
 \end{enumerate}

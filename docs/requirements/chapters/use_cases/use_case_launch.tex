@@ -11,20 +11,20 @@ ClockAlarm is running and the manager window is open. The user is logged on his 
 \subsubsection{Main success scenario}
 \begin{enumerate}
 	\item The user launches the ClockAlarm application.
-	\item \label{itm:start} The application starts and loads configurations and alarms from the user's personal files folder.
-	\item \label{itm:winopen} The manager window opens and displays the main window.
+	\item\label{itm:ucea_start_nl} The application starts and loads configurations and alarms from the user's personal files folder.
+	\item\label{itm:ucea_winopen_nl} The manager window opens and displays the main window.
 \end{enumerate}
 \subsubsection{Extension}
 \begin{enumerate}
-	\item[\ref{itm:start}] The application il allready running in background.
+	\item[\ref{itm:ucea_start_nl}] The application il allready running in background.
 	\begin{enumerate}[i]
-		\item Goto point \ref{itm:winopen}.
+		\item Goto point~\ref{itm:ucea_winopen_nl}.
 	\end{enumerate}
 	
-	\item[\ref{itm:start}] Configurations or alerts can not be loaded (e.g. first use of the program).
+	\item[\ref{itm:ucea_start_nl}] Configurations or alerts can not be loaded (e.g.\ first use of the program).
 	\begin{enumerate}[i]
 		\item The application creates a new default configuration file and an empty alert file.
-		\item Goto point \ref{itm:start}.
+		\item Goto point~\ref{itm:ucea_start_nl}.
 	\end{enumerate}
 \end{enumerate}
 
@@ -44,37 +44,37 @@ ClockAlarm is running and the manager window is open. The user is logged on his 
 \subsubsection{Main success scenario}
 \begin{enumerate}
 	\item The user launches the ClockAlarm application.
-	\item \label{itm:start} The application starts. 
-	\item \label{itm:check} The user is asked to enter his credentials and the program tries to check these.
+	\item\label{itm:ucea_start_wl} The application starts. 
+	\item\label{itm:ucea_check_wl} The user is asked to enter his credentials and the program tries to check these.
 	\item The application is connected to the server.
-	\item \label{itm:load} The application loads configurations and alarms from the server database.
-	\item \label{itm:winopen} The manager window opens and displays the main window.
+	\item\label{itm:ucea_load_wl} The application loads configurations and alarms from the server database.
+	\item\label{itm:ucea_winopen_wl} The manager window opens and displays the main window.
 \end{enumerate}
 \subsubsection{Extension}
 \begin{enumerate}
-	\item[\ref{itm:start}] The application il allready running in background.
+	\item[\ref{itm:ucea_start_wl}] The application il allready running in background.
 	\begin{enumerate}[i]
-		\item Goto point \ref{itm:winopen}.
+		\item Goto point~\ref{itm:ucea_winopen_wl}.
 	\end{enumerate}
 	
-	\item[\ref{itm:check}] The credentials are incorrect.
+	\item[\ref{itm:ucea_check_wl}] The credentials are incorrect.
 	\begin{enumerate}[i]
 		\item The connection to the server is denied.
 		\item The user is asked to give his credentials again.
-		\item Goto point \ref{itm:check}.
+		\item Goto point~\ref{itm:ucea_check_wl}.
 	\end{enumerate}
 	
-		\item[\ref{itm:check}] The user isn't registered.
+		\item[\ref{itm:ucea_check_wl}] The user isn't registered.
 	\begin{enumerate}[i]
 		\item The connection to the server is denied.
 		\item The user is redirected to a page to an account creation page.
 		\item The user creates a new account on the server.
-		\item Goto point \ref{itm:check}.
+		\item Goto point~\ref{itm:ucea_check_wl}.
 	\end{enumerate}
 	
-	\item[\ref{itm:load}] Configurations or alerts can not be loaded (e.g. first use of the account).
+	\item[\ref{itm:ucea_load_wl}] Configurations or alerts can not be loaded (e.g.\ first use of the account).
 	\begin{enumerate}[i]
 		\item The application creates and upload a new default configuration file and an empty alert file.
-		\item Goto point \ref{itm:start}.
+		\item Goto point~\ref{itm:ucea_start_wl}.
 	\end{enumerate}
 \end{enumerate}

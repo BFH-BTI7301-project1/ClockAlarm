@@ -11,14 +11,14 @@ The application configuration is replaced with the one in the given file.
 \subsubsection{Main success scenario}
 \begin{enumerate}
 	\item The User selects a file to be imported.
-	\item \label{itm:second} The application checks if the file is a valid configuration file.
+	\item\label{itm:ucic_valid_file} The application checks if the file is a valid configuration file.
 	\item The application replaces the configuration with the one specified in the file.
 	\item The application saves the new configuration.
 	\item The application notifies the User that the configuration has been imported successfully.
 \end{enumerate}
 \subsubsection{Extension}
 \begin{enumerate}
-	\item[\ref{itm:second}.] The application detects that the file is invalid.
+	\item[\ref{itm:ucic_valid_file}.] The application detects that the file is invalid.
 		\begin{enumerate}[i]
 			\item The application notifies the User that the file is invalid.
 			\item The User chooses if he wants to select another file.
