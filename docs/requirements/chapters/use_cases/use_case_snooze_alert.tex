@@ -1,0 +1,28 @@
+\subsection{Snooze Alert}
+Snooze the alert on the screen.
+\subsubsection{Scope}
+ClockAlarm application user interface
+\subsubsection{Primary actor}
+User
+\subsubsection{Precondition}
+The application has to be started. A default configuration file exists.
+\subsubsection{Postcondition}
+The alert is snoozed for a certain amount of time.
+\subsubsection{Main success scenario}
+\begin{enumerate}
+    \item The User snoozes the alert.
+    \item\label{itm:ucsa_no_config_found} The application changes the alert 
+        time of the specific alert and adds an amount of time defined by the
+        configuration.
+\end{enumerate}
+\subsubsection{Extension}
+\begin{enumerate}
+	\item[\ref{itm:ucsa_no_config_found}.] The application can't find the 
+        configuration.
+		\begin{enumerate}[i]
+			\item The application notifies the User that the configuration
+                has not been found.
+			\item The application uses the time defined in the default 
+                configuration.
+		\end{enumerate}
+\end{enumerate}
