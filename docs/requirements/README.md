@@ -69,7 +69,70 @@ Usually there is a macro in your favourite LaTeX editor to build bibliographies.
 [Short guide about BibTeX][SGB]
 To add a reference use a program from [Programs](#programs)
 
-### Programs
+## Latexmk
+**To compile everything automatically and the good number of times use [latexmk][LATEXMK].**
+
+Use the following configuration file:
+
+```bash
+$pdf_mode = 1;
+$bibtex_use = 2;
+$pdflatex = 'pdflatex --shell-escape %O %S';
+$pdf_previewer = 'open -a Preview "%S"';
+
+add_cus_dep('glo', 'gls', 0, 'run_makeglossaries');
+add_cus_dep('acn', 'acr', 0, 'run_makeglossaries');
+
+sub run_makeglossaries {
+    my ($base_name, $path) = fileparse( $_[0] );
+    pushd $path;
+    
+    if ( $silent ) {
+        system "makeglossaries -q '$base_name'";
+    }
+    else {
+        system "makeglossaries '$base_name'";
+    };
+    popd;
+}
+
+push @generated_exts, 'glo', 'gls', 'glg';
+push @generated_exts, 'acn', 'acr', 'alg';
+$clean_ext .= ' %R.ist %R.xdy';
+$out_dir = 'build';
+```
+You should edit the line 4 and specify your own pdf viewer. The example above is configured for macOS.
+
+## LaTeX syntax
+* Avoid spaces after `\item`
+
+```latex
+...
+	\item\label{...}
+...
+```
+
+* If there is a space before a command use a tilde after the command and not a space.
+
+```latex
+... some text \textgreater~some other text ...
+```
+
+* If there is a carriage return after a command without option (`\latexcommand`) put empty braces after it (`\latexcommand{}`) to avoid warnings.
+
+* For DVI output: Always specify the image size in pixel when you include one
+
+```latex
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth,natwidth=610,natheight=642]{tiger.pdf}
+\end{figure}
+```
+
+* **Label names should be unique!**
+
+
+## Programs
 * [Zotero][ZTO]: Save books, links, video references quickly. Need to setup Default Output Format (Preferences->Export). Allows drag&drop to tools like Bibdesk and Jabref.
 * [Jabref][JBF]: Like [Bibdesk][BD], manage .bib files but cross platform compatible.
 * [Other Alternatives][OT]
@@ -83,3 +146,4 @@ To add a reference use a program from [Programs](#programs)
 [SGB]:https://www.economics.utoronto.ca/osborne/latex/BIBTEX.HTM
 [WGL]:https://en.wikibooks.org/wiki/LaTeX/Glossary#Using_defined_terms
 [ZTO]:https://www.zotero.org
+[LATEXMK]:http://mg.readthedocs.io/latexmk.html
