@@ -1,0 +1,34 @@
+\subsection{Edit an alert category}
+
+\subsubsection{Scope}
+The ClockAlarm manager window.
+\subsubsection{Primary actor}
+User
+\subsubsection{Precondition}
+ClockAlarm is running. The configurations and existing alerts are loaded. The user is on the main window.
+\\A category allready exist.
+\subsubsection{Postcondition}
+The selected category is updated as wanted. It defines the parameters of the alerts belonging to it.
+\\ If alerts are defined by this category, they must be updated too.
+\subsubsection{Main success scenario}
+\begin{enumerate}
+	\item The user browse the menu and selects ``Edit \textgreater~Categories''. The categories manager window is displayed. 
+	\item The user selects from the list the category he wishes to modify.
+	\item The user clicks on the ``Edit category'' button. The edit category dialog is displayed.
+	\item\label{itm:eaac_enter_sc}The user update the selected category. The name is mandatory. \\The user can define or redifine a font and a color for the alerts and the sound to be used.
+	\item\label{itm:eaac_validate_sc} The user validates the category. It's updated, as well as all the alerts it defines.
+	\item The creation window closes.
+\end{enumerate}
+\subsubsection{Extension}
+\begin{enumerate}
+	\item[\ref{itm:eaac_validate_sc}] A non-mandatory field is not filled.
+	\begin{enumerate}[i]
+		\item The initial setting of this parameter is used. 
+		\item The category is updated and the dialog box closes.
+	\end{enumerate}
+	
+	\item[\ref{itm:eaac_validate_sc}] One of the parameter is invalid.
+	\begin{enumerate}[i]
+		\item The user is asked to check his entries. Back to point~\ref{itm:eaac_enter_sc}.
+	\end{enumerate}
+\end{enumerate}
