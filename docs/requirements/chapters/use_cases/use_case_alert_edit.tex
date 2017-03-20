@@ -12,35 +12,35 @@ The selected alert is updated and ready to alert the user at the chosen time.
 \subsubsection{Main success scenario}
 \begin{enumerate}
 	\item The user selects the alert he wishes to modify.
-	\item \label{itm:edit} The user browse the menu and selects''file \textgreater edit alert''. The simple (resp. periodic) alert edition window is displayed. 
-	\item \label{itm:enter} The current settings are displayed. The user edits his alert. The message to be displayed as well as the time of display (and the periodicity for the periodic alert) are mandatory. \\The user can, if desired, assign or reassign a category, color, sound and font to the alert.
-	\item \label{itm:validate} The user validates his modifications. It is redirected to the main window.
+	\item \label{itm:ucae_edit_spa} The user browse the menu and selects ``edit \textgreater~edit alert''. The simple (resp. periodic) alert edition window is displayed. 
+	\item \label{itm:ucae_enter_spa} The current settings are displayed. The user edits his alert. The message to be displayed as well as the time of display (and the periodicity for the periodic alert) are mandatory. \\The user can, if desired, assign or reassign a category, color, sound and font to the alert.
+	\item \label{itm:ucae_validate_spa} The user validates his modifications. The edition window closes and the manager window is updated.
 \end{enumerate}
 \subsubsection{Extension}
 \begin{enumerate}
-	\item[\ref{itm:edit}] No alert is selected.
+	\item[\ref{itm:ucae_edit_spa}] No alert is selected.
 	\begin{enumerate}[i]
 		\item Nothing happens.
 	\end{enumerate}
 	
-	\item[\ref{itm:enter}] The user changes the alert category.
+	\item[\ref{itm:ucae_enter_spa}] The user changes the alert category.
 	\begin{enumerate}[i]
 		\item The user is asked if he also wants to use the parameters of the category.
 	\end{enumerate}
 	
-	\item[\ref{itm:validate}] The user does not complete the category and settings.
+	\item[\ref{itm:ucae_validate_spa}] The user does not complete the category and settings.
 	\begin{enumerate}[i]
 		\item The default settings are used and the alert does not belong to any category.
 	\end{enumerate}
 	
-	\item[\ref{itm:validate}] The user complete the category, but not the settings.
+	\item[\ref{itm:ucae_validate_spa}] The user complete the category, but not the settings.
 	\begin{enumerate}[i]
 		\item The parameters of the category are used.
 	\end{enumerate}
 	
-	\item[\ref{itm:validate}] One of the parameter is invalid (for example, the time entered is earlier than the current time).
+	\item[\ref{itm:ucae_validate_spa}] One of the parameter is invalid (for example, the time entered is earlier than the current time).
 	\begin{enumerate}[i]
-		\item The user is asked to check his entries. Back to point \ref{itm:enter}.
+		\item The user is asked to check his entries. Back to point \ref{itm:ucae_enter_spa}.
 	\end{enumerate}
 \end{enumerate}
 
@@ -58,14 +58,14 @@ The selected e-mail sender is updated and ready to send an e-mail at the schedul
 \subsubsection{Main success scenario}
 \begin{enumerate}
 	\item The user selects the e-mail sender he wishes to modify.
-	\item \label{itm:edit} The user browse the menu and selects''file \textgreater edit alert''. The e-mail sender edition window is displayed. 
-	\item \label{itm:enter} The current settings are displayed. The user edits his e-mail. He can edit the recipient, subject, and body of the message. He can also edit the time of sending and the path to an attachment.
-	\item \label{itm:validate} The user validates his modifications. It is redirected to the main window.
+	\item \label The user browse the menu and selects  `` edit \textgreater~edit alert''. The e-mail sender edition window is displayed. 
+	\item \label{itm:ucae_enter_es} The current settings are displayed. The user edits his e-mail. He can edit the recipient, subject, and body of the message. He can also edit the time of sending and the path to an attachment.
+	\item \label{itm:ucae_validate_es} The user validates his modifications. The edition window closes and the manager window is updated.
 \end{enumerate}
 \subsubsection{Extension}
 \begin{enumerate}
-	\item[\ref{itm:validate}] One of the parameters is invalid (time entered earlier than current time, invalid recipient e-mail address, empty object).
+	\item[\ref{itm:ucae_validate_es}] One of the parameters is invalid (time entered earlier than current time, invalid recipient e-mail address, empty object).
 	\begin{enumerate}[i]
-		\item The user is asked to check his entries. Back to point \ref{itm:enter}.
+		\item The user is asked to check his entries. Back to point \ref{itm:ucae_enter_es}.
 	\end{enumerate}
 \end{enumerate}

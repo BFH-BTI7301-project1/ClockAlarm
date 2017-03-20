@@ -1,0 +1,61 @@
+\subsection{Delete an alert: Simple and Periodic alert}
+
+\subsubsection{Scope}
+The ClockAlarm manager window.
+\subsubsection{Primary actor}
+User
+\subsubsection{Precondition}
+ClockAlarm is running. The configurations and existing alerts are loaded. The user is on the main window.
+\\A simple(resp. periodic) alert is already set.
+\subsubsection{Postcondition}
+The selected alert is deleted won't alert the user in the futur.
+\subsubsection{Main success scenario}
+\begin{enumerate}
+	\item The user selects the alert he wishes to delete.
+	\item \label{itm:ucad_delete_spa} The user browse the menu and selects ``edit \textgreater~delete alert''.
+	\item \label{itm:ucad_check_spa} A dialog asks the user to validate his decision.
+	\item The alert is deleted. The dialog box closes and the manager window is updated.
+\end{enumerate}
+\subsubsection{Extension}
+\begin{enumerate}
+	\item[\ref{itm:ucad_delete_spa}] No alert is selected.
+	\begin{enumerate}[i]
+		\item Nothing happens.
+	\end{enumerate}
+	
+	\item[\ref{itm:ucad_check_spa}] The user refuses or exits the dialog box.
+	\begin{enumerate}[i]
+		\item The alert isn't deleted and the dialog box closes.
+	\end{enumerate}
+\end{enumerate}
+
+\subsection{Delete an alert: E-mail sender}
+
+\subsubsection{Scope}
+The ClockAlarm manager window.
+\subsubsection{Primary actor}
+User
+\subsubsection{Precondition}
+ClockAlarm is running. The configurations and existing alerts are loaded. The user is on the main window.
+\\An e-mail sender is already set.
+\subsubsection{Postcondition}
+The selected e-mail sender is deleted and won't send any e-mail in the futur.
+\subsubsection{Main success scenario}
+\begin{enumerate}
+	\item The user selects the e-mail sender he wishes to delete.
+	\item \label{itm:ucad_delete_es} The user browse the menu and selects ``edit \textgreater~delete alert''.
+	\item \label{itm:ucad_check_es} A dialog asks the user to validate his decision.
+	\item The email-sender is deleted. The dialog box closes and the manager window is updated.
+\end{enumerate}
+\subsubsection{Extension}
+\begin{enumerate}
+	\item[\ref{itm:ucad_delete_es}] No alert is selected.
+	\begin{enumerate}[i]
+		\item Nothing happens.
+	\end{enumerate}
+	
+	\item[\ref{itm:ucad_check_es}] The user refuses or exits the dialog box.
+	\begin{enumerate}[i]
+		\item The email-sender isn't deleted and the dialog box closes.
+	\end{enumerate}
+\end{enumerate}
