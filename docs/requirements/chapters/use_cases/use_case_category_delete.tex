@@ -1,0 +1,28 @@
+\subsection{Delete an alert category}
+
+\subsubsection{Scope}
+The ClockAlarm manager window.
+\subsubsection{Primary actor}
+User
+\subsubsection{Precondition}
+ClockAlarm is running. The configurations and existing alerts are loaded. The user is on the main window.
+\\A category allready exist.
+\subsubsection{Postcondition}
+The selected category is deleted.\\The alerts previously defined in this category resume the default configuration.
+\subsubsection{Main success scenario}
+\begin{enumerate}
+	\item The user browse the menu and selects ``Edit \textgreater~Categories''. The categories manager window is displayed. 
+	\item The user selects from the list the category he wishes to delete.
+	\item The user clicks on the ``Delete category'' button.
+	\item\label{itm:uccd_delete_ac} The user is informed that the alerts previously defined by this category will now have the default configuration. The user must accept in order to delete the category.
+	\item The category is deleted. The related alerts are updated. The category manager window is updated. 
+	\item The dialog box closes.
+\end{enumerate}
+\subsubsection{Extension}
+\begin{enumerate}
+	\item[\ref{itm:uccd_delete_ac}] The user refuses or closes the dialog box.
+	\begin{enumerate}[i]
+		\item The category is not deleted.
+		\item The dialog box closes.
+	\end{enumerate}
+\end{enumerate}
