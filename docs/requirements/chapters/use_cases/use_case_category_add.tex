@@ -1,0 +1,30 @@
+\subsection{Setup a new alert category}
+Define a category to sort alerts.
+\subsubsection{Scope}
+The ClockAlarm manager window.
+\subsubsection{Primary actor}
+User
+\subsubsection{Precondition}
+ClockAlarm is running. The configurations and existing alerts are loaded. The user is on the main window.
+\subsubsection{Postcondition}
+A new alert category is created. It defines the parameters of the alerts belonging to it.
+\subsubsection{Main success scenario}
+\begin{enumerate}
+	\item The user browses the menu and selects ``Edit \textgreater~Categories''. The categories manager window is displayed.
+	\item The user clicks on the ``New category'' button. The add category dialog is displayed.
+	\item\label{itm:ucca_enter_sc}The user defines the new category. The name is mandatory. \\The user can define a font and a color for the alerts and the sound to be used.
+	\item\label{itm:ucca_validate_sc} The user validates the category. It's created and the creation window closes.
+\end{enumerate}
+\subsubsection{Extension}
+\begin{enumerate}
+	\item[\ref{itm:ucca_validate_sc}] A non-mandatory field is not filled.
+	\begin{enumerate}[i]
+		\item The default settings are used. 
+		\item The category is created and the creation window closes.
+	\end{enumerate}
+	
+	\item[\ref{itm:ucca_validate_sc}] One of the parameter is invalid.
+	\begin{enumerate}[i]
+		\item The user is asked to check his entries. Back to point~\ref{itm:ucca_enter_sc}.
+	\end{enumerate}
+\end{enumerate}
