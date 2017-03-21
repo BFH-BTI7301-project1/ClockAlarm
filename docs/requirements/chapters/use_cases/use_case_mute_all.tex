@@ -1,0 +1,36 @@
+\subsection{Silent mode ON}
+Mute all the alertes.
+\subsubsection{Scope}
+The ClockAlarm manager window.
+\subsubsection{Primary actor}
+User
+\subsubsection{Precondition}
+ClockAlarm is running. The configurations and existing alerts are loaded. The user is on the main window.
+\\Silent mode is disabled.
+\subsubsection{Postcondition}
+The system is in silent mode. The user will no longer be disturbed by alerts.
+\subsubsection{Main success scenario}
+\begin{enumerate}
+	\item The user browses the menu and selects ``Tool \textgreater~Silent mode''.
+	\item In the displayed drop-down menu, the user selects the duration of the mute time.
+	\item All alerts are silent for the requested duration.
+\end{enumerate}
+\subsubsection{Note}
+Email alerts can't be muted.
+
+\subsection{Silent mode OFF}
+
+\subsubsection{Scope}
+The ClockAlarm manager window.
+\subsubsection{Primary actor}
+User
+\subsubsection{Precondition}
+ClockAlarm is running. The configurations and existing alerts are loaded. The user is on the main window.
+\\Silent mode is enabled.
+\subsubsection{Postcondition}
+The system is in nomral mode. The user will be alerted on time.
+\subsubsection{Main success scenario}
+\begin{enumerate}
+	\item The user browses the menu and selects ``Tool \textgreater~Silent mode''.
+	\item All alarms, except muted ones, are activated again.
+\end{enumerate}
