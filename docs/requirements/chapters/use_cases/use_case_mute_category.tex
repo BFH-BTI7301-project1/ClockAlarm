@@ -1,0 +1,52 @@
+\subsection{Mute a category}
+
+\subsubsection{Scope}
+The ClockAlarm manager window.
+\subsubsection{Primary actor}
+User
+\subsubsection{Precondition}
+ClockAlarm is running. The configurations and existing alerts are loaded. The user is on the main window.
+\\There is a parameterized and unmuted category.
+\subsubsection{Postcondition}
+The category is muted. The user will no longer be disturbed by alerts from this category.
+\subsubsection{Main success scenario}
+\begin{enumerate}
+	\item The user browse the menu and selects ``Edit \textgreater~Categories''. The categories manager window is displayed. 
+	\item The user selects from the list the category he wishes to mute.
+	\item \label{itm:ucmc_mute_mc}The user browses the menu and selects ``Tool \textgreater~Mute''.
+	\item In the displayed drop-down menu, the user selects the duration of the mute time.
+	\item All alerts from this category are silent for the requested duration.
+\end{enumerate}
+\subsubsection{Extension}
+\begin{enumerate}
+	\item[\ref{itm:ucmc_mute_mc}] No category is selected.
+	\begin{enumerate}[i]
+		\item Option ``Tool \textgreater~Mutes'' is not available.
+	\end{enumerate}
+\end{enumerate}
+
+\subsection{Unmute a category}
+
+\subsubsection{Scope}
+The ClockAlarm manager window.
+\subsubsection{Primary actor}
+User
+\subsubsection{Precondition}
+ClockAlarm is running. The configurations and existing alerts are loaded. The user is on the main window.
+\\There is a parameterized and muted category.
+\subsubsection{Postcondition}
+The category is no longer muted. The user will again be alerted on time.
+\subsubsection{Main success scenario}
+\begin{enumerate}
+	\item The user browse the menu and selects ``Edit \textgreater~Categories''. The categories manager window is displayed. 
+	\item The user selects from the list the muted category he wishes to unmute.
+	\item \label{itm:ucmc_mute_uc}The user browses the menu and selects ``Tool \textgreater~Unmute''.
+	\item All alerts from this category are no longer silent and will alert the user on time.
+\end{enumerate}
+\subsubsection{Extension}
+\begin{enumerate}
+	\item[\ref{itm:ucmc_mute_uc}] No category is selected.
+	\begin{enumerate}[i]
+		\item Option ``Tool \textgreater~Unmute is not available.
+	\end{enumerate}
+\end{enumerate}
