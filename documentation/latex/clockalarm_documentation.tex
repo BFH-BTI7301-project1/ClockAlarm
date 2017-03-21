@@ -15,15 +15,13 @@ style=numeric-comp,
 sorting=ynt
 ]{biblatex}
 \usepackage{graphicx}
-\graphicspath{ {images/} }
 
+\graphicspath{{images/}}
 \addbibresource{bibliography/p1_bib.bib}
-
-\makeglossaries{}
-
-\begin{document}
+\makeglossaries
 \input{glossary/glossary.tex}
 
+\begin{document}
 \university{Bern University of Applied Sciences}
 \project{Project 1 --- ClockAlarm}
 \title{Requirements (version\gitRels)}
@@ -31,21 +29,17 @@ sorting=ynt
 \supervisor{Claude Fuhrer}
 
 \maketitle
-
 \tableofcontents
 
 \input{chapters/project_vision.tex}
 \input{chapters/project_goals.tex}
 \input{chapters/system_and_context_boundaries.tex}
+\input{chapters/requirements.tex}
 \input{chapters/diagrams.tex}
-\input{chapters/system_description.tex}
-%\input{chapters/requirements.tex}
 \input{chapters/development_decisions.tex}
 \input{chapters/minutes.tex}
 
-%\clearpage
-
-\printglossaries{}
+\printglossaries
 
 \printbibliography[
 heading=bibintoc,
