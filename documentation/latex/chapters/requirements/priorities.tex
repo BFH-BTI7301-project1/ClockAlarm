@@ -1,34 +1,52 @@
 Description of the various stages of development of the clock alarm product. The versions correspond to the fixed milestones. For each element, a priority is associated.
 
-\begin{tabular}{| r | l | l | l |}
+\setlength\tabcolsep{2pt}
+\begin{longtable}{| c | p{5cm} | c | c | p{5cm} |}
+	\caption{Priorities Table}\\
 	\hline
-	0.2.0 & Time System and Notifications & MH & The program is able to display a hard coded alert, based on the operating system time. \\ \hline
-	0.2.1 & \fullref{subsec:usecase_launch} & P2 & The scheduled alert is visible in a GUI before it occures. \\ \hline
-	0.3.0 & \fullref{subsec:???} & ? & ? \\ \hline
-	0.3.1 & \fullref{subsec:???} & ? & ? \\ \hline
-	0.4.0 & \fullref{subsec:???} & ? & ? \\ \hline
-	0.4.1 & \fullref{subsec:???} & ? & ? \\ \hline
-	0.4.2 & \fullref{subsec:???} & ? & ? \\ \hline
-	0.4.3 & \fullref{subsec:???} & ? & ? \\ \hline
-	0.4.4 & \fullref{subsec:???} & ? & ? \\ \hline
-	0.4.5 & \fullref{subsec:???} & ? & ? \\ \hline
-	0.4.6 & \fullref{subsec:???} & ? & ? \\ \hline
-	0.4.7 & \fullref{subsec:???} & ? & ? \\ \hline
-	0.5.0 & \fullref{subsec:???} & ? & ? \\ \hline
-	0.5.1 & \fullref{subsec:???} & ? & ? \\ \hline
-	0.2.2 & \fullref{subsec:???} & ? & ? \\ \hline
-	0.2.3 & \fullref{subsec:???} & ? & ? \\ \hline
-	0.2.1 & \fullref{subsec:???} & ? & ? \\ \hline
-	0.2.1 & \fullref{subsec:???} & ? & ? \\ \hline
-	0.2.1 & \fullref{subsec:???} & ? & ? \\ \hline
-	0.2.1 & \fullref{subsec:???} & ? & ? \\ \hline
-	0.2.1 & \fullref{subsec:???} & ? & ? \\ \hline
-	0.2.1 & \fullref{subsec:???} & ? & ? \\ \hline
-	0.2.1 & \fullref{subsec:???} & ? & ? \\ \hline
-	0.2.1 & \fullref{subsec:???} & ? & ? \\ \hline
-	0.2.1 & \fullref{subsec:???} & ? & ? \\ \hline
-	0.2.1 & \fullref{subsec:???} & ? & ? \\ \hline
-	0.2.1 & \fullref{subsec:???} & ? & ? \\ \hline
-	0.2.1 & \fullref{subsec:???} & ? & ? \\ \hline
+	\rowcolor{beaublue}\textbf{Vers.} & \textbf{To Implement} & \textbf{Prio} & \textbf{Status} & \textbf{Description} \\
+	\boldhr
+	\endfirsthead
+	\multicolumn{5}{c}{\tablename\ \thetable\ -- \textit{Continued from previous page}} \\
 	\hline
-\end{tabular}
+	\rowcolor{beaublue}\textbf{Vers.} & \textbf{To Implement} & \textbf{Prio} & \textbf{Status} & \textbf{Description} \\
+	\boldhr
+	\endhead
+	
+	\hline \multicolumn{5}{r}{\textit{Continued on next page}} \\
+	\endfoot
+	\hline
+	\endlastfoot
+	
+	\rowcolor{aliceblue}0.2.0 & Time System and Notifications & MH & In progress & The program is able to display a hard coded alert, based on the operating system time \\ \hline
+	\rowcolor{aliceblue}0.2.1 & \fullref{subsec:usecase_launch} & P2 & Waiting & The scheduled alert is visible in a GUI before it occures \\ \boldhr
+	0.3.0 & Persistence \& Start at runtime & & Waiting & At run-time, the program is launch and start popping alerts. The previously saved alerts are retrieved \\ \hline
+	& \fullref{subsec:usecase_auto_start} & MH & Waiting & \\ \boldhr
+	\rowcolor{aliceblue}1.0.0 & Add/Delete/Edit Alerts & & Waiting &  \\ \hline
+	\rowcolor{aliceblue}& \fullref{subsec:usecase_add_simple_alert} & MH & Waiting &  \\ \hline
+	\rowcolor{aliceblue}& \fullref{subsec:usecase_delete_simple_alert} & MH & Waiting &  \\ \hline
+	\rowcolor{aliceblue}& \fullref{subsec:usecase_edit_simple_alert} & MH & Waiting &  \\ \hline
+	\rowcolor{aliceblue}& \fullref{subsec:usecase_add_periodic_alert} & P1 & Waiting &  \\ \hline
+	\rowcolor{aliceblue}& \fullref{subsec:usecase_add_email_sender} & NTH & Waiting &  \\ \hline
+	\rowcolor{aliceblue}& \fullref{subsec:usecase_delete_email_sender} & NTH & Waiting &  \\ \hline
+	\rowcolor{aliceblue}1.0.1 & \fullref{subsec:usecase_edit_email_sender} & NTH & Waiting &  \\ \boldhr
+	1.1.0 & Default configurations \& Alerts Management &  & Waiting & The user can change the default settings. The user can import and export lists of alerts\\ \hline
+	& \fullref{subsec:usecase_edit_default_configuration} & MH & Waiting & \\ \hline
+	& \fullref{subsec:usecase_import_alerts} & P1 & Waiting & \\ \hline
+	1.1.1 & \fullref{subsec:usecase_export_alerts} & P1 & Waiting &\\ \boldhr
+	\rowcolor{aliceblue}1.2.0 & Categories & & Waiting & The user can create, edit and delete categories \\ \hline
+	\rowcolor{aliceblue}& \fullref{subsec:usecase_add_category} & MH & Waiting & \\ \hline
+	\rowcolor{aliceblue}& \fullref{subsec:usecase_delete_category} & MH & Waiting & \\ \hline
+	\rowcolor{aliceblue}1.2.1 & \fullref{subsec:usecase_edit_category} & P2 & Waiting & \\ \boldhr
+	1.3.0 & Import/Export Configuration File &  & Waiting & \\ \hline
+	& \fullref{subsec:usecase_import_configuration} & MH & Waiting & \\ \hline
+	& \fullref{subsec:usecase_export_configuration} & MH & Waiting & \\ \boldhr
+	\rowcolor{aliceblue}1.4.0 & Disable Notifications &  & Waiting & The user is able to prevent certain alerts from taking place.\\ \hline
+	\rowcolor{aliceblue}& \fullref{subsec:usecase_silent_on} & MH & Waiting & \\ \hline
+	\rowcolor{aliceblue}& \fullref{subsec:usecase_silent_off} & MH & Waiting & \\ \hline
+	\rowcolor{aliceblue}& \fullref{subsec:usecase_mute_category} & P2 & Waiting & \\ \hline
+	\rowcolor{aliceblue}1.4.1 & \fullref{subsec:usecase_unmute_category} & P2 & Waiting & \\ \boldhr
+	1.5.0 & Snooze Alert & NTH & Waiting & The user can ask an alert to ring again in the future. \\ \hline
+	& \fullref{subsec:usecase_snooze_alert} & NTH & Waiting & \\ \boldhr
+	\rowcolor{aliceblue}1.6.0 & Handback the code & MH & Waiting & The deadline is 2 June 2017 \\ \hline
+\end{longtable}

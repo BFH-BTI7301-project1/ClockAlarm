@@ -2,27 +2,45 @@
 % !BIB program = biber
 \documentclass{sgreport}
 
+% PACKAGES
 \usepackage[english]{babel}
 \usepackage{lipsum}
+\usepackage[table]{xcolor}
 \usepackage{gitinfo2}
 \usepackage{hyperref}
 \usepackage{soul}
 \usepackage{enumerate}
 \usepackage[toc]{glossaries}
+\usepackage{csquotes}
+\usepackage{graphicx}
+\usepackage{longtable}
 \usepackage[
 backend=biber,
 style=numeric-comp,
 sorting=ynt
 ]{biblatex}
-\usepackage{graphicx}
 
+% PARAMS
 \graphicspath{{images/}}
+\setlongtables
+\definecolor{lightgray}{gray}{0.8}
+\definecolor{aliceblue}{rgb}{0.94, 0.97, 1.0}
+\definecolor{beaublue}{rgb}{0.74, 0.83, 0.9}
+
+% BIBLIO AND GLOSSARY
 \addbibresource{bibliography/p1_bib.bib}
 \makeglossaries
 \input{glossary/glossary.tex}
 
+% COMMANDS
 \newcommand*{\fullref}[1]{\hyperref[{#1}]{\ref*{#1} \nameref*{#1}}}
 
+\newcommand*{\boldhr}{
+	\noalign{\global\arrayrulewidth1.2pt}
+ 	\hline
+	\noalign{\global\arrayrulewidth0.4pt}}
+
+% DOCUMENTS
 \begin{document}
 \university{Bern University of Applied Sciences}
 \project{Project 1 --- ClockAlarm}
