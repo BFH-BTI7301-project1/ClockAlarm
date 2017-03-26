@@ -3,16 +3,19 @@
 \documentclass{sgreport}
 
 % PACKAGES
+\usepackage[T1]{fontenc}
 \usepackage[english]{babel}
 \usepackage{lipsum}
-\usepackage[table]{xcolor}
+\usepackage[dvipsnames,table]{xcolor}
 \usepackage{gitinfo2}
 \usepackage{hyperref}
 \usepackage{soul}
 \usepackage{enumerate}
-\usepackage[toc]{glossaries}
+\usepackage[toc, nosuper]{glossaries}
 \usepackage{csquotes}
 \usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{tabu}
 \usepackage{longtable}
 \usepackage[
 backend=biber,
@@ -22,14 +25,14 @@ sorting=ynt
 
 % PARAMS
 \graphicspath{{images/}}
-\setlongtables
+\setlongtables{}
 \definecolor{lightgray}{gray}{0.8}
 \definecolor{aliceblue}{rgb}{0.94, 0.97, 1.0}
 \definecolor{beaublue}{rgb}{0.74, 0.83, 0.9}
 
 % BIBLIO AND GLOSSARY
 \addbibresource{bibliography/p1_bib.bib}
-\makeglossaries
+\makeglossaries{}
 \input{glossary/glossary.tex}
 
 % COMMANDS
@@ -37,7 +40,7 @@ sorting=ynt
 
 \newcommand*{\boldhr}{
 	\noalign{\global\arrayrulewidth1.2pt}
- 	\hline
+    \hline
 	\noalign{\global\arrayrulewidth0.4pt}}
 
 % DOCUMENTS
@@ -58,7 +61,7 @@ sorting=ynt
 \input{chapters/development_decisions.tex}
 \input{chapters/minutes.tex}
 
-\printglossaries
+\printglossaries{}
 
 \printbibliography[
 heading=bibintoc,
