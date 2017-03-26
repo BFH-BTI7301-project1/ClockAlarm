@@ -4,40 +4,41 @@
 The priorities are the same as in~\ref{sec:prio_and_planning}, i.e., Must Have
 (MH), First Priority (P1), Second Priority (P2), Nice To Have (NTH).
 
-\begin{longtabu}{cccX}
+\tabulinesep = 1mm
+\begin{longtabu}{lccX}
 \caption{Technical Requirements Table}
 \label{tabu:tech_req}\\
 
-    \toprule
+    %\toprule
     \taburowcolors~{beaublue..beaublue}
     \textbf{ID}  & \textbf{Status} & \textbf{Prio}  & \textbf{Description}\\
     \taburowcolors~{white..white}
-    \toprule
+    %\midrule
     \endfirsthead\\
 
-    \toprule
+    %\toprule
     \taburowcolors~{beaublue..beaublue}
     \textbf{ID}  & \textbf{Status} & \textbf{Prio}  & \textbf{Description}\\
     \taburowcolors~{white..white}
-    \toprule
+    %\midrule
     \endhead\\
     
     \taburowcolors~{white..white}
     \multicolumn{4}{r}{\textit{Continued on next page}}\\
     \endfoot
-    \bottomrule
+    %\bottomrule
     \endlastfoot
 
 
     \taburowcolors~{aliceblue..white}
     T.1 & Waiting  & MH & The application shall be written using the python
-                          programming language version 3 or greater.\\\midrule
+                          programming language version 3 or greater.\\%\midrule
     T.2 & Waiting  & MH & The application shall run on Windows, Linux and
-                          macOS.\\\midrule
+                          macOS.\\%\midrule
     T.3 & Waiting  & MH & The database shall be stored in a non binary format.
-                          \\\midrule
+                          \\%\midrule
     T.4 & Waiting  & MH & The application shall still be running after a system
-    reboot.\\\midrule
+    reboot.\\%\midrule
     T.5 & Waiting  & MH & The configuration file shall be OS independent.\\
     \taburowcolors~{white..white}
 
