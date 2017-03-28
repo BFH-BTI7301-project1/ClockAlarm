@@ -5,6 +5,7 @@ from _clockalarm.SimpleAlert import SimpleAlert
 
 
 def main(argv):
+
     nc = NotificationCenter()  # to manage multiple notifications
 
     """2 test alerts"""

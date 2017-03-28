@@ -5,7 +5,7 @@ from PyQt5.QtMultimedia import QSound
 class Notification:
 
     def __init__(self, message):
-        self.color = QColor(80, 80, 200)
-        self.font = QFont("Helvetica")
+        self.color = QColor(255, 0, 0)
+        self.font = QFont( "lucida", 12, QFont.Bold, True)
         self.sound = QSound("resources/sounds/floop.wav")
         self.message = message
