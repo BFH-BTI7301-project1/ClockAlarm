@@ -2,8 +2,7 @@ import sys
 from PyQt5.QtWidgets import QApplication, QWidget
 from PyQt5 import Qt
 
-
-if __name__ == '__main__':
+def main(argv):
     app = QApplication(sys.argv)
 
     icon = Qt.QIcon('resources/images/bfh_logo.png')
@@ -19,5 +18,7 @@ if __name__ == '__main__':
     systemtray_icon.setIcon(icon)
     systemtray_icon.show()
     systemtray_icon.showMessage('New notification', 'Display a message')
+    sys.exit(app.exec_())
 
-sys.exit(app.exec_())
+if __name__ == '__main__':
+    main(sys.argv)
