@@ -1,11 +1,12 @@
-from Alert import Alert
+from _clockalarm.Alert import Alert
+from _clockalarm.Notification import Notification
+
 
 class SimpleAlert(Alert):
 
     def __init__(self, time, message):
         super(SimpleAlert, self).__init__(time)
-        self._message = message
+        self._notification = Notification(message)
 
     def triggered(self):
-        #todo
-        print("display notification" + " " + self._message + " " + str(self._time))
+        self._notification.display()
