@@ -1,0 +1,3 @@
+import clockalarm
+
+clockalarm.main()

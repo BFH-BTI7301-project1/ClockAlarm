@@ -6,7 +6,7 @@ from PyQt5 import Qt
 if __name__ == '__main__':
     app = QApplication(sys.argv)
 
-    icon = Qt.QIcon('ico/bfh_logo.png')
+    icon = Qt.QIcon('resources/images/bfh_logo.png')
 
     w = QWidget()
     w.resize(250, 150)
@@ -20,4 +20,4 @@ if __name__ == '__main__':
     systemtray_icon.show()
     systemtray_icon.showMessage('New notification', 'Display a message')
 
-    sys.exit(app.exec_())
+sys.exit(app.exec_())
