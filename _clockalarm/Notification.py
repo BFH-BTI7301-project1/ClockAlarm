@@ -6,6 +6,6 @@ class Notification:
 
     def __init__(self, message):
         self.color = QColor(255, 0, 0)
-        self.font = QFont( "lucida", 12, QFont.Bold, True)
+        self.font = QFont("lucida", 12, QFont.Bold, True)
         self.sound = QSound("resources/sounds/floop.wav")
         self.message = message

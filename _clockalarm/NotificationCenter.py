@@ -1,38 +1,19 @@
-from PyQt5.QtWidgets import QWidget, QLabel
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QApplication
-import sys
+from _clockalarm.UI import NotificationPopup
+from PyQt5.QtWidgets import QWidget
 
 
 class NotificationCenter:
 
-    @staticmethod
-    def display(notification):
+    def __init__(self):
+        super(NotificationCenter, self).__init__()
+        self.popup_queue = []
+        self.w = QWidget()
+        self.w.show()
+
+    def display(self, notification):
         """display QWidget"""
         print(notification.message)
 
-        app = QApplication(sys.argv)
-        popup = NotificationCenter.NotificationPopup(notification)
-        popup.show()
-        sys.exit(app.exec_())
-
-    class NotificationPopup(QWidget):
-        def __init__(self, notification):
-            super().__init__(flags=Qt.Popup)
-
-            self.notification = notification
-
-            self.init_ui()
-
-        def init_ui(self):
-            self.setGeometry(100, 100, 300, 40)
-
-            color = self.notification.color
-            alpha = 140
-            rgba = "{r}, {g}, {b}, {a}".format(r=color.red(), g=color.green(), b=color.blue(), a=alpha)
-            lbl = QLabel(self.notification.message, self)
-            lbl.setFont(self.notification.font)
-            lbl.setStyleSheet("QLabel { color : rgba("+rgba+"); }")
-
-        def mousePressEvent(self, event):
-            self.close()
+        popup = NotificationPopup(notification)
+        self.popup_queue.append(popup)
+        self.popup_queue[0].show()
