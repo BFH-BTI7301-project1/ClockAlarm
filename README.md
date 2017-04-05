@@ -3,7 +3,7 @@ The goal of this project is to develop a replacement for the
 program „kAlarm“ distributed with the KDE desktop
 environment.
 
-![kAlarm on KDE](docs/latex/images/kalarm.png)
+![kAlarm on KDE](latex/images/kalarm.png)
 
 The program kAlarm allows the user to define some events
 (possibly recurrent) and display alarms using pop-up windows
