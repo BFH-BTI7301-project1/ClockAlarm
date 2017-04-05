@@ -1,17 +1,14 @@
-from PyQt5.QtWidgets import QWidget, QLabel
 from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QWidget, QLabel
 
 
 class NotificationPopup(QWidget):
-
-    def __init__(self,  notification):
-
-        super(NotificationPopup, self).__init__(flags=Qt.Window)  # Qt.Popup
+    def __init__(self, notification):
+        super(NotificationPopup, self).__init__(flags=Qt.Popup)
         self.notification = notification
         self.init_ui()
 
     def init_ui(self):
-
         self.setGeometry(100, 100, 300, 40)
 
         color = self.notification.color
@@ -22,5 +19,4 @@ class NotificationPopup(QWidget):
         lbl.setStyleSheet("QLabel { color : rgba(" + rgba + "); }")
 
     def mousePressEvent(self, event):
-
         self.close()

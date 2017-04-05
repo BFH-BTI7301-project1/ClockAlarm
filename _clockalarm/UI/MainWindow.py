@@ -1,22 +1,15 @@
 import os
-from PyQt5.QtWidgets import QMainWindow, QGridLayout, QWidget, QLabel, QSystemTrayIcon, QMenu, QAction, qApp
-from PyQt5.QtCore import QSize
-from PyQt5.Qt import QIcon
 
-from _clockalarm.UI.NotificationPopup import NotificationPopup
-from _clockalarm.Notification import Notification
+from PyQt5.Qt import QIcon
+from PyQt5.QtCore import QSize
+from PyQt5.QtWidgets import QMainWindow, QGridLayout, QWidget, QLabel, QSystemTrayIcon, QMenu, QAction, qApp
 
 
 class MainWindow(QMainWindow):
-
-    tray_icon = None
-
     # Override the class constructor
     def __init__(self, *args):
         super(MainWindow, self).__init__(*args)
         self.init_ui()
-        self.popup = NotificationPopup(Notification("noti"))
-        self.popup.show()
 
     def init_ui(self):
         self.setMinimumSize(QSize(480, 80))  # Set sizes

@@ -1,15 +1,20 @@
-from abc import ABC, abstractmethod
-import time
+import abc
 import threading
+import time
+from abc import abstractmethod
+
+from PyQt5.QtCore import pyqtSignal, QObject
 
 PERIODICITY = 1  # frequency of time checks
 
-lock = threading.RLock()  # unused for the moment
 
+class Alert(QObject):
+    __metaclass__ = abc.ABCMeta
 
-class Alert(ABC):
+    timeout = pyqtSignal('PyQt_PyObject')
 
     def __init__(self, trigger_time):
+        super(Alert, self).__init__()
         """Constructor"""
         self._trigger_time = trigger_time
         self._periodic_time_check()
@@ -17,6 +22,7 @@ class Alert(ABC):
     @abstractmethod
     def triggered(self):
         """Triggers action"""
+        return
 
     def _periodic_time_check(self):
         """Periodically checks if alert must be triggered"""
