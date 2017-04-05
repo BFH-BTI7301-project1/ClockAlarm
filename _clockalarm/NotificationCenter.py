@@ -14,6 +14,8 @@ class NotificationCenter:
         """display QWidget"""
         popup = NotificationPopup(notification)
 
+        notification.sound.play()
+
         self._lock.acquire()
         self._popup_queue.append(popup)
         self._popup_queue[0].show()

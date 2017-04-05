@@ -9,7 +9,9 @@ class NotificationPopup(QWidget):
         self.init_ui()
 
     def init_ui(self):
-        self.setGeometry(100, 100, 300, 40)
+        self.setGeometry(100, 500, 450, 200)
+
+        self.setStyleSheet("QWidget { background-color: rgba(220, 255, 255, 1); }")
 
         color = self.notification.color
         alpha = 140

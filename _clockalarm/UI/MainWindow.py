@@ -9,6 +9,7 @@ class MainWindow(QMainWindow):
     # Override the class constructor
     def __init__(self, *args):
         super(MainWindow, self).__init__(*args)
+        self.tray_icon = None
         self.init_ui()
 
     def init_ui(self):
@@ -17,7 +18,7 @@ class MainWindow(QMainWindow):
         central_widget = QWidget(self)  # Create a central widget
         self.setCentralWidget(central_widget)  # Set the central widget
 
-        grid_layout = QGridLayout(self)  # Create a QGridLayout
+        grid_layout = QGridLayout(central_widget)  # Create a QGridLayout
         central_widget.setLayout(grid_layout)  # Set the layout into the central widget
         grid_layout.addWidget(QLabel("This will be the Alerts manager", self), 0, 0)
 

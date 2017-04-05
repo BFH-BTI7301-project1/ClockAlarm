@@ -3,7 +3,8 @@ import time
 
 from PyQt5.QtWidgets import QApplication
 
-from _clockalarm import NotificationCenter, SimpleAlert
+from _clockalarm.NotificationCenter import NotificationCenter
+from _clockalarm.SimpleAlert import SimpleAlert
 from _clockalarm.UI import MainWindow
 
 app = None
@@ -21,10 +22,9 @@ class App(QApplication):
 
 def main(argv):
     global app
+
     app = App(sys.argv)
-
     SimpleAlert(time.time() + 3, "This message is delayed: 3 seconds", app.notification_center)
-
     sys.exit(app.exec())
 
 
