@@ -1,1 +1,38 @@
 \section{Unit Testing}
+
+Python comes with a couple of built-in modules for testing the source code:
+
+\begin{enumerate}
+    \item Unittest
+    \item Doctest
+    \item Unittest.mock (Only for Python 3.3)
+\end{enumerate}
+
+The Unittest framework is similar to the JUnit one: ``It supports test
+automation, sharing of setup and shutdown code for tests, aggregation of tests
+into collections, and independence of the tests from the reporting
+framework.''~\cite{pythondoc361unittest}
+
+Doctests are put in comments and are formatted in form of an interactive Python
+session. They are usually very simple and give informative examples of the usage
+of the class or function to the reader.~\cite{python361doctest}
+
+Unittest.mock allows to replace parts of the system under test with mock objects
+and make assertions about how they have been used.~\cite{pythondoc370mock}
+\\
+
+Other alternatives include: pytest, nose2 and tox.
+
+Pytest makes it easy to write tests: only plain assert statements are used,
+which makes the code look very clean and neat. It can run unittest and nose test
+suites without any additional configuration nor modification.~\cite{pytest}
+
+Nose2 is the successor of nose. Its goals are to extend unittest and make
+testing easier to understand.~\cite{nose2VSnose}
+
+Tox is a test framework and virtualenv management tool that allows to run tests
+in multiple environments.~\cite{tox270doc}\\
+
+We chose to use pytest because as already mentioned, the code is cleaner and
+more readable. Less work is also required to achieve the same result as with the
+other solutions. We don't use virtual environments so tox is of no use to us.
