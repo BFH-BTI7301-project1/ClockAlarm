@@ -17,6 +17,6 @@ class NotificationCenter:
         notification.sound.play()
 
         self._lock.acquire()
-        self._popup_queue.append(popup)
+        self._popup_queue.insert(0, popup)
         self._popup_queue[0].show()
         self._lock.release()

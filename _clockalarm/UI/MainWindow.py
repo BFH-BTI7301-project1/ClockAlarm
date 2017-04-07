@@ -2,7 +2,9 @@ import os
 
 from PyQt5.Qt import QIcon
 from PyQt5.QtCore import QSize
-from PyQt5.QtWidgets import QMainWindow, QGridLayout, QWidget, QLabel, QSystemTrayIcon, QMenu, QAction, qApp
+from PyQt5.QtWidgets import QMainWindow, QGridLayout, QWidget, QSystemTrayIcon, QMenu, QAction, qApp
+
+from _clockalarm.UI.AlertListWidget import AlertListWidget
 
 
 class MainWindow(QMainWindow):
@@ -10,6 +12,7 @@ class MainWindow(QMainWindow):
     def __init__(self, *args):
         super(MainWindow, self).__init__(*args)
         self.tray_icon = None
+        self.alert_list_widget = None
         self.init_ui()
 
     def init_ui(self):
@@ -20,7 +23,8 @@ class MainWindow(QMainWindow):
 
         grid_layout = QGridLayout(central_widget)  # Create a QGridLayout
         central_widget.setLayout(grid_layout)  # Set the layout into the central widget
-        grid_layout.addWidget(QLabel("This will be the Alerts manager", self), 0, 0)
+        self.alert_list_widget = AlertListWidget()
+        grid_layout.addWidget(self.alert_list_widget)
 
         # Init QSystemTrayIcon
         icon_path = os.path.join(os.path.dirname(__file__), '..\\resources\\images\\bfh_logo.png')

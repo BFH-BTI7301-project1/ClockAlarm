@@ -10,3 +10,6 @@ class SimpleAlert(Alert):
 
     def triggered(self):
         self.timeout.emit(self._notification)
+
+    def get_identifier(self):
+        return self._notification.message

@@ -18,15 +18,29 @@ class App(QApplication):
         self.main_window.show()
         self.setQuitOnLastWindowClosed(False)
         self.notification_center = NotificationCenter()
+        self.alert_list = []
 
 
 def main(argv):
     global app
 
     app = App(sys.argv)
-    SimpleAlert(time.time() + 3, "This message is delayed: 3 seconds", app.notification_center)
+    app.alert_list = alerts_from_db()
+    app.main_window.alert_list_widget.actualize(app.alert_list)
     sys.exit(app.exec())
 
 
 if __name__ == '__main__':
     main(sys.argv)
+
+
+def alerts_from_db():
+    global app
+    alert_list = []
+    alert_5 = SimpleAlert(time.time() + 5, "This message is delayed: 5 seconds", app.notification_center)
+    alert_list.append((alert_5._trigger_time, alert_5))
+    alert_3 = SimpleAlert(time.time() + 3, "This message is delayed: 3 seconds", app.notification_center)
+    alert_list.append((alert_3._trigger_time, alert_3))
+    #alert_60 = SimpleAlert(time.time() + 60, "This message is delayed: 60 seconds", app.notification_center)
+    #alert_list.append((alert_60._trigger_time, alert_60))
+    return alert_list

@@ -24,6 +24,11 @@ class Alert(QObject):
         """Triggers action"""
         return
 
+    @abstractmethod
+    def get_identifier(self):
+        """Return an identifier"""
+        return str
+
     def _periodic_time_check(self):
         """Periodically checks if alert must be triggered"""
         if time.time() < self._trigger_time:
