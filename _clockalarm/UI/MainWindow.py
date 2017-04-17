@@ -4,7 +4,7 @@ from PyQt5.Qt import QIcon
 from PyQt5.QtCore import QSize
 from PyQt5.QtWidgets import QMainWindow, QGridLayout, QWidget, QSystemTrayIcon, QMenu, QAction, qApp
 
-from _clockalarm.UI.AlertListWidget import AlertListWidget
+from _clockalarm.UI import AlertListWidget
 
 
 class MainWindow(QMainWindow):
@@ -45,7 +45,6 @@ class MainWindow(QMainWindow):
             self.show()
 
     # Override closeEvent, to intercept the window closing event
-    # The window will be closed only if there is no check mark in the check box
     def closeEvent(self, event):
         event.ignore()
         self.hide()

@@ -3,7 +3,7 @@ import threading
 from _clockalarm.UI import NotificationPopup
 
 
-class NotificationCenter:
+class NotificationCenter(object):
     _popup_queue = []
     _lock = threading.RLock()
 

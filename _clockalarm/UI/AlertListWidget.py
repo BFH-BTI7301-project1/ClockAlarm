@@ -13,8 +13,10 @@ class AlertListWidget(QListWidget):
             self.actualize(self.parent().alert_list)
 
     def actualize(self, alert_list):
+        self.clear()  # clear the notification box
         for alert in alert_list:
             text = QListWidgetItem()
-            text.setText(time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(alert[0])) + " | " + alert[1]._notification.message)
+            text.setText(
+                time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(alert.trigger_time)) + " | " + alert.get_identifier())
             self.addItem(text)
             self.setSortingEnabled(True)

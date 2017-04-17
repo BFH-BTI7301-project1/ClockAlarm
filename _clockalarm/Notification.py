@@ -4,7 +4,7 @@ from PyQt5.QtGui import QColor, QFont
 from PyQt5.QtMultimedia import QSound
 
 
-class Notification:
+class Notification(object):
     def __init__(self, message):
         self.color = QColor(255, 0, 0)
         self.font = QFont("lucida", 12, QFont.Bold, True)

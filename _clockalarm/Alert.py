@@ -1,11 +1,7 @@
 import abc
-import threading
-import time
 from abc import abstractmethod
 
 from PyQt5.QtCore import pyqtSignal, QObject
-
-PERIODICITY = 1  # frequency of time checks
 
 
 class Alert(QObject):
@@ -16,8 +12,10 @@ class Alert(QObject):
     def __init__(self, trigger_time):
         super(Alert, self).__init__()
         """Constructor"""
-        self._trigger_time = trigger_time
-        self._periodic_time_check()
+        self.trigger_time = trigger_time
+
+    def kill(self):
+        self.setParent(None)
 
     @abstractmethod
     def triggered(self):
@@ -28,10 +26,3 @@ class Alert(QObject):
     def get_identifier(self):
         """Return an identifier"""
         return str
-
-    def _periodic_time_check(self):
-        """Periodically checks if alert must be triggered"""
-        if time.time() < self._trigger_time:
-            threading.Timer(PERIODICITY, self._periodic_time_check).start()
-        else:
-            self.triggered()
