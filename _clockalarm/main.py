@@ -47,6 +47,7 @@ def main(argv):
     app.init_alert_collection()
     ret = app.exec()
     app.clock_thread.terminate()  # stops the timer
+    app.alert_collection.clean_db()
     sys.exit(ret)
 
 
