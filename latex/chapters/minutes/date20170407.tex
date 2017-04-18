@@ -1,0 +1,35 @@
+\section{Meeting~\arabic{section}: April 7, 2017}
+
+\subsection*{Present at meeting}
+Samuel Gauthier, Loïc Charrière, Claude Fuhrer
+
+\subsection*{Agenda}
+\begin{itemize}
+    \item Show version with a simple notification
+\end{itemize}
+
+\subsection*{Notes}
+
+The \texttt{setup.py} is useful for bigger projects but in our case it
+is not. If we have time at the end then we should implement it.
+
+The autostart function should be cared of only at the very end of the
+project.  Users can do it themselves at the moment. More important are the
+persistence and customization features.
+
+\textbf{Question:} Should we create one thread for every alarm or one
+thread for the hole program?
+
+\textbf{Answer:} The best solution is to create one thread for the hole
+program that checks the due time ever 30 seconds or every minute.
+
+Logging is useful and should be preferred instead of simple prints
+because it is possible to disable it completely for a project.
+
+\subsection*{Tasks}
+    \begin{itemize}
+        \item Document Use Case ``Notification Center''.
+        \item Write the encountered development problems in the documentation.
+    \end{itemize}
+\subsection*{Next Meeting}
+TBD
