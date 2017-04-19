@@ -139,3 +139,10 @@ fabric.properties
 
 # Microsoft Visio files
 *.vsdx
+
+# Database
+*.json
+.idea/
+_clockalarm/resources/stylesheets/
+latex/images/brut/
+qtcreator/
