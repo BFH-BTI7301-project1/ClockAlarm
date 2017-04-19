@@ -3,7 +3,7 @@ import sys
 from PyQt5.QtWidgets import QApplication
 
 from _clockalarm import Clock
-from _clockalarm import NotificationCenter
+from _clockalarm.NotificationCenter import NotificationCenter
 from _clockalarm.AlertCollection import AlertCollection
 from _clockalarm.UI import MainWindow
 

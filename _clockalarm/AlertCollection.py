@@ -21,6 +21,7 @@ class AlertCollection:
         self.alert_list.append(alert)
         alert.timeout.connect(self._notification_center.display)
         self.db.insert({'trigger_time': alert.trigger_time, 'message': alert.get_identifier()})
+        self.display()
 
     def check_timers(self, trig_time):
         for alert in self.alert_list:
