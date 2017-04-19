@@ -13,7 +13,7 @@ app = None
 
 
 class App(QApplication):
-    notification_center = NotificationCenter()
+    notification_center = None
     alert_collection = None
     clock_thread = None
 
@@ -22,6 +22,10 @@ class App(QApplication):
         super(App, self).__init__(*argv)
         self.clock_thread = None
         self.main_window = None
+
+        screen_geometry = self.desktop().screenGeometry()
+        self.notification_center = NotificationCenter(screen_geometry)
+
         self.init_clock()
         self.init_ui()
 

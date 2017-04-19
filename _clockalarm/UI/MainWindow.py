@@ -2,7 +2,8 @@ import os
 
 from PyQt5.Qt import QIcon
 from PyQt5.QtCore import QSize
-from PyQt5.QtWidgets import QMainWindow, QGridLayout, QWidget, QSystemTrayIcon, QMenu, QAction, qApp
+from PyQt5.QtGui import QImage, QPalette, QBrush
+from PyQt5.QtWidgets import QMainWindow, QGridLayout, QWidget, QSystemTrayIcon, QMenu, QAction, qApp, QLabel
 
 from _clockalarm.UI import AlertListWidget
 
