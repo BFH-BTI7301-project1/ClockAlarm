@@ -5,6 +5,7 @@ from _clockalarm import Notification
 
 
 def test_notification():
+    """Tests the :class:`~_clockalarm.Notification` constructor."""
     notification = Notification("Test")
 
     assert isinstance(notification.color, QColor)
