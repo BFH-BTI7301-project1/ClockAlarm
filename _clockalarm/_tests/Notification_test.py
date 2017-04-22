@@ -12,4 +12,3 @@ def test_notification():
     assert isinstance(notification.sound, QSound)
     assert notification.message == "Test"
 
-    assert notification.message == "Test"
