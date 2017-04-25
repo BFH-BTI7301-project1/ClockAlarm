@@ -19,7 +19,7 @@ class AlertCollection:
 
     def add(self, alert: SimpleAlert):
         self.alert_list.append(alert)
-        alert.timeout.connect(self._notification_center.display)
+        alert.timeout.connect(self._notification_center.add_to_queue)
         alert.id = self.db.insert(
             {'trigger_time': alert.trigger_time, 'message': alert.get_identifier(), 'periodicity': alert.periodicity})
         self.display()
@@ -55,7 +55,7 @@ class AlertCollection:
             new_alert.id = alert.eid
 
             self.alert_list.append(new_alert)
-            new_alert.timeout.connect(self._notification_center.display)
+            new_alert.timeout.connect(self._notification_center.add_to_queue)
 
         """FAKE DB"""
         alert_10 = SimpleAlert.SimpleAlert(time.time() + 10, "This message is delayed: 10 seconds")

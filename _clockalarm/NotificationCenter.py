@@ -1,30 +1,64 @@
+import math
 import threading
+from collections import deque
 
 from PyQt5.QtCore import QRect
 
 from _clockalarm.UI import NotificationWidget
 
 WIDGET_SIZE = (380, 180)
+PADDING = 10
 
 
 class NotificationCenter(object):
-    _popup_queue = []
+    _popup_queue = deque([])
+    _displayed_popups = []
     _lock = threading.RLock()
+
+    ax = None
+    ay = None
 
     def __init__(self, screen_geometry):
         super(NotificationCenter, self).__init__()
         self._screen_geometry = screen_geometry
+        self._max_popups: int = math.floor((screen_geometry.height() * 0.9) / (WIDGET_SIZE[1] + PADDING))
 
-    def display(self, notification):
-        """display QWidget"""
-        ax = self._screen_geometry.width() - WIDGET_SIZE[0] - 20
-        ay = round(self._screen_geometry.height() * 0.1)
+        self.ax = self._screen_geometry.width() - WIDGET_SIZE[0] - 20
+        self.ay = round(self._screen_geometry.height() * 0.1)
 
-        notification.sound.play()
+    def add_to_queue(self, notification):
+        self._lock.acquire()
+        self._popup_queue.append(notification)
+        self._lock.release()
+        self.refresh()
+
+    def refresh(self):
+        if len(self._displayed_popups) >= self._max_popups:
+            return
+
+        i = 0
+        for popup in self._displayed_popups:
+            popup.setGeometry(QRect(self.ax, self.ay + i * (WIDGET_SIZE[1] + PADDING), WIDGET_SIZE[0], WIDGET_SIZE[1]))
+            i += 1
 
         self._lock.acquire()
-        padding = len(self._popup_queue) * (WIDGET_SIZE[1] + 10)
-        popup = NotificationWidget(QRect(ax, ay + padding, WIDGET_SIZE[0], WIDGET_SIZE[1]), notification)
-        self._popup_queue.insert(0, popup)
-        self._popup_queue[0].show()
-        self._lock.release()
+        if len(self._popup_queue) == 0:
+            self._lock.release()
+        else:
+            new_notification = self._popup_queue.popleft()
+            self._lock.release()
+            self.display_popup(QRect(self.ax, self.ay + i * (WIDGET_SIZE[1] + PADDING), WIDGET_SIZE[0], WIDGET_SIZE[1]),
+                               new_notification)
+
+    def display_popup(self, geom: QRect, notification):
+        notification.sound.play()
+
+        popup = NotificationWidget(geom, notification)
+
+        self._displayed_popups.append(popup)
+        popup.popup_close.connect(self.close_popup)
+        popup.show()
+
+    def close_popup(self, popup: NotificationWidget):
+        self._displayed_popups.remove(popup)
+        self.refresh()

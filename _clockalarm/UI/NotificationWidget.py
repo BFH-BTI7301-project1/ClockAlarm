@@ -1,11 +1,13 @@
 import os
 
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, pyqtSignal
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QWidget, QLabel
 
 
 class NotificationWidget(QWidget):
+    popup_close = pyqtSignal('PyQt_PyObject')
+
     def __init__(self, geometry, notification):
         super(NotificationWidget, self).__init__(flags=Qt.Tool | Qt.WindowStaysOnTopHint | Qt.FramelessWindowHint)
         self.notification = notification
@@ -34,3 +36,4 @@ class NotificationWidget(QWidget):
     def mousePressEvent(self, event):
         if self.underMouse():
             self.close()
+            self.popup_close.emit(self)
