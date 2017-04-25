@@ -19,7 +19,7 @@ class MainWindow(QMainWindow):
         self.init_ui()
 
     def init_ui(self):
-        self.setMinimumSize(QSize(480, 80))  # Set sizes
+        self.setMinimumSize(QSize(400, 120))  # Set sizes
         self.setWindowTitle("ClockAlarm Manager")  # Set a title
 
         quit_action = QAction("Exit", self)

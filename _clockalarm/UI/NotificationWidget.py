@@ -7,7 +7,7 @@ from PyQt5.QtWidgets import QWidget, QLabel
 
 class NotificationWidget(QWidget):
     def __init__(self, geometry, notification):
-        super(NotificationWidget, self).__init__(flags=Qt.Popup)
+        super(NotificationWidget, self).__init__(flags=Qt.Tool | Qt.WindowStaysOnTopHint | Qt.FramelessWindowHint)
         self.notification = notification
         self.init_ui(geometry)
 
@@ -15,6 +15,7 @@ class NotificationWidget(QWidget):
         self.setGeometry(geom)
         self.setAutoFillBackground(True)
         self.setWindowOpacity(0.8)
+        self.setAttribute(Qt.WA_ShowWithoutActivating)
 
         """Notification message"""
         color = self.notification.color
@@ -31,4 +32,5 @@ class NotificationWidget(QWidget):
         lbl_im.setPixmap(QPixmap(im_path))
 
     def mousePressEvent(self, event):
-        self.close()
+        if self.underMouse():
+            self.close()
