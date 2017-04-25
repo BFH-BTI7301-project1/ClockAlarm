@@ -20,7 +20,12 @@ class AlertCollection:
     def add(self, alert: SimpleAlert):
         self.alert_list.append(alert)
         alert.timeout.connect(self._notification_center.display)
-        self.db.insert({'trigger_time': alert.trigger_time, 'message': alert.get_identifier()})
+        alert.id = self.db.insert({'trigger_time': alert.trigger_time, 'message': alert.get_identifier()})
+        self.display()
+
+    def delete(self, id_alert: int):
+        self.alert_list = [alert for alert in self.alert_list if alert.id != id_alert]
+        self.db.remove(eids=[id_alert])
         self.display()
 
     def check_timers(self, trig_time):
@@ -37,6 +42,7 @@ class AlertCollection:
     def load_db(self):
         for alert in self.db.all():
             new_alert = SimpleAlert(alert["trigger_time"], alert["message"])
+            new_alert.id = alert.eid
             self.alert_list.append(new_alert)
             new_alert.timeout.connect(self._notification_center.display)
 
