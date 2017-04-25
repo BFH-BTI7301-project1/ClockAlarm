@@ -9,6 +9,7 @@ class Alert(QObject):
     
     Attributes:
         trigger_time: The trigger time of the alert.
+        id: The identification number of the alert in the alert. Set up when added to the database.
     """
     __metaclass__ = abc.ABCMeta
 
@@ -18,6 +19,7 @@ class Alert(QObject):
         """Inits Alert class with the trigger time given in arguments."""
         super(Alert, self).__init__()
         self.trigger_time = trigger_time
+        self.id = None
 
     def kill(self):
         """Kills the Alert.

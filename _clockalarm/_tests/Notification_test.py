@@ -12,4 +12,3 @@ def test_notification():
     assert isinstance(notification.font, QFont)
     assert isinstance(notification.sound, QSound)
     assert notification.message == "Test"
-
