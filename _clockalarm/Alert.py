@@ -19,7 +19,7 @@ class Alert(QObject):
         """Inits Alert class with the trigger time given in arguments."""
         super(Alert, self).__init__()
         self.trigger_time = trigger_time
-        self.id = -1
+        self.id = None
 
     def kill(self):
         """Kills the Alert.

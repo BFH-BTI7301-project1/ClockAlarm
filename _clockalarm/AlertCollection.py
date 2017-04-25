@@ -2,7 +2,7 @@ import time
 
 from tinydb import TinyDB, Query
 
-from _clockalarm import SimpleAlert
+from _clockalarm import SimpleAlert, Notification
 from _clockalarm import main
 
 
@@ -22,6 +22,18 @@ class AlertCollection:
         alert.timeout.connect(self._notification_center.display)
         alert.id = self.db.insert({'trigger_time': alert.trigger_time, 'message': alert.get_identifier()})
         self.display()
+
+    def edit(self, notification: Notification, trigger_time: int, id_alert: int):
+        print('EDITING DB')
+        print(str(id_alert))
+        alert_to_edit = next(alert for alert in self.alert_list if alert.id == id_alert)
+        if alert_to_edit:
+            print('FOUND')
+            alert_to_edit._notification = notification
+            alert_to_edit.trigger_time = trigger_time
+            self.db.update({'trigger_time': alert_to_edit.trigger_time, 'message': alert_to_edit.get_identifier()},
+                           eids=[id_alert])
+            self.display()
 
     def delete(self, id_alert: int):
         self.alert_list = [alert for alert in self.alert_list if alert.id != id_alert]

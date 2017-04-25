@@ -1,14 +1,12 @@
 import os
-import time
 
 from PyQt5.Qt import QIcon
-from PyQt5.QtCore import QSize, QDateTime
-from PyQt5.QtWidgets import QMainWindow, QGridLayout, QWidget, QSystemTrayIcon, QMenu, QAction, qApp, QDateTimeEdit, \
-    QLineEdit, QLabel, QGroupBox, QPushButton
+from PyQt5.QtCore import QSize
+from PyQt5.QtWidgets import QMainWindow, QGridLayout, QWidget, QSystemTrayIcon, QMenu, QAction, qApp
 
-from _clockalarm import SimpleAlert
+from _clockalarm import SimpleAlert, Notification
 from _clockalarm import main
-from _clockalarm.UI import AlertListWidget
+from _clockalarm.UI import AlertListWidget, SimpleAlertEditWidget
 
 
 class MainWindow(QMainWindow):
@@ -28,11 +26,11 @@ class MainWindow(QMainWindow):
         quit_action.triggered.connect(qApp.quit)
 
         new_alert_action = QAction("New Simple Alert", self)
-        new_alert_action.triggered.connect(self.simple_alert_dialogue)
+        new_alert_action.triggered.connect(self.add_simple_alert)
         delete_alert_action = QAction("Delete Alert", self)
         delete_alert_action.triggered.connect(self.delete_alerts)
         edit_alert_action = QAction("Edit Alert", self)
-        edit_alert_action.triggered.connect(self.simple_alert_dialogue)
+        edit_alert_action.triggered.connect(self.edit_simple_alert)
 
         menu_bar = self.menuBar()
         file_menu = menu_bar.addMenu('&File')
@@ -77,33 +75,35 @@ class MainWindow(QMainWindow):
             2000
         )
 
-    def simple_alert_dialogue(self, alert: SimpleAlert = None):
-        title = 'Set up a new Simple Alert'
-        date_time = time.time() + 15
-        message = ''
+    def add_simple_alert(self):
+        def button_clicked():
+            new_alert = SimpleAlert(self.dialog_widget.date_time_edit.dateTime().toTime_t(),
+                                    self.dialog_widget.alert_message_edit.text())
+            main.app.alert_collection.add(new_alert)
+            self.dialog_widget.close()
 
-        if alert:
+        self.dialog_widget = SimpleAlertEditWidget.SimpleAlertEditWidget()
+        self.dialog_widget.accept_button.clicked.connect(button_clicked)
+
+        self.dialog_widget.adjustSize()
+        self.dialog_widget.show()
+
+    def edit_simple_alert(self):
+        def button_clicked():
+            notification = Notification(self.dialog_widget.alert_message_edit.text())
+            trigger_time = self.dialog_widget.date_time_edit.dateTime().toTime_t()
+            main.app.alert_collection.edit(notification, trigger_time, id_alert)
+            self.dialog_widget.close()
+
+        selection = self.alert_list_widget.selectionModel().selectedRows()
+        if not selection:
             return
 
-        self.dialog_widget = QWidget()
-        group_box = QGroupBox(self.dialog_widget)
-        group_box.setTitle(title)
-        grid_layout = QGridLayout(group_box)
-        group_box.setLayout(grid_layout)
+        id_alert = int(self.alert_list_widget.item(selection[0].row(), 0).text())
+        alert_to_edit = next(alert for alert in main.app.alert_collection.alert_list if alert.id == id_alert)
 
-        self.alert_message_edit = QLineEdit(message)
-        self.date_time_edit = QDateTimeEdit(QDateTime.fromSecsSinceEpoch(date_time))
-        accept_button = QPushButton('Validate')
-
-        accept_button.clicked.connect(self.add_button_clicked)
-
-        grid_layout.addWidget(QLabel('Message'), 1, 1)
-        grid_layout.addWidget(self.alert_message_edit, 1, 2)
-        grid_layout.addWidget(QLabel('Date and Time'), 2, 1)
-        grid_layout.addWidget(self.date_time_edit, 2, 2)
-        grid_layout.addWidget(accept_button, 3, 2)
-
-        group_box.adjustSize()
+        self.dialog_widget = SimpleAlertEditWidget.SimpleAlertEditWidget(alert_to_edit)
+        self.dialog_widget.accept_button.clicked.connect(button_clicked)
         self.dialog_widget.adjustSize()
         self.dialog_widget.show()
 
@@ -113,8 +113,3 @@ class MainWindow(QMainWindow):
         for row in selection.selectedRows():
             alert_id = int(self.alert_list_widget.item(row.row(), 0).text())
             main.app.alert_collection.delete(alert_id)
-
-    def add_button_clicked(self):
-        main.app.alert_collection.add(
-            SimpleAlert(self.date_time_edit.dateTime().toTime_t(), self.alert_message_edit.text()))
-        self.dialog_widget.close()

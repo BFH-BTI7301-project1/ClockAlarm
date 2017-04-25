@@ -14,6 +14,7 @@ class AlertListWidget(QTableWidget):
         self.verticalHeader().setVisible(False)
         self.horizontalHeader().setStretchLastSection(True)
         self.setSelectionBehavior(QAbstractItemView.SelectRows)
+        self.setEditTriggers(QAbstractItemView.NoEditTriggers)
 
         if hasattr(self.parent(), 'alert_list'):
             self.actualize(self.parent().alert_list)
