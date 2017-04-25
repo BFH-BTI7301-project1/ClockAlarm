@@ -1,0 +1,40 @@
+\section{Database}
+
+We planned to have three alert types:
+
+\begin{enumerate}
+    \item Simple non recurring text alerts
+    \item Recurring simple alerts
+    \item Alerts that send emails
+\end{enumerate}
+
+All three types are independent of each other, that is, there is no logical link
+between them. The only ``link'' that they have in common is that they are
+extending the abstract class \texttt{Alert}. Therefore we don't need a
+relational database, only a very lightweight one.
+
+The requirement for the file storing the database is that it should be humanly
+readable, i.e., it should be in a non binary format. We came up with four
+possibilities for the file format:
+
+\begin{itemize}
+    \item XML
+    \item JSON
+    \item YAML
+    \item Plaintext
+\end{itemize}
+
+BaseX\footnote{For python it is the BaseXCLient:
+\href{http://basex.org}{basex.org}} handles both JSON and XML databases. Another
+alternative is TinyDB
+\footnote{\href{http://tinydb.readthedocs.io}{tinydb.readthedocs.io}}, it
+handles only databases in the JSON format. PyXAML
+\footnote{\href{http://pyyaml.org}{pyyaml.org}} handles databases stored in the
+YAML
+format. And for a plaintext database, i.e., a simple text file, everything has
+to be handled with the Python \texttt{open(\ldots)} and \texttt{write(\ldots)}
+commands.
+
+We choose to use TinyDB and the JSON file format because our supervisor
+encouraged us to do so and because the syntax is very simple and follows the
+Pythonic way.
