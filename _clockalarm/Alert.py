@@ -21,13 +21,6 @@ class Alert(QObject):
         self.trigger_time = trigger_time
         self.id = None
 
-    def kill(self):
-        """Kills the Alert.
-
-        Removes the parent of the alert.
-        """
-        self.setParent(None)
-
     @abstractmethod
     def triggered(self):
         """Triggers the alert action."""

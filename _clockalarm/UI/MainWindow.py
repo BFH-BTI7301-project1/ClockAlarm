@@ -77,10 +77,11 @@ class MainWindow(QMainWindow):
 
     def add_simple_alert(self):
         def button_clicked():
-            new_alert = SimpleAlert(self.dialog_widget.date_time_edit.dateTime().toTime_t(),
-                                    self.dialog_widget.alert_message_edit.text())
+            dw = self.dialog_widget
+            new_alert = SimpleAlert.SimpleAlert(dw.date_time_edit.dateTime().toTime_t(), dw.alert_message_edit.text(),
+                                                dw.periodicity_combo.itemData(dw.periodicity_combo.currentIndex()))
             main.app.alert_collection.add(new_alert)
-            self.dialog_widget.close()
+            dw.close()
 
         self.dialog_widget = SimpleAlertEditWidget.SimpleAlertEditWidget()
         self.dialog_widget.accept_button.clicked.connect(button_clicked)
@@ -90,10 +91,12 @@ class MainWindow(QMainWindow):
 
     def edit_simple_alert(self):
         def button_clicked():
-            notification = Notification(self.dialog_widget.alert_message_edit.text())
-            trigger_time = self.dialog_widget.date_time_edit.dateTime().toTime_t()
-            main.app.alert_collection.edit(notification, trigger_time, id_alert)
-            self.dialog_widget.close()
+            dw = self.dialog_widget
+            notification = Notification(dw.alert_message_edit.text())
+            trigger_time = dw.date_time_edit.dateTime().toTime_t()
+            periodicity = dw.periodicity_combo.itemData(dw.periodicity_combo.currentIndex())
+            main.app.alert_collection.edit(notification, trigger_time, id_alert, periodicity)
+            dw.close()
 
         selection = self.alert_list_widget.selectionModel().selectedRows()
         if not selection:
@@ -104,6 +107,7 @@ class MainWindow(QMainWindow):
 
         self.dialog_widget = SimpleAlertEditWidget.SimpleAlertEditWidget(alert_to_edit)
         self.dialog_widget.accept_button.clicked.connect(button_clicked)
+
         self.dialog_widget.adjustSize()
         self.dialog_widget.show()
 
