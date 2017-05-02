@@ -2,6 +2,7 @@ import math
 import threading
 from collections import deque
 
+from PyQt5 import QtMultimedia
 from PyQt5.QtCore import QRect
 
 from _clockalarm.UI import NotificationWidget
@@ -11,20 +12,19 @@ PADDING = 10
 
 
 class NotificationCenter(object):
-    _popup_queue = deque([])
-    _displayed_popups = []
-    _lock = threading.RLock()
-
-    ax = None
-    ay = None
-
     def __init__(self, screen_geometry):
         super(NotificationCenter, self).__init__()
         self._screen_geometry = screen_geometry
         self._max_popups: int = math.floor((screen_geometry.height() * 0.9) / (WIDGET_SIZE[1] + PADDING))
 
+        self._popup_queue = deque([])
+        self._displayed_popups = []
+        self._lock = threading.RLock()
+
         self.ax = self._screen_geometry.width() - WIDGET_SIZE[0] - 20
         self.ay = round(self._screen_geometry.height() * 0.1)
+
+        self.player = QtMultimedia.QMediaPlayer()
 
     def add_to_queue(self, notification):
         self._lock.acquire()
@@ -51,7 +51,8 @@ class NotificationCenter(object):
                                new_notification)
 
     def display_popup(self, geom: QRect, notification):
-        notification.sound.play()
+        self.player.setMedia(notification.sound)
+        self.player.play()
 
         popup = NotificationWidget(geom, notification)
 

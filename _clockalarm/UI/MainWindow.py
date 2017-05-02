@@ -1,8 +1,9 @@
 import os
+import shutil
 
 from PyQt5.Qt import QIcon
 from PyQt5.QtCore import QSize
-from PyQt5.QtWidgets import QMainWindow, QGridLayout, QWidget, QSystemTrayIcon, QMenu, QAction, qApp
+from PyQt5.QtWidgets import QMainWindow, QGridLayout, QWidget, QSystemTrayIcon, QMenu, QAction, qApp, QFileDialog
 
 from _clockalarm import SimpleAlert, Notification
 from _clockalarm import main
@@ -22,6 +23,10 @@ class MainWindow(QMainWindow):
         self.setMinimumSize(QSize(400, 120))  # Set sizes
         self.setWindowTitle("ClockAlarm Manager")  # Set a title
 
+        import_action = QAction("Import Alerts File", self)
+        import_action.triggered.connect(self.import_alerts_file)
+        export_action = QAction("Export Alerts File", self)
+        export_action.triggered.connect(self.export_alerts_file)
         quit_action = QAction("Exit", self)
         quit_action.triggered.connect(qApp.quit)
 
@@ -35,7 +40,11 @@ class MainWindow(QMainWindow):
         menu_bar = self.menuBar()
         file_menu = menu_bar.addMenu('&File')
         edit_menu = menu_bar.addMenu('&Edit')
+        file_menu.addAction(import_action)
+        file_menu.addAction(export_action)
+        file_menu.addSeparator()
         file_menu.addAction(quit_action)
+
         edit_menu.addAction(new_alert_action)
         edit_menu.addAction(delete_alert_action)
         edit_menu.addAction(edit_alert_action)
@@ -117,3 +126,18 @@ class MainWindow(QMainWindow):
         for row in selection.selectedRows():
             alert_id = int(self.alert_list_widget.item(row.row(), 0).text())
             main.app.alert_collection.delete(alert_id)
+
+    @staticmethod
+    def import_alerts_file():
+
+        src = QFileDialog.getOpenFileName()[0]
+        dest = os.path.join(os.path.dirname(__file__), '..\\..\\alertsDB.json')
+        print(src)
+        print(dest)
+
+        shutil.copy('C:/Users/Loic/Documents/BFH/BA4_Project1/ClockAlarm/backupDB.json', 'C:/Users/Loic/Documents/BFH/BA4_Project1/ClockAlarm/alertsDB.json')
+
+        qApp.exit(main.EXIT_CODE_REBOOT)
+
+    def export_alerts_file(self):
+        return

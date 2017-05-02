@@ -1,1 +1,1 @@
-{"alerts": {"1": {"trigger_time": 1493711366.0912998, "message": "Periodicity 15", "periodicity": 5}}}
+{"alerts": {"1": {"trigger_time": 1493717611.0912998, "message": "Periodicity 15", "periodicity": 5}, "32": {"trigger_time": 1493717610.876896, "message": "This message is delayed: 10 seconds", "periodicity": null}, "34": {"trigger_time": 1493717660.8809083, "message": "This message is delayed: 60 seconds", "periodicity": null}}}

@@ -6,13 +6,13 @@ from _clockalarm import SimpleAlert, Notification
 from _clockalarm import main
 
 
-class AlertCollection:
-    alert_list = []
+class AlertCollection(object):
     db = TinyDB('../alertsDB.json', default_table="alerts")
 
     def __init__(self, nc):
         super(self.__class__, self).__init__()
         self._notification_center = nc
+        self.alert_list = []
         self.clean_db()
         self.load_db()
         self.display()

@@ -1,5 +1,6 @@
 import sys
 
+from PyQt5.QtCore import QCoreApplication
 from PyQt5.QtWidgets import QApplication
 
 from _clockalarm import Clock
@@ -8,20 +9,19 @@ from _clockalarm.NotificationCenter import NotificationCenter
 from _clockalarm.UI import MainWindow
 
 PERIODICITY = 2  # frequency of time checks
+EXIT_CODE_REBOOT = -11231351
 
 app = None
 
 
 class App(QApplication):
-    notification_center = None
-    alert_collection = None
-    clock_thread = None
-
     # Override the class constructor
     def __init__(self, *argv):
         super(App, self).__init__(*argv)
-        self.clock_thread = None
         self.main_window = None
+        self.notification_center = None
+        self.alert_collection = None
+        self.clock_thread = None
 
         screen_geometry = self.desktop().screenGeometry()
         self.notification_center = NotificationCenter(screen_geometry)
@@ -47,12 +47,18 @@ class App(QApplication):
 def main(argv):
     global app
 
-    app = App(sys.argv)
-    app.init_alert_collection()
-    ret = app.exec()
-    app.clock_thread.terminate()  # stops the timer
-    app.alert_collection.clean_db()
-    sys.exit(ret)
+    exit_code = EXIT_CODE_REBOOT
+
+    while exit_code == EXIT_CODE_REBOOT:
+        try:
+            app = App(sys.argv)
+            app.init_alert_collection()
+        except RuntimeError:
+            app = QCoreApplication.instance()
+        exit_code = app.exec()
+        app.clock_thread.stop()
+        app = None
+    sys.exit(exit_code)
 
 
 if __name__ == '__main__':

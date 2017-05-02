@@ -5,11 +5,11 @@ from PyQt5.QtCore import pyqtSignal, QThread
 
 class Clock(QThread):
     tick = pyqtSignal('PyQt_PyObject')
-    running = True
 
     def __init__(self, periodicity, parent=None):
         super(self.__class__, self).__init__(parent)
         self._periodicity = periodicity
+        self.running = True
 
     def run(self):
         while self.running:
