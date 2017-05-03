@@ -13,7 +13,7 @@ PERIODICITY = 2  # frequency of time checks
 EXIT_CODE_REBOOT = -11231351
 
 app = None
-logging.basicConfig(stream=sys.stderr, level=logging.DEBUG)
+logging.basicConfig(stream=sys.stderr, level=logging.CRITICAL)
 
 
 class App(QApplication):

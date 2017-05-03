@@ -29,7 +29,7 @@ class NotificationWidget(QWidget):
             "QLabel { color : rgba(" + rgba + ")}")
 
         """Clock Image"""
-        im_path = os.path.join(os.path.dirname(__file__), '..\\resources\\images\\notification_clock.png')
+        im_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'resources\\images\\notification_clock.png')
         lbl_im = QLabel(self)
         lbl_im.setPixmap(QPixmap(im_path))
 

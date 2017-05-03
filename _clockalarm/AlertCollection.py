@@ -1,4 +1,4 @@
-import os
+import os.path
 import pathlib
 import time
 
@@ -9,7 +9,7 @@ from _clockalarm import main
 
 
 class AlertCollection(object):
-    db_path = pathlib.Path(os.path.dirname(os.path.abspath(__file__))).as_posix() + '/alertsDB.json'
+    db_path = pathlib.Path(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))).as_posix() + '/alertsDB.json'
     db = TinyDB(db_path, default_table="alerts")
 
     def __init__(self, nc):
@@ -59,14 +59,6 @@ class AlertCollection(object):
 
             self.alert_list.append(new_alert)
             new_alert.timeout.connect(self._notification_center.add_to_queue)
-
-        """FAKE DB"""
-        alert_10 = SimpleAlert.SimpleAlert(time.time() + 10, "This message is delayed: 10 seconds")
-        self.add(alert_10)
-        alert_3 = SimpleAlert.SimpleAlert(time.time() + 3, "This message is delayed: 3 seconds", None)
-        self.add(alert_3)
-        alert_60 = SimpleAlert.SimpleAlert(time.time() + 60, "This message is delayed: 60 seconds")
-        self.add(alert_60)
 
     def save_db(self):
         self.db.purge()

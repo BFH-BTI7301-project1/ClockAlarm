@@ -1,6 +1,7 @@
 import logging
-import os
+import pathlib
 import shutil
+from os.path import dirname, abspath, join
 
 from PyQt5.Qt import QIcon
 from PyQt5.QtCore import QSize
@@ -21,8 +22,9 @@ class MainWindow(QMainWindow):
         self.init_ui()
 
     def init_ui(self):
-        self.setMinimumSize(QSize(400, 120))  # Set sizes
+        self.setMinimumSize(QSize(300, 100))  # Set sizes
         self.setWindowTitle("ClockAlarm Manager")  # Set a title
+        self.resize(800, 400)
 
         import_action = QAction("Import Alerts File", self)
         import_action.triggered.connect(self.import_alerts_file)
@@ -59,7 +61,7 @@ class MainWindow(QMainWindow):
         grid_layout.addWidget(self.alert_list_widget)
 
         # Init QSystemTrayIcon
-        icon_path = os.path.join(os.path.dirname(__file__), '..\\resources\\images\\bfh_logo.png')
+        icon_path = join(dirname(abspath(__file__)), 'resources\\images\\bfh_logo.png')
         icon = QIcon(icon_path)
         self.tray_icon = QSystemTrayIcon(self)
         self.tray_icon.setIcon(icon)
@@ -123,21 +125,23 @@ class MainWindow(QMainWindow):
 
     def delete_alerts(self):
         selection = self.alert_list_widget.selectionModel()
+        to_delete = []
 
         for row in selection.selectedRows():
-            alert_id = int(self.alert_list_widget.item(row.row(), 0).text())
+            to_delete.append(int(self.alert_list_widget.item(row.row(), 0).text()))
+
+        for alert_id in to_delete:
             main.app.alert_collection.delete(alert_id)
 
     @staticmethod
     def import_alerts_file():
-
+        src_path = dirname(dirname(dirname(abspath(__file__))))
         src = QFileDialog.getOpenFileName()[0]
-        dest = os.path.join(os.path.dirname(__file__), '..\\..\\alertsDB.json')
-        logging.debug(src)
-        logging.debug(dest)
+        dest = pathlib.Path(join(src_path, 'alertsDB.json')).as_posix()
+        logging.debug("import src path: " + src)
+        logging.debug("import dest path: " + dest)
 
-        shutil.copy('C:/Users/Loic/Documents/BFH/BA4_Project1/ClockAlarm/backupDB.json',
-                    'C:/Users/Loic/Documents/BFH/BA4_Project1/ClockAlarm/alertsDB.json')
+        shutil.copy(src, dest)
 
         qApp.exit(main.EXIT_CODE_REBOOT)
 
