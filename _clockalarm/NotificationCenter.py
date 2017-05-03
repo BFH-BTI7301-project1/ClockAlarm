@@ -15,7 +15,7 @@ class NotificationCenter(object):
     def __init__(self, screen_geometry):
         super(NotificationCenter, self).__init__()
         self._screen_geometry = screen_geometry
-        self._max_popups: int = math.floor((screen_geometry.height() * 0.9) / (WIDGET_SIZE[1] + PADDING))
+        self._max_popups = math.floor((screen_geometry.height() * 0.9) / (WIDGET_SIZE[1] + PADDING))
 
         self._popup_queue = deque([])
         self._displayed_popups = []
@@ -51,8 +51,7 @@ class NotificationCenter(object):
                                new_notification)
 
     def display_popup(self, geom: QRect, notification):
-        self.player.setMedia(notification.sound)
-        self.player.play()
+        notification.sound.play()
 
         popup = NotificationWidget(geom, notification)
 

@@ -2,9 +2,8 @@ import logging
 import os
 import pathlib
 
-from PyQt5 import QtMultimedia
-from PyQt5.QtCore import QUrl
 from PyQt5.QtGui import QColor, QFont
+from pygame import mixer
 
 
 class Notification(object):
@@ -13,8 +12,9 @@ class Notification(object):
         self.font = QFont("lucida", 12, QFont.Bold, True)
 
         _sound_path = pathlib.Path(
-            os.path.dirname(os.path.abspath(__file__))).as_posix() + '/resources/sounds/floop.mp3'
+            os.path.dirname(os.path.abspath(__file__))).as_posix() + '/resources/sounds/floop.wav'
         logging.debug("notification sound path: " + _sound_path)
-        self.sound = QtMultimedia.QMediaContent(QUrl(_sound_path))
+        mixer.init()
+        self.sound = mixer.Sound(_sound_path)
 
         self.message = message
