@@ -1,3 +1,4 @@
+import logging
 import sys
 
 from PyQt5.QtCore import QCoreApplication
@@ -12,6 +13,7 @@ PERIODICITY = 2  # frequency of time checks
 EXIT_CODE_REBOOT = -11231351
 
 app = None
+logging.basicConfig(stream=sys.stderr, level=logging.DEBUG)
 
 
 class App(QApplication):
@@ -54,6 +56,7 @@ def main(argv):
             app = App(sys.argv)
             app.init_alert_collection()
         except RuntimeError:
+            logging.error(RuntimeError)
             app = QCoreApplication.instance()
         exit_code = app.exec()
         app.clock_thread.stop()

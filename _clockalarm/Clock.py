@@ -1,4 +1,5 @@
 import time
+import logging
 
 from PyQt5.QtCore import pyqtSignal, QThread
 
@@ -15,7 +16,7 @@ class Clock(QThread):
         while self.running:
             self.sleep(self._periodicity)
             self.tick.emit(time.time())
-            print("ClockTread: tick(P=" + str(self._periodicity) + "s)")
+            logging.log(1, "clocktread tick(P=" + str(self._periodicity) + "s)")
 
     def stop(self):
         self.running = False

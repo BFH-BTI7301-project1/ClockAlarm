@@ -1,3 +1,5 @@
+import os
+import pathlib
 import time
 
 from tinydb import TinyDB, Query
@@ -7,7 +9,8 @@ from _clockalarm import main
 
 
 class AlertCollection(object):
-    db = TinyDB('../alertsDB.json', default_table="alerts")
+    db_path = pathlib.Path(os.path.dirname(os.path.abspath(__file__))).as_posix() + '/alertsDB.json'
+    db = TinyDB(db_path, default_table="alerts")
 
     def __init__(self, nc):
         super(self.__class__, self).__init__()

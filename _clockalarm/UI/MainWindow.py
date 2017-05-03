@@ -1,3 +1,4 @@
+import logging
 import os
 import shutil
 
@@ -132,10 +133,11 @@ class MainWindow(QMainWindow):
 
         src = QFileDialog.getOpenFileName()[0]
         dest = os.path.join(os.path.dirname(__file__), '..\\..\\alertsDB.json')
-        print(src)
-        print(dest)
+        logging.debug(src)
+        logging.debug(dest)
 
-        shutil.copy('C:/Users/Loic/Documents/BFH/BA4_Project1/ClockAlarm/backupDB.json', 'C:/Users/Loic/Documents/BFH/BA4_Project1/ClockAlarm/alertsDB.json')
+        shutil.copy('C:/Users/Loic/Documents/BFH/BA4_Project1/ClockAlarm/backupDB.json',
+                    'C:/Users/Loic/Documents/BFH/BA4_Project1/ClockAlarm/alertsDB.json')
 
         qApp.exit(main.EXIT_CODE_REBOOT)
 
