@@ -1,7 +1,8 @@
 import logging
 import sys
 
-from PyQt5.QtCore import QCoreApplication
+from PyQt5.QtCore import QCoreApplication, QUrl
+from PyQt5 import QtMultimedia
 from PyQt5.QtWidgets import QApplication
 
 from _clockalarm import Clock
@@ -55,6 +56,14 @@ def main(argv):
         try:
             app = App(sys.argv)
             app.init_alert_collection()
+
+            s = QtMultimedia.QMediaContent(QUrl("C:/Users/Loic/Desktop/Chickadee-call.mp3"))
+            player = QtMultimedia.QMediaPlayer()
+            player.setMedia(s)
+            player.play()
+
+
+
         except RuntimeError:
             logging.error(RuntimeError)
             app = QCoreApplication.instance()
