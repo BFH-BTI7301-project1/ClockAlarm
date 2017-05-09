@@ -34,3 +34,15 @@ class SimpleAlert(Alert):
         :func:`~_clockalarm.Alert.get_identifier`
         """
         return self._notification.message
+
+    def get_font_family(self):
+        return self._notification.font.family()
+
+    def get_font_size(self):
+        return self._notification.font_size
+
+    def get_sound_name(self):
+        return self._notification.sound
+
+    def get_color_hex(self):
+        return self._notification.color.name()

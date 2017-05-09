@@ -1,19 +1,26 @@
+import logging
 import math
+import pathlib
 import threading
 from collections import deque
+from os.path import join, dirname, abspath
 
 from PyQt5 import QtMultimedia
 from PyQt5.QtCore import QRect
+from pygame import mixer
 
 from _clockalarm.UI.NotificationWidget import NotificationWidget
 
 WIDGET_SIZE = (380, 180)
 PADDING = 10
 
+base_path = dirname(dirname(abspath(__file__)))
+
 
 class NotificationCenter(object):
-    def __init__(self, screen_geometry):
+    def __init__(self, screen_geometry, parent=None):
         super(NotificationCenter, self).__init__()
+        self.parent = parent
         self._screen_geometry = screen_geometry
         self._max_popups = math.floor((screen_geometry.height() * 0.9) / (WIDGET_SIZE[1] + PADDING))
 
@@ -51,7 +58,12 @@ class NotificationCenter(object):
                                new_notification)
 
     def display_popup(self, geom: QRect, notification):
-        notification.sound.play()
+        if not self.parent.MUTE:
+            _sound_path = pathlib.Path(
+                join(base_path, "_clockalarm", "resources", "sounds", notification.sound)).as_posix()
+            logging.log(1, "notification sound path: " + _sound_path)
+            mixer.init()
+            mixer.Sound(_sound_path).play()
 
         popup = NotificationWidget(geom, notification)
 

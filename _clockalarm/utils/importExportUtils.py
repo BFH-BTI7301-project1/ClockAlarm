@@ -14,12 +14,12 @@ def import_alerts_file():
     src = QFileDialog.getOpenFileName()[0]
     dest = pathlib.Path(join(src_path, 'alertsDB.json')).as_posix()
 
-    if dest == "":
-        logging.debug("import abort")
+    if src == '':
+        logging.debug("import alerts abort")
         return
 
-    logging.debug("import src path: " + src)
-    logging.debug("import dest path: " + dest)
+    logging.debug("import alerts src path: " + src)
+    logging.debug("import alerts dest path: " + dest)
 
     shutil.copy(src, dest)
 
@@ -34,7 +34,7 @@ def export_alerts_file():
         logging.debug("export abort")
         return
 
-    logging.debug("export src path: " + src)
-    logging.debug("export dest path: " + dest)
+    logging.debug("export alerts src path: " + src)
+    logging.debug("export alerts dest path: " + dest)
 
     shutil.copy(src, dest)

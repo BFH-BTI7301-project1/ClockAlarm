@@ -11,7 +11,6 @@ from _clockalarm.AlertCollection import AlertCollection
 from _clockalarm.NotificationCenter import NotificationCenter
 from _clockalarm.UI.MainWindow import MainWindow
 
-CLOCK_FREQUENCY = None  # frequency of time checks
 EXIT_CODE_REBOOT = -11231351
 
 app = None
@@ -19,6 +18,9 @@ logging.basicConfig(stream=sys.stderr, level=logging.DEBUG)
 
 
 class App(QApplication):
+    CLOCK_FREQUENCY = None  # frequency of time checks
+    MUTE = None
+
     # Override the class constructor
     def __init__(self, *argv):
         super(App, self).__init__(*argv)
@@ -28,7 +30,7 @@ class App(QApplication):
         self.clock_thread = None
 
         screen_geometry = self.desktop().screenGeometry()
-        self.notification_center = NotificationCenter(screen_geometry)
+        self.notification_center = NotificationCenter(screen_geometry, parent=self)
 
         self.init_config()
         self.init_clock()
@@ -36,7 +38,7 @@ class App(QApplication):
 
     def init_clock(self):
         """CLOCK THREAD"""
-        self.clock_thread = Clock(CLOCK_FREQUENCY)
+        self.clock_thread = Clock(self.CLOCK_FREQUENCY)
         self.clock_thread.start()
 
     def init_ui(self):
@@ -45,13 +47,13 @@ class App(QApplication):
         self.setQuitOnLastWindowClosed(False)
 
     def init_config(self):
-        global CLOCK_FREQUENCY
         logging.debug("loading configuration file ...")
 
         config_file_path = join(dirname(dirname(abspath(__file__))), "config.cfg")
         config = configparser.RawConfigParser()
         config.read(config_file_path)
-        CLOCK_FREQUENCY = config.getint("default", "CLOCK_FREQUENCY")
+        self.CLOCK_FREQUENCY = config.getint("default", "CLOCK_FREQUENCY")
+        self.MUTE = config.getboolean("default", "MUTE")
         logging.debug("success")
 
     def init_alert_collection(self):

@@ -1,10 +1,7 @@
 import configparser
-import logging
-import pathlib
 from os.path import join, dirname, abspath
 
 from PyQt5.QtGui import QColor, QFont
-from pygame import mixer
 
 
 class Notification(object):
@@ -12,6 +9,7 @@ class Notification(object):
         self.message = message
         self.color = None
         self.font = None
+        self.font_size = None
         self.sound = None
 
         self.load_config()
@@ -23,11 +21,8 @@ class Notification(object):
         config.read(join(base_path, "config.cfg"))
 
         self.color = QColor(config.get("default", "NOTIFICATION_COLOR"))
-        self.font = QFont(config.get("default", "NOTIFICATION_FONT"),
-                          config.getint("default", "NOTIFICATION_FONT_SIZE"), QFont.Bold, True)
+        self.font_size = config.getint("default", "NOTIFICATION_FONT_SIZE")
+        self.font = QFont(config.get("default", "NOTIFICATION_FONT"), self.font_size, QFont.Bold, True)
+        self.sound = config.get("default", "NOTIFICATION_SOUND")
 
-        _sound_path = pathlib.Path(join(base_path, "_clockalarm", "resources", "sounds",
-                                        config.get("default", "NOTIFICATION_SOUND"))).as_posix()
-        logging.log(1, "notification sound path: " + _sound_path)
-        mixer.init()
-        self.sound = mixer.Sound(_sound_path)
+
