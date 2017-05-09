@@ -4,8 +4,9 @@ import time
 
 from tinydb import TinyDB, Query
 
-from _clockalarm import SimpleAlert, Notification
+from _clockalarm import Notification
 from _clockalarm import main
+from _clockalarm.SimpleAlert import SimpleAlert
 
 
 class AlertCollection(object):
@@ -52,7 +53,7 @@ class AlertCollection(object):
 
     def load_db(self):
         for alert in self.db.all():
-            new_alert = SimpleAlert.SimpleAlert(alert["trigger_time"], alert["message"])
+            new_alert = SimpleAlert(alert["trigger_time"], alert["message"])
             if "periodicity" in alert:
                 new_alert.periodicity = alert["periodicity"]
             new_alert.id = alert.eid
