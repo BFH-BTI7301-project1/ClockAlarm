@@ -1,15 +1,17 @@
+import configparser
 import logging
 import sys
+from os.path import dirname, abspath, join
 
 from PyQt5.QtCore import QCoreApplication
 from PyQt5.QtWidgets import QApplication
 
-from _clockalarm.AlertCollection import AlertCollection
 from _clockalarm import Clock
-from _clockalarm.UI.MainWindow import MainWindow
+from _clockalarm.AlertCollection import AlertCollection
 from _clockalarm.NotificationCenter import NotificationCenter
+from _clockalarm.UI.MainWindow import MainWindow
 
-PERIODICITY = 2  # frequency of time checks
+PERIODICITY = None  # frequency of time checks
 EXIT_CODE_REBOOT = -11231351
 
 app = None
@@ -28,6 +30,7 @@ class App(QApplication):
         screen_geometry = self.desktop().screenGeometry()
         self.notification_center = NotificationCenter(screen_geometry)
 
+        self.init_config()
         self.init_clock()
         self.init_ui()
 
@@ -40,6 +43,17 @@ class App(QApplication):
         self.main_window = MainWindow()
         self.main_window.show()
         self.setQuitOnLastWindowClosed(False)
+
+    def init_config(self):
+        global PERIODICITY
+        logging.debug("loading configuration file ...")
+
+        config_file_path = join(dirname(dirname(abspath(__file__))), "config.cfg")
+        config = configparser.RawConfigParser()
+        config.read(config_file_path)
+        PERIODICITY = config.getint("default", "PERIODICITY")
+
+        logging.debug("success")
 
     def init_alert_collection(self):
         self.alert_collection = AlertCollection(self.notification_center)

@@ -13,7 +13,7 @@ class Notification(object):
 
         _sound_path = pathlib.Path(
             os.path.dirname(os.path.abspath(__file__))).as_posix() + '/resources/sounds/floop.wav'
-        logging.debug("notification sound path: " + _sound_path)
+        logging.log(1, "notification sound path: " + _sound_path)
         mixer.init()
         self.sound = mixer.Sound(_sound_path)
 
