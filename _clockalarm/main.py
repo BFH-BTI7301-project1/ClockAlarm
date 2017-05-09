@@ -11,7 +11,7 @@ from _clockalarm.AlertCollection import AlertCollection
 from _clockalarm.NotificationCenter import NotificationCenter
 from _clockalarm.UI.MainWindow import MainWindow
 
-PERIODICITY = None  # frequency of time checks
+CLOCK_FREQUENCY = None  # frequency of time checks
 EXIT_CODE_REBOOT = -11231351
 
 app = None
@@ -36,7 +36,7 @@ class App(QApplication):
 
     def init_clock(self):
         """CLOCK THREAD"""
-        self.clock_thread = Clock(PERIODICITY)
+        self.clock_thread = Clock(CLOCK_FREQUENCY)
         self.clock_thread.start()
 
     def init_ui(self):
@@ -45,14 +45,13 @@ class App(QApplication):
         self.setQuitOnLastWindowClosed(False)
 
     def init_config(self):
-        global PERIODICITY
+        global CLOCK_FREQUENCY
         logging.debug("loading configuration file ...")
 
         config_file_path = join(dirname(dirname(abspath(__file__))), "config.cfg")
         config = configparser.RawConfigParser()
         config.read(config_file_path)
-        PERIODICITY = config.getint("default", "PERIODICITY")
-
+        CLOCK_FREQUENCY = config.getint("default", "CLOCK_FREQUENCY")
         logging.debug("success")
 
     def init_alert_collection(self):

@@ -5,8 +5,8 @@ from PyQt5.QtCore import QSize
 from PyQt5.QtWidgets import QMainWindow, QGridLayout, QWidget, QSystemTrayIcon, QMenu, QAction, qApp
 
 from _clockalarm import Notification
-from _clockalarm.SimpleAlert import SimpleAlert
 from _clockalarm import main
+from _clockalarm.SimpleAlert import SimpleAlert
 from _clockalarm.UI.AlertListWidget import AlertListWidget
 from _clockalarm.UI.SimpleAlertEditWidget import SimpleAlertEditWidget
 from _clockalarm.utils.importExportUtils import import_alerts_file, export_alerts_file
@@ -91,7 +91,7 @@ class MainWindow(QMainWindow):
         def button_clicked():
             dw = self.dialog_widget
             new_alert = SimpleAlert(dw.date_time_edit.dateTime().toTime_t(), dw.alert_message_edit.text(),
-                                                dw.periodicity_combo.itemData(dw.periodicity_combo.currentIndex()))
+                                    dw.periodicity_combo.itemData(dw.periodicity_combo.currentIndex()))
             main.app.alert_collection.add(new_alert)
             dw.close()
 
