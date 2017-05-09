@@ -1,15 +1,15 @@
-import logging
-import pathlib
-import shutil
 from os.path import dirname, abspath, join
 
 from PyQt5.Qt import QIcon
 from PyQt5.QtCore import QSize
-from PyQt5.QtWidgets import QMainWindow, QGridLayout, QWidget, QSystemTrayIcon, QMenu, QAction, qApp, QFileDialog
+from PyQt5.QtWidgets import QMainWindow, QGridLayout, QWidget, QSystemTrayIcon, QMenu, QAction, qApp
 
-from _clockalarm import SimpleAlert, Notification
+from _clockalarm import Notification
+from _clockalarm.SimpleAlert import SimpleAlert
 from _clockalarm import main
-from _clockalarm.UI import AlertListWidget, SimpleAlertEditWidget
+from _clockalarm.UI.AlertListWidget import AlertListWidget
+from _clockalarm.UI.SimpleAlertEditWidget import SimpleAlertEditWidget
+from _clockalarm.utils.importExportUtils import import_alerts_file, export_alerts_file
 
 
 class MainWindow(QMainWindow):
@@ -27,9 +27,9 @@ class MainWindow(QMainWindow):
         self.resize(800, 400)
 
         import_action = QAction("Import Alerts File", self)
-        import_action.triggered.connect(self.import_alerts_file)
+        import_action.triggered.connect(import_alerts_file)
         export_action = QAction("Export Alerts File", self)
-        export_action.triggered.connect(self.export_alerts_file)
+        export_action.triggered.connect(export_alerts_file)
         quit_action = QAction("Exit", self)
         quit_action.triggered.connect(qApp.quit)
 
@@ -61,7 +61,7 @@ class MainWindow(QMainWindow):
         grid_layout.addWidget(self.alert_list_widget)
 
         # Init QSystemTrayIcon
-        icon_path = join(dirname(abspath(__file__)), 'resources\\images\\bfh_logo.png')
+        icon_path = join(dirname(dirname(abspath(__file__))), 'resources\\images\\bfh_logo.png')
         icon = QIcon(icon_path)
         self.tray_icon = QSystemTrayIcon(self)
         self.tray_icon.setIcon(icon)
@@ -90,12 +90,12 @@ class MainWindow(QMainWindow):
     def add_simple_alert(self):
         def button_clicked():
             dw = self.dialog_widget
-            new_alert = SimpleAlert.SimpleAlert(dw.date_time_edit.dateTime().toTime_t(), dw.alert_message_edit.text(),
+            new_alert = SimpleAlert(dw.date_time_edit.dateTime().toTime_t(), dw.alert_message_edit.text(),
                                                 dw.periodicity_combo.itemData(dw.periodicity_combo.currentIndex()))
             main.app.alert_collection.add(new_alert)
             dw.close()
 
-        self.dialog_widget = SimpleAlertEditWidget.SimpleAlertEditWidget()
+        self.dialog_widget = SimpleAlertEditWidget()
         self.dialog_widget.accept_button.clicked.connect(button_clicked)
 
         self.dialog_widget.adjustSize()
@@ -117,7 +117,7 @@ class MainWindow(QMainWindow):
         id_alert = int(self.alert_list_widget.item(selection[0].row(), 0).text())
         alert_to_edit = next(alert for alert in main.app.alert_collection.alert_list if alert.id == id_alert)
 
-        self.dialog_widget = SimpleAlertEditWidget.SimpleAlertEditWidget(alert_to_edit)
+        self.dialog_widget = SimpleAlertEditWidget(alert_to_edit)
         self.dialog_widget.accept_button.clicked.connect(button_clicked)
 
         self.dialog_widget.adjustSize()
@@ -132,18 +132,3 @@ class MainWindow(QMainWindow):
 
         for alert_id in to_delete:
             main.app.alert_collection.delete(alert_id)
-
-    @staticmethod
-    def import_alerts_file():
-        src_path = dirname(dirname(dirname(abspath(__file__))))
-        src = QFileDialog.getOpenFileName()[0]
-        dest = pathlib.Path(join(src_path, 'alertsDB.json')).as_posix()
-        logging.debug("import src path: " + src)
-        logging.debug("import dest path: " + dest)
-
-        shutil.copy(src, dest)
-
-        qApp.exit(main.EXIT_CODE_REBOOT)
-
-    def export_alerts_file(self):
-        return

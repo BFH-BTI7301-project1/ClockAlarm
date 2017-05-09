@@ -3,7 +3,7 @@ import time
 from PyQt5.QtCore import QDateTime
 from PyQt5.QtWidgets import QGridLayout, QWidget, QDateTimeEdit, QLabel, QPushButton, QLineEdit, QGroupBox, QComboBox
 
-from _clockalarm import SimpleAlert
+from _clockalarm.SimpleAlert import SimpleAlert
 
 
 class SimpleAlertEditWidget(QWidget):

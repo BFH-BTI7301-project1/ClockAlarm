@@ -4,16 +4,16 @@ import sys
 from PyQt5.QtCore import QCoreApplication
 from PyQt5.QtWidgets import QApplication
 
-from _clockalarm import Clock
 from _clockalarm.AlertCollection import AlertCollection
+from _clockalarm import Clock
+from _clockalarm.UI.MainWindow import MainWindow
 from _clockalarm.NotificationCenter import NotificationCenter
-from _clockalarm.UI import MainWindow
 
 PERIODICITY = 2  # frequency of time checks
 EXIT_CODE_REBOOT = -11231351
 
 app = None
-logging.basicConfig(stream=sys.stderr, level=logging.CRITICAL)
+logging.basicConfig(stream=sys.stderr, level=logging.DEBUG)
 
 
 class App(QApplication):
@@ -55,11 +55,12 @@ def main(argv):
         try:
             app = App(sys.argv)
             app.init_alert_collection()
-        except RuntimeError:
-            logging.error(RuntimeError)
+        except RuntimeError as e:
+            logging.error(e.strerror)
             app = QCoreApplication.instance()
         exit_code = app.exec()
         app.clock_thread.stop()
+        app.main_window.tray_icon.setVisible(False)
         app = None
     sys.exit(exit_code)
 

@@ -5,7 +5,7 @@ from collections import deque
 from PyQt5 import QtMultimedia
 from PyQt5.QtCore import QRect
 
-from _clockalarm.UI import NotificationWidget
+from _clockalarm.UI.NotificationWidget import NotificationWidget
 
 WIDGET_SIZE = (380, 180)
 PADDING = 10
