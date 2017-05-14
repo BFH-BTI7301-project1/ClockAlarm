@@ -56,6 +56,10 @@ class AlertCollection(object):
         for alert in self.alert_list:
             if trig_time >= alert.trigger_time:
                 alert.triggered()
+                if not alert.periodicity:
+                    self.delete(alert.id)
+                else:
+                    self.edit(alert.id, trigger_time=alert.trigger_time + alert.periodicity)
 
     def display(self):
         main.app.main_window.alert_list_widget.actualize(self.alert_list)

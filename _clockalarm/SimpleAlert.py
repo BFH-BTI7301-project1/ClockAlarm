@@ -1,5 +1,4 @@
 from _clockalarm import Alert
-from _clockalarm import main
 
 
 class SimpleAlert(Alert):
@@ -22,11 +21,6 @@ class SimpleAlert(Alert):
         :func:`~_clockalarm.Alert.triggered`
         """
         self.timeout.emit(self.notification)
-
-        if not self.periodicity:
-            main.app.alert_collection.delete(self.id)
-        else:
-            main.app.alert_collection.edit(self.id, trigger_time=self.trigger_time + self.periodicity)
 
     def get_identifier(self):
         """This method does the same as
