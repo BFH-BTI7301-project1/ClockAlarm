@@ -23,12 +23,20 @@ class Alert(QObject):
         self.id = None
 
     def get_id(self):
-        """Get the alert identifier.
+        """Get the Alert identifier.
 
         Returns:
             The identifier of the alert.
         """
         return self.id
+
+    def get_trigger_time(self):
+        """Get the Alert trigger time in ???
+
+        Returns:
+            The trigger time
+        """
+        return self.trigger_time
 
     @abstractmethod
     def triggered(self):
