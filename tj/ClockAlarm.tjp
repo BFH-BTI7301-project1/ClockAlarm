@@ -1,0 +1,48 @@
+/*
+ *  This file contains the scheduling of the ClockAlaram project.
+ *  It is hosted under: https://github.com/BFH-BTI7301-project1/ClockAlarm.git
+ *  Authors: Samuel Gauthier
+ */
+
+project clal "ClockAlarm" 2017-02-21 +16w {
+  timezone "Europe/Zurich"
+  timeformat "%Y-%m-%d"
+  numberformat "-" "" "," "." 1
+  currencyformat "(" ")" "," "." 0
+  now 2017-05-15-08:00
+  currency "CHF"
+}
+
+copyright "© 2017 BFH TI"
+
+leaves holiday "Spring break" 2017-04-10 +4d
+leaves holiday "Easter Monday" 2017-04-17
+leaves holiday "The Games" 2017-05-17
+leaves holiday "Ascension" 2017-05-25 +1d
+leaves holiday "Pentecost" 2017-06-05
+flags team
+
+macro allocate_developers [
+  allocate charl1
+  allocate gauts1
+]
+
+resource proj_supervisor "Claude Fuhrer" {
+  email ""
+}
+
+resource dev "Developers"{
+  manager proj_supervisor
+  resource charl1 "Loïc Charrière"{
+    email "cahrl1@bfh.ch"
+  }
+  resource gauts1 "Samuel Gauthier"{
+    email "gauts1@bfh.ch"
+  }
+  flags team
+}
+
+task ClAl "ClockAlarm" {
+  chargeset dev
+  responsible proj_supervisor
+}
