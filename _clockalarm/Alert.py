@@ -1,10 +1,13 @@
 import abc
-from abc import abstractmethod
-
-from PyQt5.QtCore import pyqtSignal, QObject
+import PyQt5.QtCore as pyqt
 
 
-class Alert(QObject):
+class AlertMeta(type(pyqt.QObject), abc.ABC):
+    """Abstract Metaclass inheriting QObject's metaclass"""
+    pass
+
+
+class Alert(pyqt.QObject, metaclass=AlertMeta):
     """Abstract Alert class representing alerts.
 
     Attributes:
@@ -12,9 +15,8 @@ class Alert(QObject):
         id: The identification number of the alert in the alert.
         Set up when added to the database.
     """
-    __metaclass__ = abc.ABCMeta
 
-    timeout = pyqtSignal('PyQt_PyObject')
+    timeout = pyqt.pyqtSignal('PyQt_PyObject')
 
     def __init__(self, trigger_time):
         """Inits Alert class with the trigger time given in arguments."""
@@ -38,7 +40,7 @@ class Alert(QObject):
         """
         return self.trigger_time
 
-    @abstractmethod
+    @abc.abstractmethod
     def triggered(self):
         """Triggers the alert action."""
         return

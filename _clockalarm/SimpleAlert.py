@@ -1,7 +1,7 @@
-from _clockalarm import Alert
+import _clockalarm.Alert as alert
 
 
-class SimpleAlert(Alert):
+class SimpleAlert(alert.Alert):
     """Simple Alert implementation with text message
 
     Attributes:
