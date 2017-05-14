@@ -30,6 +30,7 @@ class SoundSelectorWidget(QWidget):
 
         h_layout.addWidget(self.sound_edit)
         h_layout.addWidget(self.sound_select_button)
+        h_layout.setContentsMargins(0, 0, 0, 0)
 
         self.setLayout(h_layout)
 

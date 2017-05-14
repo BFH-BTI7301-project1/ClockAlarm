@@ -27,6 +27,7 @@ class ColorSelectorWidget(QWidget):
 
         h_layout.addWidget(self.hex_color_edit)
         h_layout.addWidget(self.color_select_button)
+        h_layout.setContentsMargins(0, 0, 0, 0)
 
         self.setLayout(h_layout)
 
