@@ -9,13 +9,13 @@ from PyQt5.QtWidgets import qApp, QFileDialog
 EXIT_CODE_REBOOT = -11231351
 
 src_path = dirname(dirname(dirname(abspath(__file__))))
-config = configparser.RawConfigParser()
-config.read(join(src_path, "config.cfg"))
+alert_file_path = join(src_path, "alertsDB.json")
+config_file_path = join(src_path, "config.cfg")
 
 
 def import_alerts_file():
     src = QFileDialog.getOpenFileName()[0]
-    dest = pathlib.Path(join(src_path, 'alertsDB.json')).as_posix()
+    dest = pathlib.Path(alert_file_path).as_posix()
 
     if src == '':
         logging.debug("import alerts abort")
@@ -30,7 +30,7 @@ def import_alerts_file():
 
 
 def export_alerts_file():
-    src = pathlib.Path(join(src_path, 'alertsDB.json')).as_posix()
+    src = pathlib.Path(alert_file_path).as_posix()
     dest = QFileDialog.getSaveFileName(None, "Export Alerts List", "alerts.json", filter="json (*.json *.)")[0]
 
     if dest == "":
@@ -44,10 +44,25 @@ def export_alerts_file():
 
 
 def get_default_config(key, cmd="str"):
+    config = configparser.RawConfigParser()
+    config.read(config_file_path)
     if cmd == "int":
         value = config.getint("default", key)
+    elif cmd == "bool":
+        value = config.getboolean("default", key)
     else:
         value = config.get("default", key)
 
-    logging.debug("default config load(key,value): (" + key + ";" + config.get("default", key) + ")")
+    logging.debug("default config load(key,value): (" + key + ";" + str(value) + ")")
     return value
+
+
+def set_default_config(key, value):
+    config = configparser.RawConfigParser()
+    config.optionxform = str
+    config.read(config_file_path)
+    config.set("default", key, str(value))
+    with open(config_file_path, 'w') as configfile:
+        config.write(configfile)
+
+    logging.debug("default config set(key,value): (" + key + ";" + str(value) + ")")

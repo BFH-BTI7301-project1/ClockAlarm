@@ -1,15 +1,17 @@
 from os.path import dirname, abspath, join
 
 from PyQt5.Qt import QIcon
-from PyQt5.QtCore import QSize
-from PyQt5.QtWidgets import QMainWindow, QGridLayout, QWidget, QSystemTrayIcon, QMenu, QAction, qApp
+from PyQt5.QtCore import QSize, Qt
+from PyQt5.QtWidgets import QMainWindow, QGridLayout, QWidget, QSystemTrayIcon, QMenu, QAction, qApp, QPushButton, \
+    QStyle
 
 from _clockalarm import Notification
 from _clockalarm import main
 from _clockalarm.SimpleAlert import SimpleAlert
 from _clockalarm.UI.AlertListWidget import AlertListWidget
 from _clockalarm.UI.SimpleAlertEditWidget import SimpleAlertEditWidget
-from _clockalarm.utils.importExportUtils import import_alerts_file, export_alerts_file
+from _clockalarm.utils.importExportUtils import import_alerts_file, export_alerts_file, set_default_config, \
+    get_default_config
 
 
 class MainWindow(QMainWindow):
@@ -18,6 +20,7 @@ class MainWindow(QMainWindow):
         super(MainWindow, self).__init__(*args)
         self.tray_icon = None
         self.alert_list_widget = None
+        self.mute_pushbutton = None
         self.dialog_widget = None
         self.init_ui()
 
@@ -58,7 +61,15 @@ class MainWindow(QMainWindow):
         grid_layout = QGridLayout(central_widget)  # Create a QGridLayout
         central_widget.setLayout(grid_layout)  # Set the layout into the central widget
         self.alert_list_widget = AlertListWidget()
-        grid_layout.addWidget(self.alert_list_widget)
+        self.mute_pushbutton = QPushButton()
+        if get_default_config("MUTE", "bool"):
+            self.mute_pushbutton.setIcon(self.style().standardIcon(QStyle.SP_MediaVolumeMuted))
+        else:
+            self.mute_pushbutton.setIcon(self.style().standardIcon(QStyle.SP_MediaVolume))
+        self.mute_pushbutton.clicked.connect(self.mute_button_click)
+
+        grid_layout.addWidget(self.alert_list_widget, 0, 0)
+        grid_layout.addWidget(self.mute_pushbutton, 1, 0, Qt.AlignRight)
 
         # Init QSystemTrayIcon
         icon_path = join(dirname(dirname(abspath(__file__))), 'resources\\images\\bfh_logo.png')
@@ -75,6 +86,14 @@ class MainWindow(QMainWindow):
     def tray_icon_click(self, reason):
         if reason == QSystemTrayIcon.DoubleClick:
             self.show()
+
+    def mute_button_click(self):
+        main.app.MUTE = not main.app.MUTE
+        if main.app.MUTE:
+            self.mute_pushbutton.setIcon(self.style().standardIcon(QStyle.SP_MediaVolumeMuted))
+        else:
+            self.mute_pushbutton.setIcon(self.style().standardIcon(QStyle.SP_MediaVolume))
+        set_default_config("MUTE", main.app.MUTE)
 
     # Override closeEvent, to intercept the window closing event
     def closeEvent(self, event):
