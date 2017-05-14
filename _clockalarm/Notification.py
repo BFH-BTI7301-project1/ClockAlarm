@@ -18,6 +18,14 @@ class Notification(object):
         self.font_size = font_size
         self.sound = sound
 
+    def get_message(self):
+        """Get the message of the Notification
+
+        Returns:
+            The text message
+        """
+        return self.message
+
     def get_font(self):
         if self.font_family and self.font_size:
             return QFont(self.font_family, self.font_size)

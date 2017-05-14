@@ -44,7 +44,7 @@ class SimpleAlertEditWidget(QWidget):
 
         if alert:
             group_box.setTitle('Edit a Simple Alert')
-            self.alert_message_edit.setText(alert.get_identifier())
+            self.alert_message_edit.setText(alert.get_notification().get_message())
             self.date_time_edit.setDateTime(QDateTime.fromSecsSinceEpoch(alert.trigger_time))
             if alert.notification.font_family is not None:
                 self.font_family_edit.setText(alert.notification.font_family)

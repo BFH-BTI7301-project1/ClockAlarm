@@ -22,8 +22,10 @@ class SimpleAlert(Alert):
         """
         self.timeout.emit(self.notification)
 
-    def get_identifier(self):
-        """This method does the same as
-        :func:`~_clockalarm.Alert.get_identifier`
+    def get_notification(self):
+        """Get the Notification
+
+        Returns:
+            The Notification of the Alert
         """
-        return self.notification.message
+        return self.notification

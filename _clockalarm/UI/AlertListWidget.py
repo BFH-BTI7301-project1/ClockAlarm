@@ -26,7 +26,7 @@ class AlertListWidget(QTableWidget):
             self.insertRow(0)
             date = QTableWidgetItem(time.strftime('%Y-%m-%d %H:%M', time.localtime(alert.trigger_time)))
             periodicity = QTableWidgetItem(str(alert.periodicity))
-            message = QTableWidgetItem(alert.get_identifier())
+            message = QTableWidgetItem(alert.get_notification().get_message())
 
             self.setItem(0, 0, QTableWidgetItem(str(alert.id)))
             self.setItem(0, 1, date)
