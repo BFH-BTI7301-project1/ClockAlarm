@@ -16,11 +16,13 @@ class SimpleAlert(Alert):
         self.notification = notification
         self.periodicity = periodicity
 
-    def triggered(self):
-        """This method does the same as
-        :func:`~_clockalarm.Alert.triggered`
+    def get_periodicity(self):
+        """Get the SimpleAlert periodicity
+
+        Returns:
+            The periodicity
         """
-        self.timeout.emit(self.notification)
+        return self.periodicity
 
     def get_notification(self):
         """Get the Notification
@@ -29,3 +31,9 @@ class SimpleAlert(Alert):
             The Notification of the Alert
         """
         return self.notification
+
+    def triggered(self):
+        """This method does the same as
+        :func:`~_clockalarm.Alert.triggered`
+        """
+        self.timeout.emit(self.notification)
