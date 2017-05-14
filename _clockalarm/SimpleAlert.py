@@ -1,5 +1,4 @@
 from _clockalarm import Alert
-from _clockalarm import main
 
 
 class SimpleAlert(Alert):
@@ -17,19 +16,24 @@ class SimpleAlert(Alert):
         self.notification = notification
         self.periodicity = periodicity
 
+    def get_periodicity(self):
+        """Get the SimpleAlert periodicity
+
+        Returns:
+            The periodicity
+        """
+        return self.periodicity
+
+    def get_notification(self):
+        """Get the Notification
+
+        Returns:
+            The Notification of the Alert
+        """
+        return self.notification
+
     def triggered(self):
         """This method does the same as
         :func:`~_clockalarm.Alert.triggered`
         """
         self.timeout.emit(self.notification)
-
-        if not self.periodicity:
-            main.app.alert_collection.delete(self.id)
-        else:
-            main.app.alert_collection.edit(self.id, trigger_time=self.trigger_time + self.periodicity)
-
-    def get_identifier(self):
-        """This method does the same as
-        :func:`~_clockalarm.Alert.get_identifier`
-        """
-        return self.notification.message

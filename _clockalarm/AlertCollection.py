@@ -25,7 +25,7 @@ class AlertCollection(object):
         self.alert_list.append(alert)
         alert.timeout.connect(self._notification_center.add_to_queue)
         alert.id = self.db.insert(
-            {'trigger_time': alert.trigger_time, 'message': alert.get_identifier(),
+            {'trigger_time': alert.trigger_time, 'message': alert.get_notification().get_message(),
              'color_hex': alert.notification.color_hex, 'font_family': alert.notification.font_family,
              'font_size': alert.notification.font_size, 'sound': alert.notification.sound,
              'periodicity': alert.periodicity})
@@ -56,6 +56,12 @@ class AlertCollection(object):
         for alert in self.alert_list:
             if trig_time >= alert.trigger_time:
                 alert.triggered()
+                if not alert.periodicity:
+                    self.delete(alert.get_id())
+                else:
+                    self.edit(alert.get_id(),
+                              trigger_time=alert.get_trigger_time() +
+                              alert.get_periodicity())
 
     def display(self):
         main.app.main_window.alert_list_widget.actualize(self.alert_list)
@@ -76,7 +82,7 @@ class AlertCollection(object):
     def save_db(self):
         self.db.purge()
         for alert in self.alert_list:
-            self.db.insert({'trigger_time': alert.trigger_time, 'message': alert.get_identifier(),
+            self.db.insert({'trigger_time': alert.trigger_time, 'message': alert.get_notification().get_message(),
                             'font_family': alert.notification.font_family, 'font_size': alert.notification.font_size,
                             'color_hex': alert.notification.color_hex, 'sound': alert.notification.sound,
                             'periodicity': alert.periodicity})
