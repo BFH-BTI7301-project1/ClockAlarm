@@ -1,13 +1,16 @@
+import configparser
 import logging
 import pathlib
 import shutil
-from os.path import dirname, abspath, join
+from os.path import join, dirname, abspath
 
 from PyQt5.QtWidgets import qApp, QFileDialog
 
-from _clockalarm import main
+EXIT_CODE_REBOOT = -11231351
 
 src_path = dirname(dirname(dirname(abspath(__file__))))
+config = configparser.RawConfigParser()
+config.read(join(src_path, "config.cfg"))
 
 
 def import_alerts_file():
@@ -23,7 +26,7 @@ def import_alerts_file():
 
     shutil.copy(src, dest)
 
-    qApp.exit(main.EXIT_CODE_REBOOT)
+    qApp.exit(EXIT_CODE_REBOOT)
 
 
 def export_alerts_file():
@@ -38,3 +41,13 @@ def export_alerts_file():
     logging.debug("export alerts dest path: " + dest)
 
     shutil.copy(src, dest)
+
+
+def get_default_config(key, cmd="str"):
+    if cmd == "int":
+        value = config.getint("default", key)
+    else:
+        value = config.get("default", key)
+
+    logging.debug("default config load(key,value): (" + key + ";" + config.get("default", key) + ")")
+    return value

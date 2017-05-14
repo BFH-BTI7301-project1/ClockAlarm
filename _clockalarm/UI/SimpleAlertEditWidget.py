@@ -16,7 +16,7 @@ class SimpleAlertEditWidget(QWidget):
         self.alert_message_edit = None
         self.date_time_edit = None
         self.periodicity_combo = None
-        self.font_edit = None
+        self.font_family_edit = None
         self.font_size_edit = None
         self.color_edit = None
         self.sound_edit = None
@@ -34,7 +34,7 @@ class SimpleAlertEditWidget(QWidget):
         self.periodicity_combo.addItem("1 minute", 60)
         self.date_time_edit = QDateTimeEdit(QDateTime.fromSecsSinceEpoch(date_time))
         self.alert_message_edit = QLineEdit()
-        self.font_edit = QLineEdit()
+        self.font_family_edit = QLineEdit()
         self.font_size_edit = QSpinBox()
         self.font_size_edit.setMaximum(64)
         self.font_size_edit.setSingleStep(2)
@@ -42,18 +42,18 @@ class SimpleAlertEditWidget(QWidget):
         self.sound_edit = SoundSelectorWidget()
         self.accept_button = QPushButton('Validate')
 
-        if alert is not None:
+        if alert:
             group_box.setTitle('Edit a Simple Alert')
             self.alert_message_edit.setText(alert.get_identifier())
             self.date_time_edit.setDateTime(QDateTime.fromSecsSinceEpoch(alert.trigger_time))
-            if alert.get_font_family() is not None:
-                self.font_edit.setText(alert.get_font_family())
-            if alert.get_font_size() is not None:
-                self.font_size_edit.setValue(alert.get_font_size())
-            if alert.get_color_hex() is not None:
-                self.color_edit.set_hex_color(alert.get_color_hex())
-            if alert.get_sound_name() is not None:
-                self.sound_edit.set_sound(alert.get_sound_name())
+            if alert.notification.font_family is not None:
+                self.font_family_edit.setText(alert.notification.font_family)
+            if alert.notification.font_size is not None:
+                self.font_size_edit.setValue(alert.notification.font_size)
+            if alert.notification.color_hex is not None:
+                self.color_edit.set_hex_color(alert.notification.color_hex)
+            if alert.notification.sound is not None:
+                self.sound_edit.set_sound(alert.notification.sound)
 
         grid_layout = QGridLayout(group_box)
         grid_layout.addWidget(QLabel('Message'), 1, 1)
@@ -63,7 +63,7 @@ class SimpleAlertEditWidget(QWidget):
         grid_layout.addWidget(QLabel('Periodicity'), 3, 1)
         grid_layout.addWidget(self.periodicity_combo, 3, 2)
         grid_layout.addWidget(QLabel('Font'), 4, 1)
-        grid_layout.addWidget(self.font_edit, 4, 2)
+        grid_layout.addWidget(self.font_family_edit, 4, 2)
         grid_layout.addWidget(self.font_size_edit, 4, 3)
         grid_layout.addWidget(QLabel('Text color'), 5, 1)
         grid_layout.addWidget(self.color_edit, 5, 2)

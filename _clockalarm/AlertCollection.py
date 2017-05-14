@@ -25,17 +25,26 @@ class AlertCollection(object):
         self.alert_list.append(alert)
         alert.timeout.connect(self._notification_center.add_to_queue)
         alert.id = self.db.insert(
-            {'trigger_time': alert.trigger_time, 'message': alert.get_identifier(), 'periodicity': alert.periodicity})
+            {'trigger_time': alert.trigger_time, 'message': alert.get_identifier(),
+             'color_hex': alert.notification.color_hex, 'font_family': alert.notification.font_family,
+             'font_size': alert.notification.font_size, 'sound': alert.notification.sound,
+             'periodicity': alert.periodicity})
         self.display()
 
-    def edit(self, notification: Notification, trigger_time: int, id_alert: int, periodicity: int = None):
+    def edit(self, id_alert: int, notification: Notification = None, trigger_time: int = None, periodicity: int = None):
         alert_to_edit = next(alert for alert in self.alert_list if alert.id == id_alert)
         if alert_to_edit:
-            alert_to_edit._notification = notification
-            alert_to_edit.periodicity = periodicity
-            alert_to_edit.trigger_time = trigger_time
-            self.db.update({'trigger_time': alert_to_edit.trigger_time, 'message': alert_to_edit.get_identifier(),
-                            'periodicity': alert_to_edit.periodicity}, eids=[id_alert])
+            if notification:
+                alert_to_edit.notification = notification
+                self.db.update({'message': notification.message, 'color_hex': notification.color_hex,
+                                'font_family': notification.font_family, 'font_size': notification.font_size,
+                                'sound': notification.sound}, eids=[id_alert])
+            if periodicity:
+                alert_to_edit.periodicity = periodicity
+                self.db.update({'periodicity': alert_to_edit.periodicity}, eids=[id_alert])
+            if trigger_time:
+                alert_to_edit.trigger_time = trigger_time
+                self.db.update({'trigger_time': alert_to_edit.trigger_time}, eids=[id_alert])
             self.display()
 
     def delete(self, id_alert: int):
@@ -53,7 +62,10 @@ class AlertCollection(object):
 
     def load_db(self):
         for alert in self.db.all():
-            new_alert = SimpleAlert(alert["trigger_time"], alert["message"])
+            notification = Notification(alert["message"], color_hex=alert["color_hex"],
+                                        font_family=alert["font_family"], font_size=alert["font_size"],
+                                        sound=alert["sound"])
+            new_alert = SimpleAlert(alert["trigger_time"], notification)
             if "periodicity" in alert:
                 new_alert.periodicity = alert["periodicity"]
             new_alert.id = alert.eid
@@ -65,6 +77,8 @@ class AlertCollection(object):
         self.db.purge()
         for alert in self.alert_list:
             self.db.insert({'trigger_time': alert.trigger_time, 'message': alert.get_identifier(),
+                            'font_family': alert.notification.font_family, 'font_size': alert.notification.font_size,
+                            'color_hex': alert.notification.color_hex, 'sound': alert.notification.sound,
                             'periodicity': alert.periodicity})
 
     def clean_db(self):

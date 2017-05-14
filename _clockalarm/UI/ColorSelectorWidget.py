@@ -51,3 +51,6 @@ class ColorSelectorWidget(QWidget):
         if re.search(r'^#(?:[0-9a-fA-F]{3}){1,2}$', current_hex):
             self.hex_color = current_hex
             self.color_select_button.setStyleSheet("QPushButton { background-color : " + current_hex + "}")
+
+    def text(self):
+        return self.hex_color

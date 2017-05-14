@@ -1,13 +1,10 @@
-import logging
 import math
-import pathlib
 import threading
 from collections import deque
-from os.path import join, dirname, abspath
+from os.path import dirname, abspath
 
 from PyQt5 import QtMultimedia
 from PyQt5.QtCore import QRect
-from pygame import mixer
 
 from _clockalarm.UI.NotificationWidget import NotificationWidget
 
@@ -59,11 +56,7 @@ class NotificationCenter(object):
 
     def display_popup(self, geom: QRect, notification):
         if not self.parent.MUTE:
-            _sound_path = pathlib.Path(
-                join(base_path, "_clockalarm", "resources", "sounds", notification.sound)).as_posix()
-            logging.log(1, "notification sound path: " + _sound_path)
-            mixer.init()
-            mixer.Sound(_sound_path).play()
+            notification.get_sound().play()
 
         popup = NotificationWidget(geom, notification)
 

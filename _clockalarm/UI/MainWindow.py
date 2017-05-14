@@ -90,8 +90,18 @@ class MainWindow(QMainWindow):
     def add_simple_alert(self):
         def button_clicked():
             dw = self.dialog_widget
-            new_alert = SimpleAlert(dw.date_time_edit.dateTime().toTime_t(), dw.alert_message_edit.text(),
-                                    dw.periodicity_combo.itemData(dw.periodicity_combo.currentIndex()))
+            font_family = dw.font_family_edit.text()
+            font_size = dw.font_size_edit.value()
+            if font_family == '':
+                font_family = None
+            if font_size <= 0:
+                font_size = None
+            notification = Notification(dw.alert_message_edit.text(), font_family=font_family,
+                                        font_size=font_size, color_hex=dw.color_edit.text(),
+                                        sound=dw.sound_edit.text())
+            new_alert = SimpleAlert(dw.date_time_edit.dateTime().toTime_t(), notification,
+                                    periodicity=dw.periodicity_combo.itemData(dw.periodicity_combo.currentIndex()))
+
             main.app.alert_collection.add(new_alert)
             dw.close()
 
@@ -104,10 +114,20 @@ class MainWindow(QMainWindow):
     def edit_simple_alert(self):
         def button_clicked():
             dw = self.dialog_widget
-            notification = Notification(dw.alert_message_edit.text())
+            font_family = dw.font_family_edit.text()
+            font_size = dw.font_size_edit.value()
+            if font_family == '':
+                font_family = None
+            if font_size <= 0:
+                font_size = None
+            notification = Notification(dw.alert_message_edit.text(), font_family=font_family,
+                                        font_size=font_size, color_hex=dw.color_edit.text(),
+                                        sound=dw.sound_edit.text())
             trigger_time = dw.date_time_edit.dateTime().toTime_t()
             periodicity = dw.periodicity_combo.itemData(dw.periodicity_combo.currentIndex())
-            main.app.alert_collection.edit(notification, trigger_time, id_alert, periodicity)
+
+            main.app.alert_collection.edit(id_alert, notification=notification, trigger_time=trigger_time,
+                                           periodicity=periodicity)
             dw.close()
 
         selection = self.alert_list_widget.selectionModel().selectedRows()

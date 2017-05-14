@@ -1,5 +1,5 @@
 from _clockalarm import Alert
-from _clockalarm import Notification, main
+from _clockalarm import main
 
 
 class SimpleAlert(Alert):
@@ -7,42 +7,29 @@ class SimpleAlert(Alert):
 
     Attributes:
         trigger_time: The time at which the alert is triggered.
-        message: The text message to display when the alert is triggered.
+        notification: The notification to display when the alert is triggered.
         periodicity: frequency in which the alert is displayed, in seconds.
     """
 
-    def __init__(self, trigger_time, message, periodicity=None):
+    def __init__(self, trigger_time, notification, periodicity=None):
         """Default constructor for the SimpleAlert class."""
         super(SimpleAlert, self).__init__(trigger_time)
-        self._notification = Notification(message)
+        self.notification = notification
         self.periodicity = periodicity
 
     def triggered(self):
         """This method does the same as
         :func:`~_clockalarm.Alert.triggered`
         """
-        self.timeout.emit(self._notification)
+        self.timeout.emit(self.notification)
 
         if not self.periodicity:
             main.app.alert_collection.delete(self.id)
         else:
-            main.app.alert_collection.edit(Notification(self.get_identifier()), self.trigger_time + self.periodicity,
-                                           self.id, self.periodicity)
+            main.app.alert_collection.edit(self.id, trigger_time=self.trigger_time + self.periodicity)
 
     def get_identifier(self):
         """This method does the same as
         :func:`~_clockalarm.Alert.get_identifier`
         """
-        return self._notification.message
-
-    def get_font_family(self):
-        return self._notification.font.family()
-
-    def get_font_size(self):
-        return self._notification.font_size
-
-    def get_sound_name(self):
-        return self._notification.sound
-
-    def get_color_hex(self):
-        return self._notification.color.name()
+        return self.notification.message

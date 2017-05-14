@@ -1,28 +1,47 @@
-import configparser
+import logging
+import pathlib
 from os.path import join, dirname, abspath
 
 from PyQt5.QtGui import QColor, QFont
+from pygame import mixer
+
+from _clockalarm.utils.importExportUtils import get_default_config
+
+base_path = dirname(dirname(abspath(__file__)))
 
 
 class Notification(object):
-    def __init__(self, message):
+    def __init__(self, message, color_hex=None, font_family=None, font_size=None, sound=None):
         self.message = message
-        self.color = None
-        self.font = None
-        self.font_size = None
-        self.sound = None
+        self.color_hex = color_hex
+        self.font_family = font_family
+        self.font_size = font_size
+        self.sound = sound
 
-        self.load_config()
+    def get_font(self):
+        if self.font_family and self.font_size:
+            return QFont(self.font_family, self.font_size)
+        elif self.font_family:
+            return QFont(self.font_family, get_default_config("NOTIFICATION_FONT_SIZE", "int"))
+        elif self.font_size:
+            return QFont(get_default_config("NOTIFICATION_FONT_FAMILY"), self.font_size)
 
-    def load_config(self):
-        base_path = dirname(dirname(abspath(__file__)))
+        return QFont(get_default_config("NOTIFICATION_FONT_FAMILY"),
+                     get_default_config("NOTIFICATION_FONT_SIZE", "int"))
 
-        config = configparser.RawConfigParser()
-        config.read(join(base_path, "config.cfg"))
+    def get_color(self):
+        if self.color_hex:
+            return QColor(self.color_hex)
+        return QColor(get_default_config("NOTIFICATION_COLOR_HEX"))
 
-        self.color = QColor(config.get("default", "NOTIFICATION_COLOR"))
-        self.font_size = config.getint("default", "NOTIFICATION_FONT_SIZE")
-        self.font = QFont(config.get("default", "NOTIFICATION_FONT"), self.font_size, QFont.Bold, True)
-        self.sound = config.get("default", "NOTIFICATION_SOUND")
+    def get_sound(self):
+        if self.sound:
+            _sound_path = pathlib.Path(join(base_path, "_clockalarm", "resources", "sounds", self.sound)).as_posix()
+        else:
+            _sound_path = pathlib.Path(
+                join(base_path, "_clockalarm", "resources", "sounds",
+                     get_default_config("NOTIFICATION_SOUND"))).as_posix()
 
-
+        logging.log(1, "notification sound path: " + _sound_path)
+        mixer.init()
+        return mixer.Sound(_sound_path)

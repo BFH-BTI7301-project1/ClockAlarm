@@ -20,11 +20,11 @@ class NotificationWidget(QWidget):
         self.setAttribute(Qt.WA_ShowWithoutActivating)
 
         """Notification message"""
-        color = self.notification.color
+        color = self.notification.get_color()
         alpha = 140
         rgba = "{r}, {g}, {b}, {a}".format(r=color.red(), g=color.green(), b=color.blue(), a=alpha)
         lbl = QLabel(self.notification.message, self)
-        lbl.setFont(self.notification.font)
+        lbl.setFont(self.notification.get_font())
         lbl.setStyleSheet(
             "QLabel { color : rgba(" + rgba + ")}")
 

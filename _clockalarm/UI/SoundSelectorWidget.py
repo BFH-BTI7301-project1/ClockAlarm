@@ -1,7 +1,7 @@
 import logging
 import pathlib
 import shutil
-from os.path import dirname, abspath, join
+from os.path import dirname, abspath, join, basename
 
 from PyQt5.QtWidgets import QWidget, QPushButton, QLineEdit, QHBoxLayout, QFileDialog, QStyle
 
@@ -33,8 +33,7 @@ class SoundSelectorWidget(QWidget):
 
         self.setLayout(h_layout)
 
-    @staticmethod
-    def button_click():
+    def button_click(self):
         new_sound = QFileDialog.getOpenFileName(None, "Select a sound to import", filter="wav (*.wav *.)")[0]
         if new_sound == '':
             logging.debug("abort sound import")
@@ -46,8 +45,16 @@ class SoundSelectorWidget(QWidget):
         logging.debug("import sound src path: " + new_sound)
         logging.debug("import sound dest path: " + dest)
 
-        shutil.copy(new_sound, dest)
+        try:
+            shutil.move(new_sound, dest)
+        except shutil.Error:
+            logging.debug("the sound file already exist")
+
+        self.set_sound(basename(new_sound))
 
     def set_sound(self, sound):
         self.sound_name = sound
         self.sound_edit.setText(sound)
+
+    def text(self):
+        return self.sound_name
