@@ -1,0 +1,29 @@
+\section{Cycles}
+\label{sec:cycles}
+
+As already mentioned in Section~\ref{sec:documentation} Sphinx made us aware of
+cycles in our code:
+
+\begin{enumerate}
+
+    \item \texttt{SimpleAlert}~$\rightlcurvearrow$~\texttt{main}
+        $\rightlcurvearrow$~\texttt{AlertCollction}~$\rightlcurvearrow$
+        \texttt{SimpleAlert}
+
+        The \texttt{SimpleAlert} class was directly accessing
+        the \texttt{AlertCollection} inside of \texttt{main} to
+        delete \texttt{SimpleAlert}s or update periodic \texttt{SimpleAlert}s.
+        The code doing the \texttt{SimpleAlert} update and delete has been moved
+        to the \texttt{check\_timers(self, trig\_time)} method inside of
+        \texttt{AlertCollection}.
+
+    \item \texttt{AlertCollection}~$\rightlcurvearrow$~\texttt{main}
+        $\rightlcurvearrow$~\texttt{AlertCollection}
+
+        The \texttt{display(self)} method in \texttt{AlertCollection} triggered
+        the actualization method of the \texttt{UI.AlertListWidget} from the
+        \texttt{App} in \texttt{main}.
+
+\end{enumerate}
+
+
