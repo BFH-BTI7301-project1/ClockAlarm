@@ -1,8 +1,10 @@
 import configparser
+import ctypes
 import logging
 import sys
 from os.path import dirname, abspath, join
 
+from PyQt5.Qt import QIcon
 from PyQt5.QtCore import QCoreApplication
 from PyQt5.QtWidgets import QApplication
 
@@ -42,6 +44,10 @@ class App(QApplication):
         self.clock_thread.start()
 
     def init_ui(self):
+        icon_path = join(dirname(abspath(__file__)), 'resources', 'images', 'bfh_logo.png')
+        icon = QIcon(icon_path)
+        self.setWindowIcon(icon)
+
         self.main_window = MainWindow()
         self.main_window.show()
         self.setQuitOnLastWindowClosed(False)
@@ -65,6 +71,9 @@ def main(argv):
     global app
 
     exit_code = EXIT_CODE_REBOOT
+
+    myappid = u'bfh.project1.clockalarm.1-2'  # arbitrary string
+    ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
 
     while exit_code == EXIT_CODE_REBOOT:
         try:
