@@ -1,0 +1,43 @@
+\section{Metaclass}
+
+A metaclass issue was discovered when we tried to apply the new python 3 style
+for abstract classes. In our case, the \texttt{Alert} class is an abstract class
+that extends \texttt{QObject}. As \texttt{QObject} has its metaclass, pyhton
+could not resolve which metaclass \texttt{Alert} should inherit. Therefore a
+special metaclass \texttt{AlertMeta} had to be created. It inherits
+\texttt{QObject}'s metaclass and is abstract. The \texttt{Alert} class then
+has the metaclass \texttt{AlertMeta} and extends
+\texttt{QObject}.~\cite{sim2017meta,maries2015meta}
+
+The difference is shown in Listings~\ref{metapy2} and~\ref{metapy3}.
+
+\lstdefinestyle{custompy}{
+  belowcaptionskip=1\baselineskip,
+  breaklines=true,
+  frame=l,
+  xleftmargin=\parindent,
+  language=Python,
+  showstringspaces=false,
+  basicstyle=\footnotesize\ttfamily,
+  keywordstyle=\bfseries\color{green!40!black},
+  commentstyle=\itshape\color{purple!40!black},
+  identifierstyle=\color{blue},
+  stringstyle=\color{orange},
+}
+\lstset{style=custompy,caption={Abstract class, Python 2.7},label=metapy2}
+\begin{lstlisting}
+...
+class Alert(PyQt5.QtCore.QObject):
+    __metaclass__ = abc.ABCMeta
+    ...
+\end{lstlisting}
+
+\lstset{style=custompy,caption={Abstract class, Python 3.6},label=metapy3}
+\begin{lstlisting}
+...
+class AlertMeta(type(PyQt5.QtCore.QObject), abc.ABC):
+    pass
+
+class Alert(pyqt.QObject, metaclass=AlertMeta):
+    ...
+\end{lstlisting}
