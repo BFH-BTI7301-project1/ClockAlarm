@@ -61,7 +61,7 @@ class AlertCollection(object):
                 else:
                     self.edit(alert.get_id(),
                               trigger_time=alert.get_trigger_time() +
-                              alert.get_periodicity())
+                                           alert.get_periodicity())
 
     def display(self):
         # Culprit
