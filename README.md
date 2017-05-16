@@ -1,4 +1,9 @@
-# ClockAlarm : Projet Vision
+# [ClockAlarm](https://github.com/BFH-BTI7301-project1/ClockAlarm)
+
+[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0) [![Documentation Status](https://readthedocs.org/projects/clockalarm/badge/?version=latest)](http://clockalarm.readthedocs.io/en/latest/?badge=latest) [![Build Status](https://travis-ci.org/BFH-BTI7301-project1/ClockAlarm.svg?branch=master)](https://travis-ci.org/BFH-BTI7301-project1/ClockAlarm) [![Coverage Status](https://coveralls.io/repos/github/BFH-BTI7301-project1/ClockAlarm/badge.svg?branch=master)](https://coveralls.io/github/BFH-BTI7301-project1/ClockAlarm?branch=master)
+
+## Projet Vision
+
 The goal of this project is to develop a replacement for the
 program „kAlarm“ distributed with the KDE desktop
 environment.
