@@ -1,5 +1,4 @@
 import configparser
-import ctypes
 import logging
 import sys
 from os.path import dirname, abspath, join
@@ -72,8 +71,10 @@ def main(argv):
 
     exit_code = EXIT_CODE_REBOOT
 
-    myappid = u'bfh.project1.clockalarm.1-2'  # arbitrary string
-    ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
+    if sys.platform == "win32":
+        import ctypes
+        myappid = u'bfh.project1.clockalarm.1-2'  # arbitrary string
+        ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
 
     while exit_code == EXIT_CODE_REBOOT:
         try:
