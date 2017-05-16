@@ -72,7 +72,7 @@ class MainWindow(QMainWindow):
         grid_layout.addWidget(self.mute_pushbutton, 1, 0, Qt.AlignRight)
 
         # Init QSystemTrayIcon
-        icon_path = join(dirname(dirname(abspath(__file__))), 'resources\\images\\bfh_logo.png')
+        icon_path = join(dirname(dirname(abspath(__file__))), 'resources', 'images', 'bfh_logo.png')
         icon = QIcon(icon_path)
         self.tray_icon = QSystemTrayIcon(self)
         self.tray_icon.setIcon(icon)
