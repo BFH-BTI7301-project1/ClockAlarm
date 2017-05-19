@@ -1,7 +1,7 @@
 import time
 
-from PyQt5.QtCore import QDateTime
-from PyQt5.QtWidgets import QGridLayout, QWidget, QDateTimeEdit, QLabel, QPushButton, QLineEdit, QGroupBox, QComboBox, \
+from PyQt5.QtCore import QDateTime, QTime
+from PyQt5.QtWidgets import QGridLayout, QWidget, QDateTimeEdit, QLabel, QPushButton, QLineEdit, QGroupBox, QTimeEdit, \
     QSpinBox
 
 from _clockalarm.SimpleAlert import SimpleAlert
@@ -15,7 +15,7 @@ class SimpleAlertEditWidget(QWidget):
 
         self.alert_message_edit = None
         self.date_time_edit = None
-        self.periodicity_combo = None
+        self.periodicity_edit = None
         self.font_family_edit = None
         self.font_size_edit = None
         self.color_edit = None
@@ -28,10 +28,8 @@ class SimpleAlertEditWidget(QWidget):
         group_box = QGroupBox(self)
         group_box.setTitle('Set up a new Simple Alert')
         date_time = time.time() + 15
-        self.periodicity_combo = QComboBox()
-        self.periodicity_combo.addItem("Disable", None)
-        self.periodicity_combo.addItem("10 seconds", 10)
-        self.periodicity_combo.addItem("1 minute", 60)
+        self.periodicity_edit = QTimeEdit()
+        self.periodicity_edit.setDisplayFormat("HH:mm:ss")
         self.date_time_edit = QDateTimeEdit(QDateTime.fromSecsSinceEpoch(date_time))
         self.alert_message_edit = QLineEdit()
         self.font_family_edit = QLineEdit()
@@ -46,6 +44,8 @@ class SimpleAlertEditWidget(QWidget):
             group_box.setTitle('Edit a Simple Alert')
             self.alert_message_edit.setText(alert.get_notification().get_message())
             self.date_time_edit.setDateTime(QDateTime.fromSecsSinceEpoch(alert.trigger_time))
+            if alert.periodicity is not None:
+                self.periodicity_edit.setTime(QTime(0, 0).addSecs(alert.periodicity))
             if alert.notification.font_family is not None:
                 self.font_family_edit.setText(alert.notification.font_family)
             if alert.notification.font_size is not None:
@@ -61,7 +61,7 @@ class SimpleAlertEditWidget(QWidget):
         grid_layout.addWidget(QLabel('Date and Time'), 2, 1)
         grid_layout.addWidget(self.date_time_edit, 2, 2)
         grid_layout.addWidget(QLabel('Periodicity'), 3, 1)
-        grid_layout.addWidget(self.periodicity_combo, 3, 2)
+        grid_layout.addWidget(self.periodicity_edit, 3, 2)
         grid_layout.addWidget(QLabel('Font'), 4, 1)
         grid_layout.addWidget(self.font_family_edit, 4, 2)
         grid_layout.addWidget(self.font_size_edit, 4, 3)

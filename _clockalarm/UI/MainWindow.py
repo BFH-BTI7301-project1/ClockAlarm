@@ -1,6 +1,6 @@
 from os.path import dirname, abspath, join
 
-from PyQt5.Qt import QIcon
+from PyQt5.Qt import QIcon, QTime
 from PyQt5.QtCore import QSize, Qt
 from PyQt5.QtWidgets import QMainWindow, QGridLayout, QWidget, QSystemTrayIcon, QMenu, QAction, qApp, QPushButton, \
     QStyle
@@ -109,9 +109,12 @@ class MainWindow(QMainWindow):
     def add_simple_alert(self):
         def button_clicked():
             dw = self.dialog_widget
+            periodicity = QTime(0, 0).secsTo(dw.periodicity_edit.time())
             font_family = dw.font_family_edit.text()
             font_size = dw.font_size_edit.value()
             message = dw.alert_message_edit.text()
+            if periodicity == 0:
+                periodicity = None
             if font_family == '':
                 font_family = None
             if font_size <= 0:
@@ -121,8 +124,7 @@ class MainWindow(QMainWindow):
             notification = Notification(message, font_family=font_family,
                                         font_size=font_size, color_hex=dw.color_edit.text(),
                                         sound=dw.sound_edit.text())
-            new_alert = SimpleAlert(dw.date_time_edit.dateTime().toTime_t(), notification,
-                                    periodicity=dw.periodicity_combo.itemData(dw.periodicity_combo.currentIndex()))
+            new_alert = SimpleAlert(dw.date_time_edit.dateTime().toTime_t(), notification, periodicity=periodicity)
 
             main.app.alert_collection.add(new_alert)
             dw.close()
@@ -136,9 +138,12 @@ class MainWindow(QMainWindow):
     def edit_simple_alert(self):
         def button_clicked():
             dw = self.dialog_widget
+            periodicity = QTime(0, 0).secsTo(dw.periodicity_edit.time())
             font_family = dw.font_family_edit.text()
             font_size = dw.font_size_edit.value()
             message = dw.alert_message_edit.text()
+            if periodicity == 0:
+                periodicity = None
             if font_family == '':
                 font_family = None
             if font_size <= 0:
@@ -149,7 +154,6 @@ class MainWindow(QMainWindow):
                                         font_size=font_size, color_hex=dw.color_edit.text(),
                                         sound=dw.sound_edit.text())
             trigger_time = dw.date_time_edit.dateTime().toTime_t()
-            periodicity = dw.periodicity_combo.itemData(dw.periodicity_combo.currentIndex())
 
             main.app.alert_collection.edit(id_alert, notification=notification, trigger_time=trigger_time,
                                            periodicity=periodicity)
