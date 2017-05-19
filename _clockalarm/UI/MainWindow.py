@@ -111,11 +111,14 @@ class MainWindow(QMainWindow):
             dw = self.dialog_widget
             font_family = dw.font_family_edit.text()
             font_size = dw.font_size_edit.value()
+            message = dw.alert_message_edit.text()
             if font_family == '':
                 font_family = None
             if font_size <= 0:
                 font_size = None
-            notification = Notification(dw.alert_message_edit.text(), font_family=font_family,
+            if message == '':
+                message = "Untitled simple alert"
+            notification = Notification(message, font_family=font_family,
                                         font_size=font_size, color_hex=dw.color_edit.text(),
                                         sound=dw.sound_edit.text())
             new_alert = SimpleAlert(dw.date_time_edit.dateTime().toTime_t(), notification,
@@ -135,11 +138,14 @@ class MainWindow(QMainWindow):
             dw = self.dialog_widget
             font_family = dw.font_family_edit.text()
             font_size = dw.font_size_edit.value()
+            message = dw.alert_message_edit.text()
             if font_family == '':
                 font_family = None
             if font_size <= 0:
                 font_size = None
-            notification = Notification(dw.alert_message_edit.text(), font_family=font_family,
+            if message == '':
+                message = "Untitled simple alert"
+            notification = Notification(message, font_family=font_family,
                                         font_size=font_size, color_hex=dw.color_edit.text(),
                                         sound=dw.sound_edit.text())
             trigger_time = dw.date_time_edit.dateTime().toTime_t()
