@@ -5,7 +5,7 @@ cache: pip
 install:
 - pip install -r stable-req.txt
 script:
-- py.test --cov-report term --cov=.
+- py.test --cov-report term --cov=. _clockalarm/_tests
 after_success:
 - coveralls
 notifications:
