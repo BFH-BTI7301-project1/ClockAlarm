@@ -1,10 +1,11 @@
 language: python
 python:
-    - "3.6"
+- '3.6'
 cache: pip
 install:
-    - pip install -r stable-req.txt
+- pip install -r stable-req.txt
 script:
-    - py.test
+- py.test
 notifications:
-    slack: bfhproj1:0Ldhgv6TTGZ5tUKift6YMBSV
+  slack:
+    secure: NZkDgDhC4HuHI6I7+9NQMyNJEstbv5Cp1ji6jUI5veJXZmsDFrVUNyuIN+BDLmuSTVzVb0r8jeKueeBldVYDghbNJ89qaA6pbbudkW5MDc09S7r4pmE+b0O2b0H1wBrSQBUH97hoUWSkEU0C00tglC5tKLH6iyraHayx4bRRX8rXIGD1IPKXuzYrhx4BSrOb0SqEsOZjTpENPeRg+EJL8g1nhY8b6Y4YvGC4/jl/2sGEpGGnNR/lRv0QGvo3jd69WbYXY49/YqVbttiRtX+xoc6qDiOQpwMcruIDzUTevU6O/yxHFDKxemYk8z5sW93xYqMk7y/ACUGXeu7NlyzRri8vUPmVZGSnyA3ZNxOb6qQD/82sAbD8tz98oZ0SWbfhLQxhH2h8iM0jiyrGS8BsxW/vlAl8iRYUSuEW6ixlWvFkEoKbRtoGCNvFFqw0WiTOp+7JgI6sIzy6BeOLz5giX/ZBxh6/RWIbQPAM+7xE09c3kmUXmb07WDn0TxyXTqRZBogytYhQzri6Rnn/8eCXNbJJwjpI8Ks2TAlmEyFnED8tBpyBKsWusxwRIqK+Hff5FIxRaboapgMMQWWGqIQHdmDdo3TZXI7N+7bIbVRjvCCjqx4c9PqBDxuuEY/SRPa9Z52dMStoL7tCkBmyS7f4is8UO6OR1yb5VNnop9U/2ZM=
