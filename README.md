@@ -11,6 +11,7 @@ ClockAlarm is a cross-platform (linux, Windows, macOS) alarm manager.
 * [Installation](#installation)
 	* [Requirements](#requirements)
 * [Usage](#usage)
+* [Documentation](#documentation)
 * [Bugs](#bugs)
 
 
@@ -37,6 +38,10 @@ ClockAlarm is a cross-platform (linux, Windows, macOS) alarm manager.
 > python3 bin/clockalarm
 
 ```
+
+## Documentation
+
+The documentation can either be found under ```docs/pdf/clockalarm_documentation.pdf``` or [clockalarm.readthedocs.io](https://clockalarm.readthedocs.io)
 
 ## Bugs
 
