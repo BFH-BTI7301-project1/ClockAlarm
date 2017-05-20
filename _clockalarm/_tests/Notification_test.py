@@ -46,4 +46,8 @@ def test_get_sound():
     """
     notification = Notification("Test")
 
-    assert isinstance(notification.get_sound(), mixer.Sound)
+    mixer.init()
+    if mixer.get_num_channels() > 0:
+        assert isinstance(notification.get_sound(), mixer.Sound)
+    else:
+        assert not notification.get_sound()

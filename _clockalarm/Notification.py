@@ -11,7 +11,8 @@ base_path = dirname(dirname(abspath(__file__)))
 
 
 class Notification(object):
-    def __init__(self, message, color_hex=None, font_family=None, font_size=None, sound=None):
+    def __init__(self, message, color_hex=None, font_family=None,
+                 font_size=None, sound=None):
         self.message = message
         self.color_hex = color_hex
         self.font_family = font_family
@@ -30,9 +31,11 @@ class Notification(object):
         if self.font_family and self.font_size:
             return QFont(self.font_family, self.font_size)
         elif self.font_family:
-            return QFont(self.font_family, get_default_config("NOTIFICATION_FONT_SIZE", "int"))
+            return QFont(self.font_family, get_default_config(
+                "NOTIFICATION_FONT_SIZE", "int"))
         elif self.font_size:
-            return QFont(get_default_config("NOTIFICATION_FONT_FAMILY"), self.font_size)
+            return QFont(get_default_config("NOTIFICATION_FONT_FAMILY"),
+                         self.font_size)
 
         return QFont(get_default_config("NOTIFICATION_FONT_FAMILY"),
                      get_default_config("NOTIFICATION_FONT_SIZE", "int"))
@@ -44,7 +47,9 @@ class Notification(object):
 
     def get_sound(self):
         if self.sound:
-            _sound_path = pathlib.Path(join(base_path, "_clockalarm", "resources", "sounds", self.sound)).as_posix()
+            _sound_path = pathlib.Path(join(base_path, "_clockalarm",
+                                            "resources", "sounds",
+                                            self.sound)).as_posix()
         else:
             _sound_path = pathlib.Path(
                 join(base_path, "_clockalarm", "resources", "sounds",
@@ -52,4 +57,9 @@ class Notification(object):
 
         logging.log(1, "notification sound path: " + _sound_path)
         mixer.init()
-        return mixer.Sound(_sound_path)
+        channels = mixer.get_num_channels()
+        logging.log(1, "available audio channels: {0}".format(channels))
+        if channels > 0:
+            return mixer.Sound(_sound_path)
+        else:
+            return None

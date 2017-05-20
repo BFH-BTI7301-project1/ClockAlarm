@@ -6,3 +6,5 @@ install:
     - pip install -r stable-req.txt
 script:
     - py.test
+notifications:
+    slack: bfhproj1:0Ldhgv6TTGZ5tUKift6YMBSV
