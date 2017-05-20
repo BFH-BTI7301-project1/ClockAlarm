@@ -10,7 +10,8 @@ from _clockalarm.SimpleAlert import SimpleAlert
 
 
 class AlertCollection(object):
-    db_path = pathlib.Path(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))).as_posix() + '/alertsDB.json'
+    db_path = pathlib.Path(os.path.dirname(os.path.dirname(
+        os.path.abspath(__file__)))).as_posix() + '/alertsDB.json'
     db = TinyDB(db_path, default_table="alerts")
 
     def __init__(self, nc):
@@ -25,30 +26,40 @@ class AlertCollection(object):
         self.alert_list.append(alert)
         alert.timeout.connect(self._notification_center.add_to_queue)
         alert.id = self.db.insert(
-            {'trigger_time': alert.trigger_time, 'message': alert.get_notification().get_message(),
-             'color_hex': alert.notification.color_hex, 'font_family': alert.notification.font_family,
-             'font_size': alert.notification.font_size, 'sound': alert.notification.sound,
+            {'trigger_time': alert.trigger_time,
+             'message': alert.get_notification().get_message(),
+             'color_hex': alert.notification.color_hex,
+             'font_family': alert.notification.font_family,
+             'font_size': alert.notification.font_size,
+             'sound': alert.notification.sound,
              'periodicity': alert.periodicity})
         self.display()
 
-    def edit(self, id_alert: int, notification: Notification = None, trigger_time: int = None, periodicity: int = None):
-        alert_to_edit = next(alert for alert in self.alert_list if alert.id == id_alert)
+    def edit(self, id_alert: int, notification: Notification = None,
+             trigger_time: int = None, periodicity: int = None):
+        alert_to_edit = next(alert for alert in self.alert_list
+                             if alert.id == id_alert)
         if alert_to_edit:
             if notification:
                 alert_to_edit.notification = notification
-                self.db.update({'message': notification.message, 'color_hex': notification.color_hex,
-                                'font_family': notification.font_family, 'font_size': notification.font_size,
+                self.db.update({'message': notification.message,
+                                'color_hex': notification.color_hex,
+                                'font_family': notification.font_family,
+                                'font_size': notification.font_size,
                                 'sound': notification.sound}, eids=[id_alert])
             if periodicity:
                 alert_to_edit.periodicity = periodicity
-                self.db.update({'periodicity': alert_to_edit.periodicity}, eids=[id_alert])
+                self.db.update({'periodicity': alert_to_edit.periodicity},
+                               eids=[id_alert])
             if trigger_time:
                 alert_to_edit.trigger_time = trigger_time
-                self.db.update({'trigger_time': alert_to_edit.trigger_time}, eids=[id_alert])
+                self.db.update({'trigger_time': alert_to_edit.trigger_time},
+                               eids=[id_alert])
             self.display()
 
     def delete(self, id_alert: int):
-        self.alert_list = [alert for alert in self.alert_list if alert.id != id_alert]
+        self.alert_list = [alert for alert in self.alert_list
+                           if alert.id != id_alert]
         self.db.remove(eids=[id_alert])
         self.display()
 
@@ -61,7 +72,7 @@ class AlertCollection(object):
                 else:
                     self.edit(alert.get_id(),
                               trigger_time=alert.get_trigger_time() +
-                                           alert.get_periodicity())
+                              alert.get_periodicity())
 
     def display(self):
         # Culprit
@@ -69,8 +80,10 @@ class AlertCollection(object):
 
     def load_db(self):
         for alert in self.db.all():
-            notification = Notification(alert["message"], color_hex=alert["color_hex"],
-                                        font_family=alert["font_family"], font_size=alert["font_size"],
+            notification = Notification(alert["message"],
+                                        color_hex=alert["color_hex"],
+                                        font_family=alert["font_family"],
+                                        font_size=alert["font_size"],
                                         sound=alert["sound"])
             new_alert = SimpleAlert(alert["trigger_time"], notification)
             if "periodicity" in alert:
@@ -83,9 +96,12 @@ class AlertCollection(object):
     def save_db(self):
         self.db.purge()
         for alert in self.alert_list:
-            self.db.insert({'trigger_time': alert.trigger_time, 'message': alert.get_notification().get_message(),
-                            'font_family': alert.notification.font_family, 'font_size': alert.notification.font_size,
-                            'color_hex': alert.notification.color_hex, 'sound': alert.notification.sound,
+            self.db.insert({'trigger_time': alert.trigger_time,
+                            'message': alert.get_notification().get_message(),
+                            'font_family': alert.notification.font_family,
+                            'font_size': alert.notification.font_size,
+                            'color_hex': alert.notification.color_hex,
+                            'sound': alert.notification.sound,
                             'periodicity': alert.periodicity})
 
     def clean_db(self):

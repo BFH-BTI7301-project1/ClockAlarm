@@ -2,16 +2,16 @@ from os.path import dirname, abspath, join
 
 from PyQt5.Qt import QIcon, QTime
 from PyQt5.QtCore import QSize, Qt
-from PyQt5.QtWidgets import QMainWindow, QGridLayout, QWidget, QSystemTrayIcon, QMenu, QAction, qApp, QPushButton, \
-    QStyle
+from PyQt5.QtWidgets import QMainWindow, QGridLayout, QWidget, \
+        QSystemTrayIcon, QMenu, QAction, qApp, QPushButton, QStyle
 
 from _clockalarm import Notification
 from _clockalarm import main
 from _clockalarm.SimpleAlert import SimpleAlert
 from _clockalarm.UI.AlertListWidget import AlertListWidget
 from _clockalarm.UI.SimpleAlertEditWidget import SimpleAlertEditWidget
-from _clockalarm.utils.importExportUtils import import_alerts_file, export_alerts_file, set_default_config, \
-    get_default_config
+from _clockalarm.utils.importExportUtils import import_alerts_file, \
+        export_alerts_file, set_default_config, get_default_config
 
 
 class MainWindow(QMainWindow):
