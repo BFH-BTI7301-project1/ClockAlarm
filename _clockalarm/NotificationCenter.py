@@ -1,5 +1,7 @@
 import math
 import threading
+import logging
+import pygame
 from collections import deque
 from os.path import dirname, abspath
 
@@ -19,7 +21,8 @@ class NotificationCenter(object):
         super(NotificationCenter, self).__init__()
         self.parent = parent
         self._screen_geometry = screen_geometry
-        self._max_popups = math.floor((screen_geometry.height() * 0.9) / (WIDGET_SIZE[1] + PADDING))
+        self._max_popups = math.floor((screen_geometry.height() * 0.9) /
+                                      (WIDGET_SIZE[1] + PADDING))
 
         self._popup_queue = deque([])
         self._displayed_popups = []
@@ -42,7 +45,9 @@ class NotificationCenter(object):
 
         i = 0
         for popup in self._displayed_popups:
-            popup.setGeometry(QRect(self.ax, self.ay + i * (WIDGET_SIZE[1] + PADDING), WIDGET_SIZE[0], WIDGET_SIZE[1]))
+            popup.setGeometry(QRect(self.ax,
+                                    self.ay + i * (WIDGET_SIZE[1] + PADDING),
+                                    WIDGET_SIZE[0], WIDGET_SIZE[1]))
             i += 1
 
         self._lock.acquire()
@@ -51,12 +56,17 @@ class NotificationCenter(object):
         else:
             new_notification = self._popup_queue.popleft()
             self._lock.release()
-            self.display_popup(QRect(self.ax, self.ay + i * (WIDGET_SIZE[1] + PADDING), WIDGET_SIZE[0], WIDGET_SIZE[1]),
+            self.display_popup(QRect(self.ax,
+                                     self.ay + i * (WIDGET_SIZE[1] + PADDING),
+                                     WIDGET_SIZE[0], WIDGET_SIZE[1]),
                                new_notification)
 
     def display_popup(self, geom: QRect, notification):
         if not self.parent.MUTE:
-            notification.get_sound().play()
+            try:
+                notification.get_sound().play()
+            except pygame.error:
+                logging.log(1, "unavailable audio device")
 
         popup = NotificationWidget(geom, notification)
 

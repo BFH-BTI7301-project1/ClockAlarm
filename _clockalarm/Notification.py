@@ -57,9 +57,4 @@ class Notification(object):
 
         logging.log(1, "notification sound path: " + _sound_path)
         mixer.init()
-        channels = mixer.get_num_channels()
-        logging.log(1, "available audio channels: {0}".format(channels))
-        if channels > 0:
-            return mixer.Sound(_sound_path)
-        else:
-            return None
+        return mixer.Sound(_sound_path)
