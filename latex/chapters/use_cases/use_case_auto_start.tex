@@ -1,21 +1,37 @@
 \subsection{Program Auto Start}\label{subsec:usecase_auto_start}
-TODO
+
+Program starts at OS start.
+
 \subsubsection{Scope}
+
+A computer running any common operating system (Windows, macOS, Linux).
 
 \subsubsection{Primary actor}
 
+User or Administrator
+
 \subsubsection{Precondition}
+The computer is on. The ClockAlarm application is correctly installed.
 
 \subsubsection{Postcondition}
 
+ClockAlarm is running and the manager window is hidden in the system tray. The
+user is logged on his personnal ClockAlarm session.
+
 \subsubsection{Main success scenario}
 \begin{enumerate}
-	\item \label{itm:denomination} 
+    %\item \label{itm:denomination} 
+    \item The system launches the ClockAlarm application.
+    \item\label{itm:ucas_start} The application starts and loads
+        configurations and alarms from the user's personal files folder.
+    \item The manager window is hidden in the system tray.
 \end{enumerate}
+
 \subsubsection{Extension}
 \begin{enumerate}
-	\item[\ref{itm:denominationt}.]
-	\begin{enumerate}[i]
-		\item 
-	\end{enumerate}
+    \item[\ref{itm:ucas_start}.] Configurations or alerts can not be loaded
+    \begin{enumerate}[i]
+        \item The application creates a new default configuration file and an
+            empty alert file.
+    \end{enumerate}
 \end{enumerate}
