@@ -105,7 +105,7 @@ def test_get_sound():
         sound = Notification("Test", sound="floop.wave").get_sound()
         assert isinstance(sound, pygame.mixer.Sound)
     except pygame.error as e:
-        print("test_get_sound: " + e)
+        print("test_get_sound: {}".format(str(e)))
 
 
 def test_get_sound_corrupted():
@@ -120,4 +120,4 @@ def test_get_sound_corrupted():
         sound = Notification("Test").get_sound()
         assert isinstance(sound, pygame.mixer.Sound)
     except pygame.error as e:
-        print("test_get_sound_corrupted" + e)
+        print("test_get_sound_corrupted {}".format(str(e)))
