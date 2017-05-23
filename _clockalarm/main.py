@@ -31,6 +31,7 @@ from _clockalarm.UI.MainWindow import MainWindow
 EXIT_CODE_REBOOT = -11231351  # error code launch by App in case of reboot
 
 app = None  # global
+
 log_format = '%(asctime)s - %(levelname)-8s : %(message)s'
 logging.basicConfig(stream=sys.stderr, level=logging.DEBUG, format=log_format)  # set logging level and format
 
@@ -48,7 +49,7 @@ class App(QApplication):
         Override the class constructor
         
         Attributes:
-            *argv: Pointer on the argument passed to the main
+            *argv: no expected argv
             
         """
         super(App, self).__init__(*argv)
@@ -115,7 +116,7 @@ def main(argv):
     """Main function called when application starts
 
     Attributes:
-        argv: initial program arguments
+        argv: no expected argv
         
     Returns:
         the system exit code
