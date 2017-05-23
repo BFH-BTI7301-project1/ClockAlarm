@@ -19,13 +19,14 @@ ClockAlarm is a cross-platform (linux, Windows, macOS) alarm manager.
 
 ### Requirements
 
+* python => 3.6
 * pygame => 1.9.3
 * PyQt5 => 5.8.2
 * sip => 4.19.2
 * tinydb => 3.2.2
 
 ```bash
-> pip install pygame pyqt5 sip tinydb
+> pip3 install pygame pyqt5 sip tinydb
 ```
 
 ```bash
