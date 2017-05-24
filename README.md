@@ -11,6 +11,7 @@ ClockAlarm is a cross-platform (linux, Windows, macOS) alarm manager.
 * [Installation](#installation)
 	* [Requirements](#requirements)
 * [Usage](#usage)
+* [Development](#development)
 * [Documentation](#documentation)
 * [Bugs](#bugs)
 
@@ -38,6 +39,23 @@ ClockAlarm is a cross-platform (linux, Windows, macOS) alarm manager.
 ```bash
 > python3 bin/clockalarm
 
+```
+
+## Development
+
+To develop ClockAlarm and run the tests the following packages are necessary:
+
+* coverage >= 4.4.1
+* pytest >= 3.0.7
+* pytest-cov >= 2.5.1
+* pytest-qt >= 2.1.0
+* pytest-catchlog >= 1.2.2
+* coveralls >= 1.1
+
+Run the following command:
+
+```bash
+> pip3 install coverage pytest pytest-cov pytest-qt pytest-catchlog coveralls
 ```
 
 ## Documentation
