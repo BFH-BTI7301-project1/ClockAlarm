@@ -35,5 +35,5 @@ def test_simple_alert_triggered(qtbot):
     """Test the :class:`~_clockalarm.SimpleAlert.triggered` method."""
     global notification
     simplealert = SimpleAlert(10, notification)
-    with qtbot.waitSignal(simplealert.timeout, raising=True):
+    with qtbot.waitSignal(simplealert.timeout, raising=True, timeout=1000):
         simplealert.triggered()
