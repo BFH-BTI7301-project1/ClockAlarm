@@ -14,13 +14,13 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import logging
 import math
 import threading
-import logging
-import pygame
 from collections import deque
 from os.path import dirname, abspath
 
+import pygame
 from PyQt5 import QtMultimedia
 from PyQt5.QtCore import QRect
 

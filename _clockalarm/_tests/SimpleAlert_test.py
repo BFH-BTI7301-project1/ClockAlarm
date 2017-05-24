@@ -1,6 +1,5 @@
-from _clockalarm.SimpleAlert import SimpleAlert
 from _clockalarm import Notification
-
+from _clockalarm.SimpleAlert import SimpleAlert
 
 notification = Notification("Test")
 

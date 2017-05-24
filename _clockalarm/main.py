@@ -27,6 +27,7 @@ from _clockalarm import Clock
 from _clockalarm.AlertCollection import AlertCollection
 from _clockalarm.NotificationCenter import NotificationCenter
 from _clockalarm.UI.MainWindow import MainWindow
+from _clockalarm.utils import importExportUtils
 
 EXIT_CODE_REBOOT = -11231351  # error code launch by App in case of reboot
 
@@ -44,7 +45,7 @@ class App(QApplication):
     MUTE = None  # general mute of the application
 
     # Override the class constructor
-    def __init__(self, *argv):
+    def __init__(self, default_config_path, alert_db_path, *argv):
         """Default App constructor
         Override the class constructor
         
@@ -53,6 +54,8 @@ class App(QApplication):
             
         """
         super(App, self).__init__(*argv)
+        importExportUtils.DEFAULT_CONFIG_PATH = default_config_path
+        importExportUtils.ALERT_DB_PATH = alert_db_path
         self.main_window = None
         self.notification_center = None
         self.alert_collection = None
@@ -68,13 +71,12 @@ class App(QApplication):
         self.init_ui()
 
     def init_config(self):
-        """Open the config.cfg file and use a parser to retrieve default values
+        """Open the config_test.cfg file and use a parser to retrieve default values
         
         """
         logging.debug("loading configuration file ...")
-        config_file_path = join(dirname(dirname(abspath(__file__))), "config.cfg")
         config = configparser.RawConfigParser()  # instantiate a parser to read the stream
-        config.read(config_file_path)
+        config.read(importExportUtils.DEFAULT_CONFIG_PATH)
         self.CLOCK_FREQUENCY = config.getint("default", "CLOCK_FREQUENCY")
         self.MUTE = config.getboolean("default", "MUTE")
         logging.debug("success")
@@ -116,7 +118,9 @@ def main(argv):
     """Main function called when application starts
 
     Attributes:
-        argv: no expected argv
+        argv (optional): path of the config file and the alertDB file
+            usage: program configFile alrtDBFile
+            If no argument entered, default is config_test.cfg and alertDB.json
         
     Returns:
         the system exit code
@@ -132,10 +136,19 @@ def main(argv):
         myappid = u'bfh.project1.clockalarm.1-2'  # arbitrary string (unicode)
         ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
 
+    default_config_path = join(dirname(dirname(abspath(__file__))), "config_test.cfg")  # default config path
+    alert_db_path = join(dirname(dirname(abspath(__file__))), "alertsDB_test.json")  # default db path
+    if len(argv) > 1:  # parse the config path argument
+        default_config_path = argv[1]
+    if len(argv) > 2:  # parse the db path argument
+        alert_db_path = argv[2]
+    logging.info("Default configuration file path: " + default_config_path)
+    logging.info("Default alertDB path: " + alert_db_path)
+
     while exit_code == EXIT_CODE_REBOOT:
         # start or reboot
         try:
-            app = App(sys.argv)
+            app = App(default_config_path, alert_db_path, argv)
             app.init_alert_collection()
         except RuntimeError as e:
             logging.error("RuntimeError : " + e.args[0])

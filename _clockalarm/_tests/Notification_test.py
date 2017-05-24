@@ -1,9 +1,17 @@
+from os.path import dirname, abspath, join
+
 import pygame
 import pytest
 from PyQt5.QtGui import QColor, QFont
 
 from _clockalarm import Notification
-from _clockalarm.utils.importExportUtils import get_default_config
+from _clockalarm.utils import importExportUtils
+
+
+@pytest.fixture
+def init_paths():
+    importExportUtils.DEFAULT_CONFIG_PATH = join(dirname(abspath(__file__)), "config_test.cfg")
+    importExportUtils.ALERT_DB_PATH = join(dirname(abspath(__file__)), "alertsDB_test.json")
 
 
 def test_notification_constructor():
@@ -48,31 +56,31 @@ def test_get_font():
     assert font.pointSize() == 10
 
 
-def test_get_font_miss_one_arg():
+def test_get_font_miss_one_arg(init_paths):
     """Tests the :class:`~_clockalarm.Notification.get_font` method with one parameter missing
     """
     notification = Notification("Test", font_size=10)
     font = notification.get_font()
     assert isinstance(font, QFont)
-    assert font.family() == get_default_config("NOTIFICATION_FONT_FAMILY")
+    assert font.family() == importExportUtils.get_default_config("NOTIFICATION_FONT_FAMILY")
     assert font.pointSize() == 10
 
     notification = Notification("Test", font_family="helvetica")
     font = notification.get_font()
     assert isinstance(font, QFont)
     assert font.family() == "helvetica"
-    assert font.pointSize() == get_default_config("NOTIFICATION_FONT_SIZE", "int")
+    assert font.pointSize() == importExportUtils.get_default_config("NOTIFICATION_FONT_SIZE", "int")
 
 
-def test_get_font_miss_two_arg():
+def test_get_font_miss_two_arg(init_paths):
     """Tests the :class:`~_clockalarm.Notification.get_font` method without any
     font given.
     """
     notification = Notification("Test")
     font = notification.get_font()
     assert isinstance(font, QFont)
-    assert font.family() == get_default_config("NOTIFICATION_FONT_FAMILY")
-    assert font.pointSize() == get_default_config("NOTIFICATION_FONT_SIZE", "int")
+    assert font.family() == importExportUtils.get_default_config("NOTIFICATION_FONT_FAMILY")
+    assert font.pointSize() == importExportUtils.get_default_config("NOTIFICATION_FONT_SIZE", "int")
 
 
 def test_get_color():
@@ -85,7 +93,7 @@ def test_get_color():
     assert color.name() == "#ff5500"
 
 
-def test_get_color_miss_arg():
+def test_get_color_miss_arg(init_paths):
     """Tests the :class:`~_clockalarm.Notification.get_color` method without any
     color given.
     """
@@ -93,7 +101,7 @@ def test_get_color_miss_arg():
     color = notification.get_color()
 
     assert isinstance(color, QColor)
-    assert color.name() == get_default_config("NOTIFICATION_COLOR_HEX")
+    assert color.name() == importExportUtils.get_default_config("NOTIFICATION_COLOR_HEX")
 
 
 def test_get_sound():

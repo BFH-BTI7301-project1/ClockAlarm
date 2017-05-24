@@ -14,8 +14,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import os.path
-import pathlib
 import time
 
 from tinydb import TinyDB, Query
@@ -23,15 +21,13 @@ from tinydb import TinyDB, Query
 from _clockalarm import Notification
 from _clockalarm import main
 from _clockalarm.SimpleAlert import SimpleAlert
+from _clockalarm.utils import importExportUtils
 
 
 class AlertCollection(object):
-    db_path = pathlib.Path(os.path.dirname(os.path.dirname(
-        os.path.abspath(__file__)))).as_posix() + '/alertsDB.json'
-    db = TinyDB(db_path, default_table="alerts")
-
     def __init__(self, nc):
         super(self.__class__, self).__init__()
+        self.db = TinyDB(importExportUtils.ALERT_DB_PATH, default_table="alerts")
         self._notification_center = nc
         self.alert_list = []
         self.clean_db()
@@ -88,7 +84,7 @@ class AlertCollection(object):
                 else:
                     self.edit(alert.get_id(),
                               trigger_time=alert.get_trigger_time() +
-                              alert.get_periodicity())
+                                           alert.get_periodicity())
 
     def display(self):
         # Culprit
