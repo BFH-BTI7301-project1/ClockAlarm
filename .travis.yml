@@ -4,7 +4,7 @@ python:
 cache: pip
 before_install:
 - sudo apt-get -qq update
-- sudo apt-get install -y libpulse
+- sudo apt-get install -y libpulse-dev
 install:
 - pip install -r stable-req.txt
 before_script:
