@@ -19,16 +19,17 @@ import time
 from tinydb import TinyDB, Query
 
 from _clockalarm import Notification
-from _clockalarm import main
 from _clockalarm.SimpleAlert import SimpleAlert
 from _clockalarm.utils import importExportUtils
 
 
 class AlertCollection(object):
-    def __init__(self, nc):
+    def __init__(self, nc, parent):
         super(self.__class__, self).__init__()
-        self.db = TinyDB(importExportUtils.ALERT_DB_PATH, default_table="alerts")
         self._notification_center = nc
+        self.parent = parent
+
+        self.db = TinyDB(importExportUtils.ALERT_DB_PATH, default_table="alerts")
         self.alert_list = []
         self.clean_db()
         self.load_db()
@@ -88,7 +89,7 @@ class AlertCollection(object):
 
     def display(self):
         # Culprit
-        main.app.main_window.alert_list_widget.actualize(self.alert_list)
+        self.parent.main_window.alert_list_widget.actualize(self.alert_list)
 
     def load_db(self):
         for alert in self.db.all():

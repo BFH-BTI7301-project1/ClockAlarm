@@ -17,7 +17,7 @@
 import configparser
 import logging
 import sys
-from os.path import dirname, abspath, join
+from os.path import dirname, abspath, join, isfile
 
 from PyQt5.Qt import QIcon
 from PyQt5.QtCore import QCoreApplication
@@ -54,8 +54,14 @@ class App(QApplication):
             
         """
         super(App, self).__init__(*argv)
+
+        if not isfile(default_config_path) or not default_config_path.lower().endswith('.cfg'):
+            raise ValueError("Incorrect configuration file, give a .cfg file")
+        if not isfile(alert_db_path) or not alert_db_path.lower().endswith('.json'):
+            raise ValueError("Incorrect database file, give a .json file")
         importExportUtils.DEFAULT_CONFIG_PATH = default_config_path
         importExportUtils.ALERT_DB_PATH = alert_db_path
+
         self.main_window = None
         self.notification_center = None
         self.alert_collection = None
@@ -110,7 +116,7 @@ class App(QApplication):
             The alerts will be loaded from the default database
             
         """
-        self.alert_collection = AlertCollection(self.notification_center)
+        self.alert_collection = AlertCollection(self.notification_center, self)
         self.clock_thread.tick.connect(self.alert_collection.check_timers)
 
 
@@ -136,8 +142,8 @@ def main(argv):
         myappid = u'bfh.project1.clockalarm.1-2'  # arbitrary string (unicode)
         ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
 
-    default_config_path = join(dirname(dirname(abspath(__file__))), "config_test.cfg")  # default config path
-    alert_db_path = join(dirname(dirname(abspath(__file__))), "alertsDB_test.json")  # default db path
+    default_config_path = join(dirname(dirname(abspath(__file__))), "config.cfg")  # default config path
+    alert_db_path = join(dirname(dirname(abspath(__file__))), "alertsDB.json")  # default db path
     if len(argv) > 1:  # parse the config path argument
         default_config_path = argv[1]
     if len(argv) > 2:  # parse the db path argument
