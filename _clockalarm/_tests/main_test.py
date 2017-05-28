@@ -42,7 +42,7 @@ def test_app_constructor_nonexistent_argument():
 
 def test_app_constructor():
     """Tests the :class:`~_clockalarm.main.App` constructor.
-    
+
     """
     argv = ["file", test_config_path, test_alertsDB_path]
     app = main.App(argv[1], argv[2], argv)
@@ -54,16 +54,6 @@ def test_app_constructor():
     assert isinstance(app.clock_thread, Clock)
     assert app.alert_collection is None  # alert_collection is not initializes in constructor
 
-    app.clock_thread.stop()
-
-
-def test_app_init_alert_collection():
-    """Tests the :class:`~_clockalarm.main.App` init_alert_collection method.
-
-    """
-
-    argv = ["file", test_config_path, test_alertsDB_path]
-    app = main.App(argv[1], argv[2], argv)
     app.init_alert_collection()
     assert isinstance(app.alert_collection, AlertCollection.AlertCollection)
 
