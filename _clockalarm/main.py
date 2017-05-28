@@ -163,6 +163,7 @@ def main(argv):
 
         # properly close the App
         app.clock_thread.stop()
+        app.alert_collection.db.close()
         app.main_window.setVisible(False)
         app.main_window.tray_icon.setVisible(False)
         app = None
