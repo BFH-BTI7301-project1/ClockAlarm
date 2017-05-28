@@ -46,8 +46,9 @@ class NotificationWidget(QWidget):
         alpha = 200
         rgba = "{r}, {g}, {b}, {a}".format(r=color.red(), g=color.green(), b=color.blue(), a=alpha)
         lbl = QLabel(self.notification.message, self)
+        lbl.setAlignment(Qt.AlignTop)
         lbl.setWordWrap(True)
-        lbl.setGeometry(QRect(30, 25, geom.width() - 2*28, geom.height()/2 - 10))
+        lbl.setGeometry(QRect(30, 25, geom.width() - 2 * 28, geom.height() / 2 - 10))
         lbl.setFont(self.notification.get_font())
         lbl.setStyleSheet(
             "QLabel { color : rgba(" + rgba + ")}")
