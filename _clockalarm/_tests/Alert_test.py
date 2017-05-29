@@ -1,6 +1,5 @@
 from _clockalarm.Alert import Alert
 
-
 alert = Alert(3)
 
 
