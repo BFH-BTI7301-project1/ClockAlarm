@@ -58,9 +58,17 @@ Run the following command:
 > pip3 install coverage pytest pytest-cov pytest-qt pytest-catchlog coveralls
 ```
 
+Run the tests:
+
+```bash
+> py.test --cov-report term --cov=. _clockalarm/_tests
+```
+
 ## Documentation
 
 The documentation can either be found under ```docs/pdf/clockalarm_documentation.pdf``` or [clockalarm.readthedocs.io](https://clockalarm.readthedocs.io)
+
+You can also compile it yourself. Make sure that Sphinx (>= 1.6.1) is installed. The simply run ```make html``` in the ```/docs```directory.
 
 ## Bugs
 
