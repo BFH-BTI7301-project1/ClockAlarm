@@ -5,15 +5,35 @@
  */
 
 project clal "ClockAlarm" 2017-02-21 +16w {
+  # Set the default time zone for the project. If not specified, UTC is used.
   timezone "Europe/Zurich"
+  # Hide the clock time. Only show the date.
   timeformat "%Y-%m-%d"
+  # Use US format for numbers
   numberformat "-" "" "," "." 1
+  # Use US financial format for currency values. Don't show cents.
   currencyformat "(" ")" "," "." 0
-  now 2017-05-15-08:00
+  # Today date
+  now 2017-05-29-08:00
+  # The currency for all money values is the Euro.
   currency "CHF"
+
+  weekstartsmonday
+  workinghours tue 8:00 - 12:00
+  workinghours wed 13:00 - 17:00
+  workinghours sat, sun 10:00 - 12:00, 13:00 - 15:00
+
+  scenario plan "Plan"{
+
+  }
+
+  # resource
+  extend resource {
+    text Phone "Phone"
+  }
 }
 
-copyright "© 2017 BFH TI"
+copyright "© 2017 Loïc Charrière, Samuel Gauthier"
 
 leaves holiday "Spring break" 2017-04-10 +4d
 leaves holiday "Easter Monday" 2017-04-17
@@ -32,7 +52,7 @@ resource proj_supervisor "Claude Fuhrer" {
 }
 
 resource dev "Developers"{
-  manager proj_supervisor
+  managers proj_supervisor
   resource charl1 "Loïc Charrière"{
     email "cahrl1@bfh.ch"
   }
@@ -42,7 +62,205 @@ resource dev "Developers"{
   flags team
 }
 
+# List of all the tasks
 task ClAl "ClockAlarm" {
-  chargeset dev
+  # chargeset dev
   responsible proj_supervisor
+
+  task req "Requirements" {
+    effort 4d
+    ${allocate_developers}
+    depends !deliveries.start
+  }
+
+  task software "Software Development" {
+    depends !req
+
+    task req_tsan "Time System and Notifications" {}
+
+    task req_lcamnl "Launch ClockAlarm manager (no login)" {}
+
+    task req_pdb "Persistent Database" {}
+
+    task req_pas "Program Auto Start" {}
+
+    task req_sanasa "Setup a new alert: Simple alert" {}
+
+    task req_daasapa "Delete an alert: Simple and Periodic alert" {}
+
+    task req_eaasapa "Edit an alert: Simple and Periodic alert" {}
+
+    task req_sanapa "Setup a new alert: Periodic alert" {}
+
+    task req_sanaes "Setup a new alert: E-mail sender" {}
+
+    task req_daaes "Delete an alert: E-mail sender" {}
+
+    task req_eaaes "Edit an alert: E-mail sender" {}
+
+    task req_edc "Edit Default Configuration" {}
+
+    task req_ia "Import Alerts" {}
+
+    task req_ea "Export Alerts" {}
+
+    task req_sanac "Setup a new alert category" {}
+
+    task req_daac "Delete an alert category" {}
+
+    task req_eaac "Edit an alert category" {}
+
+    task req_ic "Import Configuration" {}
+
+    task req_ec "Export Configuration" {}
+
+    task req_smon "Silent mode ON" {}
+
+    task req_smoff "Silent mode OFF" {}
+
+    task req_mac "Mute a category" {}
+
+    task req_uac "Unmute a category" {}
+
+    task req_sa "Snooze Alert" {}
+
+  }
+
+  task test "Software testing" {
+    depends !software
+  }
+
+  task manual "Manual" {
+    effort 2d
+    ${allocate_developers}
+    depends !software
+  }
+
+  task deliveries "Milestones" {
+
+    task start "Project start" {
+      start ${projectstart}
+    }
+
+    task time_system_notifications "Time System and Notifications" {}
+
+    task persistent_db "Persistent Database" {}
+
+    task persistence "Persistence & Start at runtime" {}
+
+    task add_edit_delete_alerts "Add/Delete/Edit Alerts" {}
+
+    task default_conf "Default Configurations & Alerts Management" {}
+
+    task categories "Categories" {}
+
+    task import_export_conf_file "Import/Export Configuration File" {}
+
+    task disable_notifs "Disable Notifications" {}
+
+    task snooze_alert "Snooze Alert" {}
+
+    task end "Project end" {}
+
+  }
+}
+
+navigator navbar {
+  hidereport @none
+}
+
+macro TaskTip [
+  tooltip istask() -8<-
+    '''Start: ''' <-query attribute='start'->
+    '''End: ''' <-query attribute='end'->
+    ----
+    '''Resources:'''
+
+    <-query attribute='resources'->
+    ----
+    '''Precursors: '''
+
+    <-query attribute='precursors'->
+    ----
+    '''Followers: '''
+
+    <-query attribute='followers'->
+    ->8-
+]
+
+taskreport overview "" {
+  columns bsi { title 'WBS' },
+          name, start, end, effort,
+          chart { ${TaskTip} }
+  timeformat "%a %Y-%m-%d"
+  loadunit days
+  caption 'All effort values are in man days.'
+}
+
+textreport frame "" {
+  header -8<-
+    == ClockAlarm Project ==
+    <[navigator id="navbar"]>
+  ->8-
+  footer "----"
+  textreport index "Overview" {
+    formats html
+    center '<[report id="overview"]>'
+  }
+}
+
+# Macro to set the background color of a cell according to the alert
+# level of the task.
+macro AlertColor [
+  cellcolor plan.alert = 0 "#00D000" # green
+  cellcolor plan.alert = 1 "#D0D000" # yellow
+  cellcolor plan.alert = 2 "#D00000" # red
+]
+
+taskreport status "" {
+  columns bsi { width 50 title 'WBS' }, name { width 150 },
+          start { width 100 }, end { width 100 },
+          effort { width 100 },
+          alert { tooltip plan.journal
+                          != '' "<-query attribute='journal'->" width 150 },
+          status { width 150 }
+  scenarios plan
+
+  taskreport dashboard "" {
+    headline "Project Dashboard (<-query attribute='now'->)"
+    columns name { title "Task" ${AlertColor} width 200},
+            resources { width 200 ${AlertColor}
+                        listtype bullets
+                        listitem "<-query attribute='name'->"
+                        start ${projectstart} end ${projectend} },
+            alerttrend { title "Trend" ${AlertColor} width 50 },
+            journal { width 350 ${AlertColor} }
+    journalmode status_up
+    journalattributes headline, author, date, summary, details
+    hidetask ~hasalert(0)
+    sorttasks alert.down, plan.end.up
+    period %{${now} - 1w} +1w
+  }
+  taskreport completed "" {
+    headline "Already completed tasks"
+    hidetask ~(plan.end <= ${now})
+  }
+  taskreport ongoing "" {
+    headline "Ongoing tasks"
+    hidetask ~((plan.start <= ${now}) & (plan.end > ${now}))
+  }
+  taskreport future "" {
+    headline "Future tasks"
+    hidetask ~(plan.start > ${now})
+  }
+}
+
+# A list of all tasks with the percentage completed for each task
+taskreport deliveries "" {
+  headline "Project Deliverables"
+  columns bsi { title 'WBS' }, name, start, end, note { width 150 }, complete,
+          chart { ${TaskTip} }
+  taskroot ClAl.deliveries
+  hideresource @all
+  scenarios plan
 }
