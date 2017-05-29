@@ -203,9 +203,33 @@ textreport frame "" {
     <[navigator id="navbar"]>
   ->8-
   footer "----"
+
   textreport index "Overview" {
     formats html
     center '<[report id="overview"]>'
+  }
+
+  textreport "Status" {
+    formats html
+    center -8<-
+      <[report id="status.dashboard"]>
+      ----
+      <[report id="status.completed"]>
+      ----
+      <[report id="status.ongoing"]>
+      ----
+      <[report id="status.future"]>
+    ->8-
+  }
+
+  textreport development "Development" {
+    formats html
+    center '<[report id="development"]>'
+  }
+
+  textreport "Deliveries" {
+    formats html
+    center '<[report id="deliveries"]>'
   }
 }
 
@@ -253,6 +277,17 @@ taskreport status "" {
     headline "Future tasks"
     hidetask ~(plan.start > ${now})
   }
+}
+
+# A list of tasks showing the resources assigned to each task.
+taskreport development "" {
+  scenarios plan
+  headline "Development - Resource Allocation Report"
+  columns bsi { title 'WBS' }, name, start, end, effort { title "Work" },
+          duration, chart { ${TaskTip} scale day width 500 }
+  timeformat "%Y-%m-%d"
+  hideresource ~(isleaf() & isleaf_())
+  sortresources name.up
 }
 
 # A list of all tasks with the percentage completed for each task
