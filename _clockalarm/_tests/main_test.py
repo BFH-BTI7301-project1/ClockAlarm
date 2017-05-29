@@ -16,32 +16,6 @@ def init_paths():
     importExportUtils.ALERT_DB_PATH = join(dirname(abspath(__file__)), "alertsDB_test.json")
 
 
-def test_app_constructor():
-    """Tests the :class:`~_clockalarm.main.App` constructor.
-    
-    """
-    argv = ["file", test_config_path, test_alertsDB_path]
-    app = main.App(argv[1], argv[2], argv)
-
-    assert app.CLOCK_FREQUENCY == importExportUtils.get_default_config("CLOCK_FREQUENCY", "int")
-    assert app.MUTE == importExportUtils.get_default_config("MUTE", "bool")
-    assert isinstance(app.main_window, MainWindow.MainWindow)
-    assert isinstance(app.notification_center, NotificationCenter.NotificationCenter)
-    assert isinstance(app.clock_thread, Clock)
-    assert app.alert_collection is None  # alert_collection is not initializes in constructor
-
-
-def test_app_init_alert_collection():
-    """Tests the :class:`~_clockalarm.main.App` init_alert_collection method.
-
-    """
-
-    argv = ["file", test_config_path, test_alertsDB_path]
-    app = main.App(argv[1], argv[2], argv)
-    app.init_alert_collection()
-    assert isinstance(app.alert_collection, AlertCollection.AlertCollection)
-
-
 def test_app_constructor_corrupted_argument():
     """Tests the :class:`~_clockalarm.main.App` constructor with corrupted files.
 
@@ -64,3 +38,24 @@ def test_app_constructor_nonexistent_argument():
     with pytest.raises(ValueError):
         argv = ["file", test_config_path, "nonexistent/file/path.cfg"]
         main.App(argv[1], argv[2], argv)
+
+
+def test_app_constructor():
+    """Tests the :class:`~_clockalarm.main.App` constructor.
+
+    """
+    argv = ["file", test_config_path, test_alertsDB_path]
+    app = main.App(argv[1], argv[2], argv)
+
+    assert app.CLOCK_FREQUENCY == importExportUtils.get_default_config("CLOCK_FREQUENCY", "int")
+    assert app.MUTE == importExportUtils.get_default_config("MUTE", "bool")
+    assert isinstance(app.main_window, MainWindow.MainWindow)
+    assert isinstance(app.notification_center, NotificationCenter.NotificationCenter)
+    assert isinstance(app.clock_thread, Clock)
+    assert app.alert_collection is None  # alert_collection is not initializes in constructor
+
+    app.init_alert_collection()
+    assert isinstance(app.alert_collection, AlertCollection.AlertCollection)
+
+    app.clock_thread.stop()
+    app.alert_collection.db.close()

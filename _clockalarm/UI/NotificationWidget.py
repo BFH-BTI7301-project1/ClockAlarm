@@ -14,9 +14,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import os
+from os.path import join, abspath, dirname
 
-from PyQt5.QtCore import Qt, pyqtSignal
+from PyQt5.QtCore import Qt, pyqtSignal, QRect
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QWidget, QLabel
 
@@ -35,20 +35,23 @@ class NotificationWidget(QWidget):
         self.setWindowOpacity(0.8)
         self.setAttribute(Qt.WA_ShowWithoutActivating)
 
+        """Background Image"""
+        im_path = join(dirname(dirname(abspath(__file__))), 'resources', 'images',
+                       'notification_clock.png')
+        lbl_im = QLabel(self)
+        lbl_im.setPixmap(QPixmap(im_path))
+
         """Notification message"""
         color = self.notification.get_color()
-        alpha = 140
+        alpha = 200
         rgba = "{r}, {g}, {b}, {a}".format(r=color.red(), g=color.green(), b=color.blue(), a=alpha)
         lbl = QLabel(self.notification.message, self)
+        lbl.setAlignment(Qt.AlignTop)
+        lbl.setWordWrap(True)
+        lbl.setGeometry(QRect(30, 25, geom.width() - 2 * 28, geom.height() / 2 - 10))
         lbl.setFont(self.notification.get_font())
         lbl.setStyleSheet(
             "QLabel { color : rgba(" + rgba + ")}")
-
-        """Clock Image"""
-        im_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'resources', 'images',
-                               'notification_clock.png')
-        lbl_im = QLabel(self)
-        lbl_im.setPixmap(QPixmap(im_path))
 
     def mousePressEvent(self, event):
         if self.underMouse():

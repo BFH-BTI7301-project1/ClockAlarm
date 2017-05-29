@@ -50,7 +50,9 @@ class App(QApplication):
         Override the class constructor
         
         Attributes:
-            *argv: no expected argv
+            default_config_path: complete path to the .cfg config file
+            alert_db_path: complete path to the .json alert_db file
+            *argv: pointer to  the system arguments
             
         """
         super(App, self).__init__(*argv)
@@ -163,6 +165,7 @@ def main(argv):
 
         # properly close the App
         app.clock_thread.stop()
+        app.alert_collection.db.close()
         app.main_window.setVisible(False)
         app.main_window.tray_icon.setVisible(False)
         app = None

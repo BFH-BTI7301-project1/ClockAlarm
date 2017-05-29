@@ -26,7 +26,7 @@ from PyQt5.QtCore import QRect
 
 from _clockalarm.UI.NotificationWidget import NotificationWidget
 
-WIDGET_SIZE = (380, 180)
+WIDGET_SIZE = (350, 215)
 PADDING = 10
 
 base_path = dirname(dirname(abspath(__file__)))
