@@ -21,33 +21,33 @@ Priorities: \gls{mh}, \gls{p1}, \gls{p2}, \gls{nth}
 	
 	\rowcolor{aliceblue}0.2.0 & Time System and Notifications & \gls{mh} & Done & The program is able to display a hard coded alert, based on the operating system time \\ \hline
 	\rowcolor{aliceblue}0.2.1 & \fullref{subsec:usecase_launch} & \gls{p2} & Done & The scheduled alert is visible in a GUI before it occures \\ \boldhr
-	0.3.0 & Persistence \& Start at runtime & & Not done & At run-time, the program is launched and starts popping alerts. The previously saved alerts are retrieved \\ \hline
-	& \fullref{subsec:usecase_auto_start} & MH & Not done & \\ \boldhr
+	0.3.0 & Persistence \& Start at Runtime & & Partially done & At run-time, the program is launched and starts popping alerts. The previously saved alerts are retrieved \\ \hline
+	& \fullref{subsec:usecase_auto_start} & MH & Not done\footnote{\label{ftn:autostart}See~\fullref{sec:unimplreq}, \textit{Auto start}} & \\ \boldhr
 	\rowcolor{aliceblue}1.0.0 & Add/Delete/Edit Alerts & & Partially done &  \\ \hline
 	\rowcolor{aliceblue}& \fullref{subsec:usecase_add_simple_alert} & MH & Done &  \\ \hline
 	\rowcolor{aliceblue}& \fullref{subsec:usecase_delete_simple_alert} & MH & Done &  \\ \hline
 	\rowcolor{aliceblue}& \fullref{subsec:usecase_edit_simple_alert} & MH & Done &  \\ \hline
 	\rowcolor{aliceblue}& \fullref{subsec:usecase_add_periodic_alert} & \gls{p1} & Done &  \\ \hline
-	\rowcolor{aliceblue}& \fullref{subsec:usecase_add_email_sender} & \gls{nth} & Not done &  \\ \hline
-	\rowcolor{aliceblue}& \fullref{subsec:usecase_delete_email_sender} & NTH & Not done &  \\ \hline
-	\rowcolor{aliceblue}1.0.1 & \fullref{subsec:usecase_edit_email_sender} & NTH & Not done &  \\ \boldhr
-	1.1.0 & Default configurations \& Alerts Management &  & Done & The user can change the default settings. The user can import and export lists of alerts\\ \hline
+	\rowcolor{aliceblue}& \fullref{subsec:usecase_add_email_sender} & \gls{nth} & Not done\footnote{\label{ftn:emailreq}See~\fullref{sec:unimplreq}, \textit{Email alert}} &  \\ \hline
+	\rowcolor{aliceblue}& \fullref{subsec:usecase_delete_email_sender} & NTH & Not done\footref{ftn:emailreq} &  \\ \hline
+	\rowcolor{aliceblue}1.0.1 & \fullref{subsec:usecase_edit_email_sender} & NTH & Not done\footref{ftn:emailreq} &  \\ \boldhr
+	1.1.0 & Default Configurations \& Alerts Management &  & Done & The user can change the default settings. The user can import and export lists of alerts\\ \hline
 	& \fullref{subsec:usecase_edit_default_configuration} & MH & Done & \\ \hline
 	& \fullref{subsec:usecase_import_alerts} & P1 & Done & \\ \hline
 	1.1.1 & \fullref{subsec:usecase_export_alerts} & P1 & Done &\\ \boldhr
-	\rowcolor{aliceblue}1.2.0 & Categories & & Not done & The user can create, edit and delete categories \\ \hline
-	\rowcolor{aliceblue}& \fullref{subsec:usecase_add_category} & MH & Not done & \\ \hline
-	\rowcolor{aliceblue}& \fullref{subsec:usecase_delete_category} & MH & Not done & \\ \hline
-	\rowcolor{aliceblue}1.2.1 & \fullref{subsec:usecase_edit_category} & P2 & Not done & \\ \boldhr
+	\rowcolor{aliceblue}1.2.0 & Categories & & Not done\footnote{\label{ftn:categories}See~\fullref{sec:unimplreq}, \textit{Alert categories}} & The user can create, edit and delete categories \\ \hline
+	\rowcolor{aliceblue}& \fullref{subsec:usecase_add_category} & MH & Not done\footref{ftn:categories} & \\ \hline
+	\rowcolor{aliceblue}& \fullref{subsec:usecase_delete_category} & MH & Not done\footref{ftn:categories} & \\ \hline
+	\rowcolor{aliceblue}1.2.1 & \fullref{subsec:usecase_edit_category} & P2 & Not done\footref{ftn:categories} & \\ \boldhr
 	1.3.0 & Import/Export Configuration File &  & Done & \\ \hline
 	& \fullref{subsec:usecase_import_configuration} & MH & Done & \\ \hline
 	& \fullref{subsec:usecase_export_configuration} & MH & Done & \\ \boldhr
-	\rowcolor{aliceblue}1.4.0 & Disable Notifications &  & Done & The user is able to prevent certain alerts from taking place.\\ \hline
+	\rowcolor{aliceblue}1.4.0 & Disable Notifications &  & Partially done & The user is able to prevent certain alerts from taking place.\\ \hline
 	\rowcolor{aliceblue}& \fullref{subsec:usecase_silent_on} & MH & Done & \\ \hline
 	\rowcolor{aliceblue}& \fullref{subsec:usecase_silent_off} & MH & Done & \\ \hline
-	\rowcolor{aliceblue}& \fullref{subsec:usecase_mute_category} & P2 & Not done & \\ \hline
-	\rowcolor{aliceblue}1.4.1 & \fullref{subsec:usecase_unmute_category} & P2 & Not done & \\ \boldhr
-	1.5.0 & Snooze Alert & NTH & Not done & The user can ask an alert to ring again in the future. \\ \hline
-	& \fullref{subsec:usecase_snooze_alert} & NTH & Not done & \\ \boldhr
-	\rowcolor{aliceblue}1.6.0 & Handback the code & MH & Waiting & The deadline is 2 June 2017 \\ \hline
+	\rowcolor{aliceblue}& \fullref{subsec:usecase_mute_category} & P2 & Not done\footref{ftn:categories} & \\ \hline
+	\rowcolor{aliceblue}1.4.1 & \fullref{subsec:usecase_unmute_category} & P2 & Not done\footref{ftn:categories} & \\ \boldhr
+	1.5.0 & Snooze Alert & NTH & Not done\footnote{\label{ftn:snooze}See~\fullref{sec:unimplreq}, \textit{Snooze alert}} & The user can ask an alert to ring again in the future. \\ \hline
+	& \fullref{subsec:usecase_snooze_alert} & NTH & Not done\footref{ftn:snooze} & \\ \boldhr
+	\rowcolor{aliceblue}1.6.0 & Handback the Code & MH & Waiting & The deadline is 2 June 2017 \\ \hline
 \end{longtable}
