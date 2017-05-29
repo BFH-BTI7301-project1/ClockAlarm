@@ -22,6 +22,7 @@ from collections import deque
 import pygame
 from PyQt5.QtCore import QRect
 
+from _clockalarm.Notification import Notification
 from _clockalarm.UI.NotificationWidget import NotificationWidget
 
 WIDGET_SIZE = (350, 215)  # dimensions of the notification widgets in pixels
@@ -44,11 +45,18 @@ class NotificationCenter(object):
         Compute the maximum number of popup one can display on the screen.
 
         Attributes:
-            screen_geometry: dimensions of the screen displaying the app
-            parent: parent class for NotificationCenter (usually main.App object)
+            screen_geometry (QRect): dimensions of the screen displaying the app
+            parent (optional): parent class for NotificationCenter (usually main.App object)
+
+        Exceptions:
+            ValueError: In case of incorrect screen_geometry parameter
 
         """
         super(NotificationCenter, self).__init__()
+
+        if not isinstance(screen_geometry, QRect) or screen_geometry is None:
+            raise ValueError("screen_geometry must be a QRect object")
+
         self.parent = parent
         self._screen_geometry = screen_geometry
         self._max_popups = math.floor((screen_geometry.height() * 0.9) / (
@@ -69,7 +77,13 @@ class NotificationCenter(object):
         Attributes:
             notification (Notification): The notification to add to enqueue
 
+        Exceptions:
+            ValueError: If the user try to add None or incorrect Notification object to the queue
+
         """
+        if not isinstance(notification, Notification) or notification is None:
+            raise ValueError("Can't add None or corrupted Notification object")
+
         self._lock.acquire()
         self._popup_queue.append(notification)
         self._lock.release()
@@ -114,7 +128,17 @@ class NotificationCenter(object):
             geom(QRect): position and size of the widget on the screen
             notification (Notification): the notification to display
 
+        Exceptions:
+            ValueError: In case of None or invalid QRect object as geom argument
+            ValueError: In case of None or invalid Notification object as notification argument
+            IndexError: If the number of displayed popups is greater or equal to the max number of displayed popups
+
         """
+        if not isinstance(geom, QRect) or geom is None:
+            raise ValueError("Incorrect or None argument: geom")
+        if not isinstance(notification, Notification) or notification is None:
+            raise ValueError("Incorrect or None argument: notification")
+
         if not self.parent.MUTE:
             try:
                 notification.get_sound().play()
@@ -123,6 +147,8 @@ class NotificationCenter(object):
 
         popup = NotificationWidget(geom, notification)
 
+        if len(self._displayed_popups) >= self._max_popups:
+            raise IndexError("Display list full: no place for this popup")
         self._displayed_popups.append(popup)
         popup.popup_close.connect(
             self.close_popup)  # to be able to update the NotificationCenter when the popup is closed
@@ -136,6 +162,15 @@ class NotificationCenter(object):
         Attributes:
             popup: The NotificationWidget to remove from the display zone
 
+        Exceptions:
+            ValueError: If the user pass a None or incorrect popup object as argument.
+            KeyError: If the popup isn't in the list and can't be removed
         """
+        if not isinstance(popup, NotificationWidget) or popup is None:
+            raise ValueError("None or incorrect NotificationWidget object as argument")
+
+        if popup not in self._displayed_popups:
+            raise KeyError("The popup isn't currently displayed")
+
         self._displayed_popups.remove(popup)
         self.refresh()
