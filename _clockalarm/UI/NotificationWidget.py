@@ -22,6 +22,12 @@ from PyQt5.QtWidgets import QWidget, QLabel
 
 
 class NotificationWidget(QWidget):
+    """Notification widget
+
+    Attributes:
+        geometry: The parent window
+        notification: The notification
+    """
     popup_close = pyqtSignal('PyQt_PyObject')
 
     def __init__(self, geometry, notification):
@@ -54,6 +60,7 @@ class NotificationWidget(QWidget):
             "QLabel { color : rgba(" + rgba + ")}")
 
     def mousePressEvent(self, event):
+        """Override of :class:~PyQt5.QtWidgets.QWidget.mousePressEvent method"""
         if self.underMouse():
             self.close()
             self.popup_close.emit(self)
