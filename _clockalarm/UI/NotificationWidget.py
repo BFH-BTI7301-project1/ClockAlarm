@@ -30,8 +30,10 @@ class NotificationWidget(QWidget):
     """
     popup_close = pyqtSignal('PyQt_PyObject')
 
-    def __init__(self, geometry, notification):
-        super(NotificationWidget, self).__init__(flags=Qt.Tool | Qt.WindowStaysOnTopHint | Qt.FramelessWindowHint)
+    def __init__(self, geometry, notification, parent=None):
+        super(NotificationWidget, self).__init__(parent=parent,
+                                                 flags=Qt.Tool | Qt.WindowStaysOnTopHint | Qt.FramelessWindowHint)
+        self.parent = parent
         self.notification = notification
         self.init_ui(geometry)
 
