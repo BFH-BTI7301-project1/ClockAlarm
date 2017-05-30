@@ -1,3 +1,4 @@
+import time
 import _clockalarm.Clock as Clock
 
 clock = Clock(1)
@@ -11,13 +12,12 @@ def test_clock_constructor():
 
 
 def test_clock_running(qtbot):
-    """Test :class:`~_clockalarm.Clock.stop` method.
-
-    Tests with a mock object the ticks of the clock.
-    """
+    """Test :class:`~_clockalarm.Clock.run` method."""
     clock2 = Clock(1)
-    # clock2.run()
-    # clock2.stop()
+    with qtbot.waitSignal(clock2.tick, raising=True):
+        clock2.start()
+        time.sleep(1)
+        clock2.stop()
 
 
 def test_clock_stop():
