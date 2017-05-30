@@ -88,7 +88,6 @@ class AlertCollection(object):
                                            alert.get_periodicity())
 
     def display(self):
-        # Culprit
         self.parent.main_window.alert_list_widget.actualize(self.alert_list)
 
     def load_db(self):
