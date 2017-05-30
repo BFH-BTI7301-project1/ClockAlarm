@@ -12,10 +12,7 @@ def test_clock_constructor():
 
 
 def test_clock_running(qtbot):
-    """Test :class:`~_clockalarm.Clock.run` method.
-
-    Tests with a mock object the ticks of the clock.
-    """
+    """Test :class:`~_clockalarm.Clock.run` method."""
     clock2 = Clock(1)
     with qtbot.waitSignal(clock2.tick, raising=True):
         clock2.start()
