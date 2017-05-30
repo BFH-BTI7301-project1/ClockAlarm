@@ -14,10 +14,13 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import logging
 from os.path import dirname, abspath, join
+from shutil import SameFileError
 
 from PyQt5.Qt import QIcon, QTime
 from PyQt5.QtCore import QSize, Qt
+from PyQt5.QtWidgets import QFileDialog
 from PyQt5.QtWidgets import QMainWindow, QGridLayout, QWidget, \
     QSystemTrayIcon, QMenu, QAction, qApp, QPushButton, QStyle
 
@@ -26,8 +29,7 @@ from _clockalarm import main
 from _clockalarm.SimpleAlert import SimpleAlert
 from _clockalarm.UI.AlertListWidget import AlertListWidget
 from _clockalarm.UI.SimpleAlertEditWidget import SimpleAlertEditWidget
-from _clockalarm.utils.importExportUtils import import_alerts_file, \
-    export_alerts_file, set_default_config, get_default_config
+from _clockalarm.utils.importExportUtils import export_alerts_file, set_default_config, get_default_config
 
 
 class MainWindow(QMainWindow):
@@ -46,9 +48,9 @@ class MainWindow(QMainWindow):
         self.resize(800, 400)
 
         import_action = QAction("Import Alerts File", self)
-        import_action.triggered.connect(import_alerts_file)
+        import_action.triggered.connect(self.import_json_db)
         export_action = QAction("Export Alerts File", self)
-        export_action.triggered.connect(export_alerts_file)
+        export_action.triggered.connect(self.export_json_db)
         quit_action = QAction("Exit", self)
         quit_action.triggered.connect(qApp.quit)
 
@@ -197,3 +199,26 @@ class MainWindow(QMainWindow):
 
         for alert_id in to_delete:
             main.app.alert_collection.delete(alert_id)
+
+    @staticmethod
+    def import_json_db():
+        src = QFileDialog.getOpenFileName(None, 'Import Alert File', '.json', filter='json files (*.json *.JSON *.)')[0]
+        if src == '':
+            logging.info("import alerts abort")
+            return
+        try:
+            export_alerts_file(src)
+        except SameFileError:
+            logging.info("the file is already imported")
+
+    @staticmethod
+    def export_json_db():
+        dest = QFileDialog.getSaveFileName(None, "Export Alerts File", "alerts.json",
+                                           filter="json files (*.json *.JSON *.)")[0]
+        if dest == "":
+            logging.info("export abort")
+            return
+        try:
+            export_alerts_file(dest)
+        except SameFileError:
+            logging.info("the file is already exported")

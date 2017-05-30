@@ -18,65 +18,113 @@ import configparser
 import logging
 import pathlib
 import shutil
+from os.path import isfile
 
-from PyQt5.QtWidgets import qApp, QFileDialog
+from PyQt5.QtWidgets import qApp
 
-EXIT_CODE_REBOOT = -11231351
+EXIT_CODE_REBOOT = -11231351  # exit code to reboot the app
 
-DEFAULT_CONFIG_PATH = None
-ALERT_DB_PATH = None
+DEFAULT_CONFIG_PATH = ""
+ALERT_DB_PATH = ""
 
 
-def import_alerts_file():
-    src = QFileDialog.getOpenFileName()[0]
+def import_alerts_file(src):
+    """Copy the .json file given as argument into the location specified by ALERT_DB_PATH
+
+    If existing, the destination file is erased.
+    All the application is restarted after an import.
+
+    Arguments:
+        src (str): full path of the source json database
+
+    Exceptions:
+        FileNotFoundException: If the given source file doesn't exist or isn't a json file
+        SameFileError: If the src and destination files are the same
+
+    """
+    if src is None or not src.endswith(('.json', '.JSON)')) or not isfile(src):
+        raise FileNotFoundError("Source isn't a correct JSON file")
+
     dest = pathlib.Path(ALERT_DB_PATH).as_posix()
-
-    if src == '':
-        logging.debug("import alerts abort")
-        return
 
     logging.debug("import alerts src path: " + src)
     logging.debug("import alerts dest path: " + dest)
-
-    shutil.copy(src, dest)
+    shutil.copy(src, dest)  # raises SameFileError
 
     qApp.exit(EXIT_CODE_REBOOT)
 
 
-def export_alerts_file():
-    src = pathlib.Path(ALERT_DB_PATH).as_posix()
-    dest = QFileDialog.getSaveFileName(None, "Export Alerts List", "alerts.json", filter="json (*.json *.)")[0]
+def export_alerts_file(dest):
+    """Copy the file at ALERT_DB_PATH into the .json location specified the argument
 
-    if dest == "":
-        logging.debug("export abort")
-        return
+    If existing, the destination file is erased.
+
+    Arguments:
+        dest (str): full path of the destination location
+
+    Exceptions:
+        FileNotFoundException: If the given destination file doesn't exist or haven't a json extension
+        shutil.SameFileError: If the src and destination files are the same
+
+    """
+    if dest is None or not dest.endswith(('.json', '.JSON')):
+        raise FileNotFoundError("Destination isn't a correct JSON file")
+
+    src = pathlib.Path(ALERT_DB_PATH).as_posix()
 
     logging.debug("export alerts src path: " + src)
     logging.debug("export alerts dest path: " + dest)
-
-    shutil.copy(src, dest)
+    shutil.copy(src, dest)  # raises SameFileError
 
 
 def get_default_config(key, cmd="str"):
+    """Read the configuration file and return the value for the given key
+
+    The cmd attribute defines the type of the value. Default is str.
+
+    Attributes:
+        key: The key of the key-value pair in the config file
+        cmd: Type of the desired value. Default is str.
+
+    Exceptions:
+        KeyError: Is the key doesn't match any key in the config file.
+        configparser.NoSectionError: If the config file or the section doesn't exist.
+
+    """
     config = configparser.RawConfigParser()
-    config.read(DEFAULT_CONFIG_PATH)
-    if cmd == "int":
-        value = config.getint("default", key)
-    elif cmd == "bool":
-        value = config.getboolean("default", key)
-    else:
-        value = config.get("default", key)
+    config.read(DEFAULT_CONFIG_PATH)  # load the file in the parser
+    try:
+        if cmd == "int":
+            value = config.getint("default", key)
+        elif cmd == "bool":
+            value = config.getboolean("default", key)
+        else:
+            value = config.get("default", key)
+    except configparser.NoOptionError as e:
+        raise KeyError(e)  # key not found
 
     logging.debug("default config load(key,value): (" + key + ";" + str(value) + ")")
     return value
 
 
 def set_default_config(key, value):
+    """ Set the given (key,value) pair in the config file.
+
+    Preserves the Caps
+
+    Attributes:
+        key: the key
+        value: the value
+
+    Exceptions:
+        configparser.NoSectionError: If the config file or the section doesn't exist.
+
+    """
     config = configparser.RawConfigParser()
-    config.optionxform = str
-    config.read(DEFAULT_CONFIG_PATH)
-    config.set("default", key, str(value))
+    config.optionxform = str  # preserve the Caps in the config file
+    config.read(DEFAULT_CONFIG_PATH)  # load the config file in the parser
+    config.set("default", key, str(value))  # update the parser
     with open(DEFAULT_CONFIG_PATH, 'w') as configfile:
-        config.write(configfile)
+        config.write(configfile)  # write back the parser in the config file
 
     logging.debug("default config set(key,value): (" + key + ";" + str(value) + ")")

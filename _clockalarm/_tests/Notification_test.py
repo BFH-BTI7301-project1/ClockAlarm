@@ -14,6 +14,7 @@ def init_paths():
     importExportUtils.ALERT_DB_PATH = join(dirname(abspath(__file__)), "alertsDB_test.json")
 
 
+@pytest.mark.test
 def test_notification_constructor():
     """Tests the :class:`~_clockalarm.Notification` constructor."""
     notification = Notification("Test")  # correct constructor
@@ -31,6 +32,7 @@ def test_notification_constructor():
     assert notification.sound == "test.wav"
 
 
+@pytest.mark.test
 def test_notification_constructor_exception():
     """Tests the :class:`~_clockalarm.Notification` constructor."""
     with pytest.raises(ValueError):  # message is empty
@@ -39,6 +41,7 @@ def test_notification_constructor_exception():
         Notification(None, "#ffff00", None, None, "test.wav")
 
 
+@pytest.mark.test
 def test_get_message():
     """Tests the :class:`~_clockalarm.Notification.get_message` method."""
     notification = Notification("Test")
@@ -46,6 +49,7 @@ def test_get_message():
     assert notification.get_message() == "Test"
 
 
+@pytest.mark.test
 def test_get_font():
     """Tests the :class:`~_clockalarm.Notification.get_font` method with font given
     """
@@ -56,6 +60,7 @@ def test_get_font():
     assert font.pointSize() == 10
 
 
+@pytest.mark.test
 def test_get_font_miss_one_arg(init_paths):
     """Tests the :class:`~_clockalarm.Notification.get_font` method with one parameter missing
     """
@@ -72,6 +77,7 @@ def test_get_font_miss_one_arg(init_paths):
     assert font.pointSize() == importExportUtils.get_default_config("NOTIFICATION_FONT_SIZE", "int")
 
 
+@pytest.mark.test
 def test_get_font_miss_two_arg(init_paths):
     """Tests the :class:`~_clockalarm.Notification.get_font` method without any
     font given.
@@ -83,6 +89,7 @@ def test_get_font_miss_two_arg(init_paths):
     assert font.pointSize() == importExportUtils.get_default_config("NOTIFICATION_FONT_SIZE", "int")
 
 
+@pytest.mark.test
 def test_get_color():
     """Tests the :class:`~_clockalarm.Notification.get_color` method.
     """
@@ -93,6 +100,7 @@ def test_get_color():
     assert color.name() == "#ff5500"
 
 
+@pytest.mark.test
 def test_get_color_miss_arg(init_paths):
     """Tests the :class:`~_clockalarm.Notification.get_color` method without any
     color given.
@@ -104,6 +112,7 @@ def test_get_color_miss_arg(init_paths):
     assert color.name() == importExportUtils.get_default_config("NOTIFICATION_COLOR_HEX")
 
 
+@pytest.mark.test
 def test_get_sound():
     """Tests the :class:`~_clockalarm.Notification.get_sound` method
     """
@@ -116,6 +125,7 @@ def test_get_sound():
         print("test_get_sound: {}".format(str(e)))
 
 
+@pytest.mark.test
 def test_get_sound_corrupted():
     """Tests the :class:`~_clockalarm.Notification.get_sound` method without any
     sound or corrupted file given.
