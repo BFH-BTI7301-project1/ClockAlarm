@@ -42,26 +42,41 @@ class AlertCollection(object):
 
         """
         super(self.__class__, self).__init__()
+
         import _clockalarm.main
         if parent and not isinstance(parent, _clockalarm.main.App):
             raise ValueError("parent argument is set but isn't an instance of _clockalarm.main.App")
+
         self.parent = parent
-        self.db = TinyDB(importExportUtils.ALERT_DB_PATH, default_table="alerts")
+        self.db = TinyDB(importExportUtils.ALERT_DB_PATH, default_table="alerts")  # open the DB or create a new one
         self.alert_list = []
-        self.clean_db()
-        self.load_db()
+
+        self.clean_db()  # search for outdated or duplicated alerts in DB
+        self.load_db()  # load the TinyDB in AlertCollection object
+
         self.display()
 
     def add(self, alert: SimpleAlert):
-        """
+        """Add the Alert given in argument to the collection of alerts
 
-        :param alert:
-        :return:
+        If parent is set, the new Alert is connected to the notification center and the list of displayed alerts is
+        updated.
+
+        Attributes:
+            alert(SimpleAlert): The alert to add to the collection
+
+        Exceptions:
+            ValueError: If the alert argument is None or incorrect.
+
         """
+        if alert is None or not isinstance(alert, SimpleAlert):
+            raise ValueError('None or incorrect alert argument')
+
         self.alert_list.append(alert)
-        if self.parent:
+        if self.parent:  # connect the timeout signal to the notification center
             alert.timeout.connect(self.parent.notification_center.add_to_queue)
-        alert.id = self.db.insert(
+
+        alert.id = self.db.insert(  # update the TinyDB
             {'trigger_time': alert.trigger_time,
              'message': alert.get_notification().get_message(),
              'color_hex': alert.notification.color_hex,
