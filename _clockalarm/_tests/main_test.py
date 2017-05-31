@@ -1,6 +1,7 @@
 from os.path import dirname, abspath, join
 
 import pytest
+from PyQt5.QtWidgets import QApplication
 
 from _clockalarm import main, NotificationCenter, Clock, AlertCollection
 from _clockalarm.UI import MainWindow
@@ -8,6 +9,8 @@ from _clockalarm.utils import importExportUtils
 
 test_config_path = join(dirname(abspath(__file__)), "config_test.cfg")
 test_alertsDB_path = join(dirname(abspath(__file__)), "alertsDB_test.json")
+
+app = QApplication([])
 
 
 @pytest.fixture

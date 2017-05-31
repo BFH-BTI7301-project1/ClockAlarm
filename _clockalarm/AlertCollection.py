@@ -24,11 +24,28 @@ from _clockalarm.utils import importExportUtils
 
 
 class AlertCollection(object):
-    def __init__(self, nc, parent):
-        super(self.__class__, self).__init__()
-        self._notification_center = nc
-        self.parent = parent
+    """Collection of all the Alert objects running on the program.
 
+    This class contains utilities to load, update and save the alerts in a TinyDB database, and maintain the correct
+    state of all the alerts
+
+    """
+
+    def __init__(self, parent=None):
+        """Default constructor for AlertCollection object
+
+        Attributes:
+            parent (main.App, optional): Parent of the class
+
+        Exceptions:
+            ValueError: If the parent argument is not None but isn't an instance of _clockalarm.main.App
+
+        """
+        super(self.__class__, self).__init__()
+        import _clockalarm.main
+        if parent and not isinstance(parent, _clockalarm.main.App):
+            raise ValueError("parent argument is set but isn't an instance of _clockalarm.main.App")
+        self.parent = parent
         self.db = TinyDB(importExportUtils.ALERT_DB_PATH, default_table="alerts")
         self.alert_list = []
         self.clean_db()
@@ -36,8 +53,14 @@ class AlertCollection(object):
         self.display()
 
     def add(self, alert: SimpleAlert):
+        """
+
+        :param alert:
+        :return:
+        """
         self.alert_list.append(alert)
-        alert.timeout.connect(self._notification_center.add_to_queue)
+        if self.parent:
+            alert.timeout.connect(self.parent.notification_center.add_to_queue)
         alert.id = self.db.insert(
             {'trigger_time': alert.trigger_time,
              'message': alert.get_notification().get_message(),
@@ -50,6 +73,14 @@ class AlertCollection(object):
 
     def edit(self, id_alert: int, notification: Notification = None,
              trigger_time: int = None, periodicity: int = None):
+        """
+
+        :param id_alert:
+        :param notification:
+        :param trigger_time:
+        :param periodicity:
+        :return:
+        """
         alert_to_edit = next(alert for alert in self.alert_list
                              if alert.id == id_alert)
         if alert_to_edit:
@@ -71,12 +102,22 @@ class AlertCollection(object):
             self.display()
 
     def delete(self, id_alert: int):
+        """
+
+        :param id_alert:
+        :return:
+        """
         self.alert_list = [alert for alert in self.alert_list
                            if alert.id != id_alert]
         self.db.remove(eids=[id_alert])
         self.display()
 
     def check_timers(self, trig_time):
+        """
+
+        :param trig_time:
+        :return:
+        """
         for alert in self.alert_list:
             if trig_time >= alert.trigger_time:
                 alert.triggered()
@@ -88,9 +129,18 @@ class AlertCollection(object):
                                            alert.get_periodicity())
 
     def display(self):
-        self.parent.main_window.alert_list_widget.actualize(self.alert_list)
+        """
+
+        :return:
+        """
+        if self.parent:
+            self.parent.main_window.alert_list_widget.actualize(self.alert_list)
 
     def load_db(self):
+        """
+
+        :return:
+        """
         for alert in self.db.all():
             notification = Notification(alert["message"],
                                         color_hex=alert["color_hex"],
@@ -103,9 +153,14 @@ class AlertCollection(object):
             new_alert.id = alert.eid
 
             self.alert_list.append(new_alert)
-            new_alert.timeout.connect(self._notification_center.add_to_queue)
+            if self.parent:
+                new_alert.timeout.connect(self.parent.notification_center.add_to_queue)
 
     def save_db(self):
+        """
+
+        :return:
+        """
         self.db.purge()
         for alert in self.alert_list:
             self.db.insert({'trigger_time': alert.trigger_time,
@@ -117,6 +172,11 @@ class AlertCollection(object):
                             'periodicity': alert.periodicity})
 
     def clean_db(self):
+        """
+
+        :return:
+        """
+
         def operation():
             def transform(element):
                 trig = element['trigger_time']

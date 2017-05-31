@@ -118,7 +118,7 @@ class App(QApplication):
             The alerts will be loaded from the default database
             
         """
-        self.alert_collection = AlertCollection(self.notification_center, self)
+        self.alert_collection = AlertCollection(self)
         self.clock_thread.tick.connect(self.alert_collection.check_timers)
 
 
