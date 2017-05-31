@@ -5,7 +5,7 @@ import pytest
 from PyQt5 import QtCore
 from PyQt5.Qt import QRect
 from PyQt5.QtCore import Qt, QPoint
-from PyQt5.QtWidgets import QApplication
+from PyQt5.QtWidgets import QApplication, QLabel
 
 from _clockalarm.UI.NotificationWidget import NotificationWidget
 from _clockalarm.Notification import Notification
@@ -25,10 +25,10 @@ sound_path = join(dirname(dirname(abspath(__file__))), 'resources', 'sounds',
 im_path = join(dirname(dirname(abspath(__file__))), 'resources', 'images',
                'notification_clock.png')
 
-notification = Notification("Test")
-complete_notification = Notification("Test", "000000", "Times", 12, sound_path)
+notification = Notification("Test", "000000", "Times", 12, sound_path)
 rect = QRect(0, 0, 1024, 768)
 
+# A QApplication is needed to create widgets
 app = QApplication([])
 
 
@@ -48,9 +48,15 @@ def test_constructor(init_paths):
     assert nw.autoFillBackground()
     assert nw.testAttribute(Qt.WA_ShowWithoutActivating)
 
-    # TODO: Test Background Image
+    children = nw.findChildren(QLabel)
 
-    # TODO: Test Notification message layout
+    # Background image
+    assert not children[0].pixmap().isNull()
+
+    # Notification message
+    assert children[1].alignment() == Qt.AlignTop
+    assert children[1].wordWrap()
+    assert children[1].font().family() == notification.font_family
 
 
 def test_mousePressedEvent(qtbot, init_paths):
@@ -68,4 +74,3 @@ def test_mousePressedEvent(qtbot, init_paths):
     with qtbot.waitSignal(nw.popup_close, raising=True):
         qtbot.mouseMove(nw, QPoint(0, 0))
         qtbot.mouseClick(nw, QtCore.Qt.LeftButton)
-        # nw.mousePressEvent()
