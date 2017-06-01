@@ -1,4 +1,5 @@
 import time
+
 import _clockalarm.Clock as Clock
 
 clock = Clock(1)

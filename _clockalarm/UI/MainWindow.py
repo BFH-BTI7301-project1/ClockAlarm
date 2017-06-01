@@ -29,7 +29,8 @@ from _clockalarm import main
 from _clockalarm.SimpleAlert import SimpleAlert
 from _clockalarm.UI.AlertListWidget import AlertListWidget
 from _clockalarm.UI.SimpleAlertEditWidget import SimpleAlertEditWidget
-from _clockalarm.utils.importExportUtils import export_alerts_file, set_default_config, get_default_config
+from _clockalarm.utils.importExportUtils import export_alerts_file, import_alerts_file, set_default_config, \
+    get_default_config
 
 
 class MainWindow(QMainWindow):
@@ -207,7 +208,7 @@ class MainWindow(QMainWindow):
             logging.info("import alerts abort")
             return
         try:
-            export_alerts_file(src)
+            import_alerts_file(src)
         except SameFileError:
             logging.info("the file is already imported")
 

@@ -88,16 +88,26 @@ class AlertCollection(object):
 
     def edit(self, id_alert: int, notification: Notification = None,
              trigger_time: int = None, periodicity: int = None):
-        """
+        """Update an alert with the given modifications
 
-        :param id_alert:
-        :param notification:
-        :param trigger_time:
-        :param periodicity:
-        :return:
+        Attributes:
+            id_alert(int): The id number of the alert to modify
+            notification(Notification, optional): Default is None. The new notification
+            trigger_time(int,optional): Default is None. The new trigger time
+            periodicity(int,optional: Default is None. The new periodicity
+
+        Exceptions:
+            KeyError: If the alert to edit doesn't exist in the database.
+            ValueError: If the periodicity argument is equal or under zero.
+            ValueError: If the trigger_time argument correspond to a date in the past.
+
         """
-        alert_to_edit = next(alert for alert in self.alert_list
-                             if alert.id == id_alert)
+        try:
+            alert_to_edit = next(
+                alert for alert in self.alert_list if alert.id == id_alert)  # raises StopIteration exception
+        except StopIteration as e:
+            raise KeyError(e)
+
         if alert_to_edit:
             if notification:
                 alert_to_edit.notification = notification
@@ -106,21 +116,29 @@ class AlertCollection(object):
                                 'font_family': notification.font_family,
                                 'font_size': notification.font_size,
                                 'sound': notification.sound}, eids=[id_alert])
-            if periodicity:
+            if periodicity is not None:
+                if periodicity <= 0:
+                    raise ValueError("Periodicity have to be greater than 0")
                 alert_to_edit.periodicity = periodicity
                 self.db.update({'periodicity': alert_to_edit.periodicity},
                                eids=[id_alert])
-            if trigger_time:
+            if trigger_time is not None:
+                if trigger_time < time.time():  # alert can't be triggered in the past
+                    raise ValueError("Trigger time can't be in the past")
                 alert_to_edit.trigger_time = trigger_time
                 self.db.update({'trigger_time': alert_to_edit.trigger_time},
                                eids=[id_alert])
             self.display()
 
     def delete(self, id_alert: int):
-        """
+        """Remove an alert from the collection
 
-        :param id_alert:
-        :return:
+        Attributes:
+            id_alert: The id number of the alert to remove.
+
+        Exceptions:
+            KeyError: If the alert to delete doesn't exist in the database.
+
         """
         self.alert_list = [alert for alert in self.alert_list
                            if alert.id != id_alert]
@@ -128,10 +146,13 @@ class AlertCollection(object):
         self.display()
 
     def check_timers(self, trig_time):
-        """
+        """Check all the alerts to see if on should be triggered
 
-        :param trig_time:
-        :return:
+        This function is triggered periodically by the clock.
+
+        Attributes:
+            trig_time: Actual time, in seconds.
+
         """
         for alert in self.alert_list:
             if trig_time >= alert.trigger_time:
