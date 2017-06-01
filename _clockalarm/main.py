@@ -107,7 +107,7 @@ class App(QApplication):
         icon = QIcon(icon_path)
         self.setWindowIcon(icon)  # application icon for OSx and linux
 
-        self.main_window = MainWindow()
+        self.main_window = MainWindow(self)
         self.main_window.show()
         self.setQuitOnLastWindowClosed(False)  # app don't quit when last window is closed (reduced in tray)
 

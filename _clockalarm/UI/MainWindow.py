@@ -25,17 +25,18 @@ from PyQt5.QtWidgets import QMainWindow, QGridLayout, QWidget, \
     QSystemTrayIcon, QMenu, QAction, qApp, QPushButton, QStyle
 
 from _clockalarm import Notification
-from _clockalarm import main
 from _clockalarm.SimpleAlert import SimpleAlert
 from _clockalarm.UI.AlertListWidget import AlertListWidget
 from _clockalarm.UI.SimpleAlertEditWidget import SimpleAlertEditWidget
-from _clockalarm.utils.importExportUtils import export_alerts_file, set_default_config, get_default_config
+from _clockalarm.utils.importExportUtils import export_alerts_file, \
+        set_default_config, get_default_config
 
 
 class MainWindow(QMainWindow):
     # Override the class constructor
-    def __init__(self, *args):
+    def __init__(self, application, *args):
         super(MainWindow, self).__init__(*args)
+        self.app = application
         self.tray_icon = None
         self.alert_list_widget = None
         self.mute_pushbutton = None
@@ -106,15 +107,19 @@ class MainWindow(QMainWindow):
             self.show()
 
     def mute_button_click(self):
-        main.app.MUTE = not main.app.MUTE
-        if main.app.MUTE:
+        self.app.MUTE = not self.app.MUTE
+        if self.app.MUTE:
             self.mute_pushbutton.setIcon(self.style().standardIcon(QStyle.SP_MediaVolumeMuted))
         else:
             self.mute_pushbutton.setIcon(self.style().standardIcon(QStyle.SP_MediaVolume))
-        set_default_config("MUTE", main.app.MUTE)
+        set_default_config("MUTE", self.app.MUTE)
 
     # Override closeEvent, to intercept the window closing event
     def closeEvent(self, event):
+        """Overrides :class:`PyQt5.QtWidgets.QtWidget.closeEvent` method.
+
+        Allows to intercept the window closing event.
+        """
         event.ignore()
         self.hide()
         self.tray_icon.showMessage(
@@ -144,7 +149,7 @@ class MainWindow(QMainWindow):
                                         sound=dw.sound_edit.text())
             new_alert = SimpleAlert(dw.date_time_edit.dateTime().toTime_t(), notification, periodicity=periodicity)
 
-            main.app.alert_collection.add(new_alert)
+            self.app.alert_collection.add(new_alert)
             dw.close()
 
         self.dialog_widget = SimpleAlertEditWidget()
@@ -173,7 +178,7 @@ class MainWindow(QMainWindow):
                                         sound=dw.sound_edit.text())
             trigger_time = dw.date_time_edit.dateTime().toTime_t()
 
-            main.app.alert_collection.edit(id_alert, notification=notification, trigger_time=trigger_time,
+            self.app.alert_collection.edit(id_alert, notification=notification, trigger_time=trigger_time,
                                            periodicity=periodicity)
             dw.close()
 
@@ -182,7 +187,7 @@ class MainWindow(QMainWindow):
             return
 
         id_alert = int(self.alert_list_widget.item(selection[0].row(), 0).text())
-        alert_to_edit = next(alert for alert in main.app.alert_collection.alert_list if alert.id == id_alert)
+        alert_to_edit = next(alert for alert in self.app.alert_collection.alert_list if alert.id == id_alert)
 
         self.dialog_widget = SimpleAlertEditWidget(alert_to_edit)
         self.dialog_widget.accept_button.clicked.connect(button_clicked)
@@ -198,7 +203,7 @@ class MainWindow(QMainWindow):
             to_delete.append(int(self.alert_list_widget.item(row.row(), 0).text()))
 
         for alert_id in to_delete:
-            main.app.alert_collection.delete(alert_id)
+            self.app.alert_collection.delete(alert_id)
 
     @staticmethod
     def import_json_db():
