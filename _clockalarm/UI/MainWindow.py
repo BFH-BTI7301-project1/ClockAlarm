@@ -33,8 +33,16 @@ from _clockalarm.utils.importExportUtils import export_alerts_file, \
 
 
 class MainWindow(QMainWindow):
-    # Override the class constructor
+    """Main window interface extending :class:`PyQt5.QtWidgets.QMainWindow`.
+
+    Shows a list of all the alerts retrieved from a JSON file.
+
+    Attributes:
+        application: The main application
+        *args: The parent pointer or window flags
+    """
     def __init__(self, application, *args):
+        """Creates a main window with an Alert list"""
         super(MainWindow, self).__init__(*args)
         self.app = application
         self.tray_icon = None
@@ -44,6 +52,7 @@ class MainWindow(QMainWindow):
         self.init_ui()
 
     def init_ui(self):
+        """Init helper method to set up the main window."""
         self.setMinimumSize(QSize(300, 100))  # Set sizes
         self.setWindowTitle("ClockAlarm Manager")  # Set a title
         self.resize(800, 400)
@@ -103,10 +112,14 @@ class MainWindow(QMainWindow):
         self.tray_icon.show()
 
     def tray_icon_click(self, reason):
+        """Displays the main window when clicking on the app icon in the
+        tray.
+        """
         if reason == QSystemTrayIcon.DoubleClick:
             self.show()
 
     def mute_button_click(self):
+        """Mutes the alerts and updates the mute button."""
         self.app.MUTE = not self.app.MUTE
         if self.app.MUTE:
             self.mute_pushbutton.setIcon(self.style().standardIcon(QStyle.SP_MediaVolumeMuted))
@@ -116,7 +129,7 @@ class MainWindow(QMainWindow):
 
     # Override closeEvent, to intercept the window closing event
     def closeEvent(self, event):
-        """Overrides :class:`PyQt5.QtWidgets.QtWidget.closeEvent` method.
+        """Overrides :func:`~PyQt5.QtWidgets.QWidget.closeEvent` method.
 
         Allows to intercept the window closing event.
         """
@@ -130,6 +143,9 @@ class MainWindow(QMainWindow):
         )
 
     def add_simple_alert(self):
+        """Creates a :class:`~_clockalarm.UI.SimpleAlertEditWidget`
+        and shows it to the user.
+        """
         def button_clicked():
             dw = self.dialog_widget
             periodicity = QTime(0, 0).secsTo(dw.periodicity_edit.time())
@@ -159,6 +175,9 @@ class MainWindow(QMainWindow):
         self.dialog_widget.show()
 
     def edit_simple_alert(self):
+        """Edits the selcted alert and shows an SimpleAlertEditWidget to the
+        user.
+        """
         def button_clicked():
             dw = self.dialog_widget
             periodicity = QTime(0, 0).secsTo(dw.periodicity_edit.time())
@@ -196,6 +215,7 @@ class MainWindow(QMainWindow):
         self.dialog_widget.show()
 
     def delete_alerts(self):
+        """Deletes the selected alerts."""
         selection = self.alert_list_widget.selectionModel()
         to_delete = []
 
@@ -207,6 +227,7 @@ class MainWindow(QMainWindow):
 
     @staticmethod
     def import_json_db():
+        """Imports Alerts from a JSON file into ClockAlarm."""
         src = QFileDialog.getOpenFileName(None, 'Import Alert File', '.json', filter='json files (*.json *.JSON *.)')[0]
         if src == '':
             logging.info("import alerts abort")
@@ -218,6 +239,7 @@ class MainWindow(QMainWindow):
 
     @staticmethod
     def export_json_db():
+        """Exports all the Alerts into a JSON file."""
         dest = QFileDialog.getSaveFileName(None, "Export Alerts File", "alerts.json",
                                            filter="json files (*.json *.JSON *.)")[0]
         if dest == "":
