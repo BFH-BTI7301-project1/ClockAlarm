@@ -25,12 +25,17 @@ class NotificationWidget(QWidget):
     """Notification widget
 
     Attributes:
-        geometry: The parent window
+        geometry: The position and size of the widget on the screen
         notification: The notification
     """
     popup_close = pyqtSignal('PyQt_PyObject')
 
     def __init__(self, geometry, notification, parent=None):
+        """Inits the NotificationWidget with a position and a notification.
+
+        Note:
+            By default, the NotificationWidget has no parent
+        """
         super(NotificationWidget, self).__init__(parent=parent,
                                                  flags=Qt.Tool | Qt.WindowStaysOnTopHint | Qt.FramelessWindowHint)
         self.parent = parent
@@ -38,6 +43,11 @@ class NotificationWidget(QWidget):
         self.init_ui(geometry)
 
     def init_ui(self, geom):
+        """Helper method that sets the style of the NotificationWidget.
+        
+        Attributes:
+            geom: The position and size of the widget on the screen
+        """
         self.setGeometry(geom)
         self.setAutoFillBackground(True)
         self.setWindowOpacity(0.8)
