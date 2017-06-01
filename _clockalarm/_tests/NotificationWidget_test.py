@@ -1,14 +1,13 @@
 from os.path import join, abspath, dirname
 
 import pytest
-
 from PyQt5 import QtCore
 from PyQt5.Qt import QRect
 from PyQt5.QtCore import Qt, QPoint
 from PyQt5.QtWidgets import QApplication, QLabel
 
-from _clockalarm.UI.NotificationWidget import NotificationWidget
 from _clockalarm.Notification import Notification
+from _clockalarm.UI.NotificationWidget import NotificationWidget
 from _clockalarm.utils import importExportUtils
 
 
