@@ -32,6 +32,7 @@ rect = QRect(0, 0, 1024, 768)
 app = QApplication([])
 
 
+@pytest.mark.test
 def test_constructor(init_paths):
     """Test :class:~_clockalarm.UI.NotificationWidget constructor."""
     global notification
@@ -59,6 +60,7 @@ def test_constructor(init_paths):
     assert children[1].font().family() == notification.font_family
 
 
+@pytest.mark.test
 def test_mousePressedEvent(qtbot, init_paths):
     """Test :class:~_clockalarm.UI.NotificationWidget.mousPressEvent method."""
     global notification

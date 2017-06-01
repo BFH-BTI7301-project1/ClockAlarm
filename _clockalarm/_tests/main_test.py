@@ -19,6 +19,7 @@ def init_paths():
     importExportUtils.ALERT_DB_PATH = join(dirname(abspath(__file__)), "alertsDB_test.json")
 
 
+@pytest.mark.test
 def test_app_constructor_corrupted_argument():
     """Tests the :class:`~_clockalarm.main.App` constructor with corrupted files.
 
@@ -31,6 +32,7 @@ def test_app_constructor_corrupted_argument():
         main.App(argv[1], argv[2], argv)
 
 
+@pytest.mark.test
 def test_app_constructor_nonexistent_argument():
     """Tests the :class:`~_clockalarm.main.App` constructor with nonexistent files.
 
@@ -43,6 +45,7 @@ def test_app_constructor_nonexistent_argument():
         main.App(argv[1], argv[2], argv)
 
 
+@pytest.mark.test
 def test_app_constructor():
     """Tests the :class:`~_clockalarm.main.App` constructor.
 

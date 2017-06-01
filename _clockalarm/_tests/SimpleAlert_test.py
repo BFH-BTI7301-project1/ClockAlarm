@@ -1,9 +1,12 @@
+import pytest
+
 from _clockalarm import Notification
 from _clockalarm.SimpleAlert import SimpleAlert
 
 notification = Notification("Test")
 
 
+@pytest.mark.test
 def test_simple_alert_constructor():
     """Test the :class:`~_clockalarm.SimpleAlert` constructor."""
     global notification
@@ -13,6 +16,7 @@ def test_simple_alert_constructor():
     assert not simplealert.periodicity
 
 
+@pytest.mark.test
 def test_get_periodicity():
     """Test the :class:`~_clockalarm.SimpleAlert.get_periodicity` method."""
     global notification
@@ -21,6 +25,7 @@ def test_get_periodicity():
     assert simplealert.get_periodicity() == 30
 
 
+@pytest.mark.test
 def test_get_notification():
     """Test the :class:`~_clockalarm.SimpleAlert.get_notification` method."""
     global notification
@@ -30,6 +35,7 @@ def test_get_notification():
             notification.get_message())
 
 
+@pytest.mark.test
 def test_simple_alert_triggered(qtbot):
     """Test the :class:`~_clockalarm.SimpleAlert.triggered` method."""
     global notification
