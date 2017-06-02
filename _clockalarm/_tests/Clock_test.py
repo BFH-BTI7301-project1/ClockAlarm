@@ -1,6 +1,6 @@
-import pytest
-
 import time
+
+import pytest
 
 import _clockalarm.Clock as Clock
 

@@ -3,6 +3,7 @@ import time
 from os.path import join, dirname, abspath
 
 import pytest
+from tinydb import TinyDB
 
 from _clockalarm import SimpleAlert, Notification
 from _clockalarm.AlertCollection import AlertCollection
@@ -207,4 +208,63 @@ def test_alert_collection_check_timers_with_periodicity(before):
 
     alert_collection.delete(alert.id)
 
+    alert_collection.db.close()
+
+
+@pytest.mark.test
+def test_alert_collection_load_db_corrupted(before):
+    """Test the :class:`~_clockalarm.AllertCollection` load_db method.
+
+    Load from a corrupted database.
+
+    """
+    alert_collection = AlertCollection()  # constructor call load_db
+    alert_collection.alert_list = []  # clean the alert_list
+    alert_collection.db.close()
+
+    corrupted_path = join(dirname(abspath(__file__)), "alertsDB_corrupted_test.json")
+    alert_collection.db = TinyDB(corrupted_path, default_table="alerts")
+
+    with pytest.raises(IOError):
+        alert_collection.load_db()
+
+    alert_collection.db.close()
+
+
+@pytest.mark.test
+def test_alert_collection_load_db(before):
+    """Test the :class:`~_clockalarm.AllertCollection` load_db method."""
+    alert_collection = AlertCollection()  # constructor call load_db
+    alert_collection.alert_list = []  # clean the alert_list
+
+    assert len(alert_collection.alert_list) == 0
+    alert_collection.load_db()
+    assert len(alert_collection.alert_list) != 0
+
+    alert_collection.db.close()
+
+
+@pytest.mark.test
+def test_alert_collection_clean_db(before):
+    """Test the :class:`~_clockalarm.AllertCollection` clean_db method."""
+    alert_collection = AlertCollection()
+    t = time.time()
+    nb_alert = len(alert_collection.alert_list)
+    old_alert = SimpleAlert.SimpleAlert(t - 10, Notification("old alert"))
+    old_periodic_alert = SimpleAlert.SimpleAlert(t - 10, Notification("old periodic alert"), periodicity=60)
+
+    alert_collection.add(old_alert)
+    alert_collection.add(old_periodic_alert)
+    id_old = old_periodic_alert.id
+
+    assert old_alert in alert_collection.alert_list
+    assert old_periodic_alert in alert_collection.alert_list
+    assert len(alert_collection.alert_list) == nb_alert + 2
+
+    alert_collection.clean_db()
+    alert_collection.load_db()
+
+    assert len(alert_collection.alert_list) == nb_alert + 1
+
+    alert_collection.delete(id_old)
     alert_collection.db.close()

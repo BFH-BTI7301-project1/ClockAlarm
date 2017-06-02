@@ -10,17 +10,17 @@ from _clockalarm.utils import importExportUtils
 test_config_path = join(dirname(abspath(__file__)), "config_test.cfg")
 test_alertsDB_path = join(dirname(abspath(__file__)), "alertsDB_test.json")
 
-app = QApplication([])
+q_app = QApplication([])
 
 
 @pytest.fixture
-def init_paths():
+def before():
     importExportUtils.DEFAULT_CONFIG_PATH = join(dirname(abspath(__file__)), "config_test.cfg")
     importExportUtils.ALERT_DB_PATH = join(dirname(abspath(__file__)), "alertsDB_test.json")
 
 
 @pytest.mark.test
-def test_app_constructor_corrupted_argument():
+def test_app_constructor_corrupted_argument(before):
     """Tests the :class:`~_clockalarm.main.App` constructor with corrupted files.
 
     """
@@ -33,7 +33,7 @@ def test_app_constructor_corrupted_argument():
 
 
 @pytest.mark.test
-def test_app_constructor_nonexistent_argument():
+def test_app_constructor_nonexistent_argument(before):
     """Tests the :class:`~_clockalarm.main.App` constructor with nonexistent files.
 
     """
@@ -46,7 +46,7 @@ def test_app_constructor_nonexistent_argument():
 
 
 @pytest.mark.test
-def test_app_constructor():
+def test_app_constructor(before):
     """Tests the :class:`~_clockalarm.main.App` constructor.
 
     """
