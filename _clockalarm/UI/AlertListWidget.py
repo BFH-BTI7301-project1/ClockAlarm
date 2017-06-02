@@ -20,22 +20,36 @@ from PyQt5.QtWidgets import QTableWidget, QTableWidgetItem, QAbstractItemView
 
 
 class AlertListWidget(QTableWidget):
+    """Visual list displaying the Alerts from the database."""
     def __init__(self):
+        """Default constructor for the :class:`~_clockalarm.UI.AlertListWidget`
+        class.
+        """
         super(AlertListWidget, self).__init__()
         self.init_ui()
 
     def init_ui(self):
+        """Initialization helper method.
+
+        Creates a visual empty grid with column headers ID, Time, Periodicity
+        and Message. If alerts are in the db, fills the list with alerts and
+        sorts them.
+        """
         self.setColumnCount(4)
-        self.setHorizontalHeaderLabels(('ID', 'Time', 'Periodicity', 'Message'))
+        self.setHorizontalHeaderLabels(('ID', 'Time', 'Periodicity',
+                                        'Message'))
         self.verticalHeader().setVisible(False)
         self.horizontalHeader().setStretchLastSection(True)
         self.setSelectionBehavior(QAbstractItemView.SelectRows)
         self.setEditTriggers(QAbstractItemView.NoEditTriggers)
 
-        if hasattr(self.parent(), 'alert_list'):
-            self.actualize(self.parent().alert_list)
-
     def actualize(self, alert_list):
+        """Actualizes the graphical alert list based on the list given in
+        argument.
+
+        Attributes:
+            alert_list: The list containing all the alerts.
+        """
         self.setRowCount(0)  # clear the notification box
 
         for alert in alert_list:
