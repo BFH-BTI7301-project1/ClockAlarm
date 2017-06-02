@@ -18,7 +18,7 @@ import time
 
 from PyQt5.QtCore import QDateTime, QTime
 from PyQt5.QtWidgets import QGridLayout, QWidget, QDateTimeEdit, QLabel, \
-        QPushButton, QLineEdit, QGroupBox, QTimeEdit, QSpinBox
+    QPushButton, QLineEdit, QGroupBox, QTimeEdit, QSpinBox
 
 from _clockalarm.SimpleAlert import SimpleAlert
 from _clockalarm.UI.ColorSelectorWidget import ColorSelectorWidget
@@ -31,6 +31,7 @@ class SimpleAlertEditWidget(QWidget):
     Attributes:
         alert: A :class:`~_clockalarm.SimpleAlert` to edit, default None
     """
+
     def __init__(self, alert: SimpleAlert = None):
         """Default constructor of the
         :class:`~_clockalarm.UI.SimpleAlertEditWidget` class.

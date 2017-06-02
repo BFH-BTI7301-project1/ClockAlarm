@@ -1,8 +1,8 @@
-import pytest
 from os.path import dirname, abspath, join
 
-
+import pytest
 from PyQt5.QtWidgets import QApplication, QAbstractItemView
+
 from _clockalarm.AlertCollection import AlertCollection
 from _clockalarm.UI.AlertListWidget import AlertListWidget
 from _clockalarm.utils import importExportUtils

@@ -1,9 +1,9 @@
-import pytest
 from os.path import dirname, abspath, join
 
-
+import pytest
 from PyQt5.QtWidgets import QApplication, QGroupBox, QTimeEdit, \
-        QDateTimeEdit
+    QDateTimeEdit
+
 from _clockalarm.UI.SimpleAlertEditWidget import SimpleAlertEditWidget
 from _clockalarm.utils import importExportUtils
 

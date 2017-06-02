@@ -21,6 +21,7 @@ from PyQt5.QtWidgets import QTableWidget, QTableWidgetItem, QAbstractItemView
 
 class AlertListWidget(QTableWidget):
     """Visual list displaying the Alerts from the database."""
+
     def __init__(self):
         """Default constructor for the :class:`~_clockalarm.UI.AlertListWidget`
         class.
