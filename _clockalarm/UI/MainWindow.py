@@ -163,8 +163,8 @@ class MainWindow(QMainWindow):
             if message == '':
                 message = "Untitled simple alert"
             notification = Notification(message, font_family=font_family,
-                                        font_size=font_size, color_hex=dw.color_edit.text(),
-                                        sound=dw.sound_edit.text())
+                                        font_size=font_size, color_hex=dw.color_edit.hex_color,
+                                        sound=dw.sound_edit.sound_name)
             new_alert = SimpleAlert(dw.date_time_edit.dateTime().toTime_t(), notification, periodicity=periodicity)
 
             self.app.alert_collection.add(new_alert)
@@ -196,8 +196,8 @@ class MainWindow(QMainWindow):
             if message == '':
                 message = "Untitled simple alert"
             notification = Notification(message, font_family=font_family,
-                                        font_size=font_size, color_hex=dw.color_edit.text(),
-                                        sound=dw.sound_edit.text())
+                                        font_size=font_size, color_hex=dw.color_edit.hex_color,
+                                        sound=dw.sound_edit.sound_name)
             trigger_time = dw.date_time_edit.dateTime().toTime_t()
 
             self.app.alert_collection.edit(id_alert, notification=notification, trigger_time=trigger_time,

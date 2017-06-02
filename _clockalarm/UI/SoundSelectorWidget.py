@@ -28,6 +28,7 @@ class SoundSelectorWidget(QWidget):
     """Costumed widget to selected a sound
 
     Select a wave file and import it in the application sound folder.
+
     """
 
     def __init__(self, sound_name: str = None, parent=None):

@@ -6,45 +6,33 @@ from _clockalarm.UI.ColorSelectorWidget import ColorSelectorWidget
 app = QApplication([])
 
 
-@pytest.mark.skip
+@pytest.mark.test
 def test_color_selector_widget_constructor_wrong():
     """Tests the :class:`~_clockalarm.UI.ColorSelectorWidget` constructor.
 
-    Invalid sound_name argument.
+    Invalid hex_color argument.
 
     """
     with pytest.raises(ValueError):
-        SoundSelectorWidget("mySound.mp3")
+        ColorSelectorWidget("#incorrect")
 
 
-@pytest.mark.skip
-def test_sound_selector_widget_constructor():
+@pytest.mark.test
+def test_color_selector_widget_constructor():
     """Tests the :class:`~_clockalarm.UI.SoundSelectorWidget` constructor."""
-    ss_widget = SoundSelectorWidget("mySound.wav")
+    cs_widget = ColorSelectorWidget("#111111")
 
-    assert ss_widget.sound_name == "mySound.wav"
-    assert isinstance(ss_widget.sound_edit, QLineEdit)
-    assert ss_widget.sound_edit.text() == "mySound.wav"
-    assert isinstance(ss_widget.sound_select_button, QPushButton)
-
-
-@pytest.mark.skip
-def test_sound_selector_widget_set_sound_wrong():
-    """Tests the :class:`~_clockalarm.UI.SoundSelectorWidget.set_sound` method.
-
-    Incorrect sound argument.
-
-    """
-    ss_widget = SoundSelectorWidget("mySound.wav")
-    with pytest.raises(ValueError):
-        ss_widget.set_sound("wrong_ext.mp3")
+    assert cs_widget.hex_color == "#111111"
+    assert isinstance(cs_widget.hex_color_edit, QLineEdit)
+    assert cs_widget.hex_color_edit.text() == "#111111"
+    assert isinstance(cs_widget.color_select_button, QPushButton)
 
 
-@pytest.mark.skip
-def test_sound_selector_widget_set_sound():
-    """Tests the :class:`~_clockalarm.UI.SoundSelectorWidget.set_sound` method."""
-    ss_widget = SoundSelectorWidget("mySound.wav")
-    ss_widget.set_sound("new_sound.wav")
+@pytest.mark.test
+def test_color_selector_widget_set_hex_color():
+    """Tests the :class:`~_clockalarm.UI.ColorSelectorWidget.set_hex_color` method."""
+    cs_widget = ColorSelectorWidget("#111111")
+    cs_widget.set_hex_color("#222222")
 
-    assert ss_widget.sound_name == "new_sound.wav"
-    assert ss_widget.sound_edit.text() == "new_sound.wav"
+    assert cs_widget.hex_color == "#222222"
+    assert cs_widget.hex_color_edit.text() == "#222222"

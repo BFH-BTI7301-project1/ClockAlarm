@@ -22,16 +22,20 @@ from PyQt5.QtWidgets import QWidget, QPushButton, QLineEdit, QColorDialog, QHBox
 
 
 class ColorSelectorWidget(QWidget):
-    """
+    """Costumed widget to selected a color for the notification"""
 
-    """
     def __init__(self, hex_color=None, parent=None):
-        """
+        """ColorSelectorWidget default constructor
 
-        :param hex_color:
-        :param parent:
+        Attributes:
+            hex_color (str, optional): Initialization hexadecimal color value
+            parent (QWidget, optional): Parent QWidget
+
         """
         super(ColorSelectorWidget, self).__init__(parent)
+
+        if hex_color and not re.search(r'^#(?:[0-9a-fA-F]{3}){1,2}$', hex_color):
+            raise ValueError(hex_color + ' is not a correct hexadecimal value')
 
         self.hex_color = hex_color
         self.hex_color_edit = None
@@ -40,17 +44,16 @@ class ColorSelectorWidget(QWidget):
         self.init_ui()
 
     def init_ui(self):
-        """
+        """Initialize the GUI of the QWidget
 
-        :return:
         """
         h_layout = QHBoxLayout()
 
         self.hex_color_edit = QLineEdit()
         self.color_select_button = QPushButton()
-        if self.hex_color is not None:
+        if self.hex_color is not None:  # init the text in QLineEdit
             self.set_hex_color(self.hex_color)
-        self.hex_color_edit.textChanged.connect(self.change_event)
+        self.hex_color_edit.textChanged.connect(self.change_event)  # event to change the button color
         self.color_select_button.released.connect(self.button_click)
 
         h_layout.addWidget(self.hex_color_edit)
@@ -60,12 +63,13 @@ class ColorSelectorWidget(QWidget):
         self.setLayout(h_layout)
 
     def button_click(self):
-        """
+        """Called when the color_select_button is clicked.
 
-        :return:
+        Choose a color from a palette.
+
         """
         if self.hex_color:
-            new_color = QColorDialog.getColor(QColor(self.hex_color))
+            new_color = QColorDialog.getColor(QColor(self.hex_color))  # init with color
         else:
             new_color = QColorDialog.getColor()
 
@@ -75,21 +79,25 @@ class ColorSelectorWidget(QWidget):
         self.set_hex_color(new_color.name())
 
     def set_hex_color(self, hex_color):
+        """Set a new hexadecimal color
+
+        Attributes:
+            hex_color (str): The new color.
+
         """
 
-        :param hex_color:
-        :return:
-        """
         self.hex_color = hex_color
         self.hex_color_edit.setText(hex_color)
         self.color_select_button.setStyleSheet("QPushButton { background-color : " + hex_color + "}")
 
     def change_event(self):
-        """
+        """Called every times the QLineEdit field is updated.
 
-        :return:
+        Update the hex_color value and the color of the QPushButton.
+
         """
         current_hex = self.hex_color_edit.text()
-        if re.search(r'^#(?:[0-9a-fA-F]{3}){1,2}$', current_hex):
+        if re.search(r'^#(?:[0-9a-fA-F]{3}){1,2}$',
+                     current_hex):  # only update the color if it's a correct hexadecimal string
             self.hex_color = current_hex
             self.color_select_button.setStyleSheet("QPushButton { background-color : " + current_hex + "}")
