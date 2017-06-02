@@ -57,6 +57,15 @@ class SoundSelectorWidget(QWidget):
         """Initialize the GUI of the QWidget
 
         """
+
+        def button_click(self):
+            """Called when the sound_select_button is clicked. Get a wave sound file path from the file explorer."""
+            sound_path = QFileDialog.getOpenFileName(None, "Select a sound to import", filter="wav (*.wav *.)")[0]
+            if sound_path == '':  # canceled dialog
+                logging.debug("abort sound import")
+                return
+            self.load_sound(sound_path)
+
         h_layout = QHBoxLayout()  # to line up the widgets
 
         self.sound_edit = QLineEdit()
@@ -64,7 +73,7 @@ class SoundSelectorWidget(QWidget):
         self.sound_select_button.setIcon(self.style().standardIcon(QStyle.SP_DirIcon))
         if self.sound_name is not None:  # init the sound name is not None
             self.sound_edit.setText(self.sound_name)
-        self.sound_select_button.released.connect(self.button_click)
+        self.sound_select_button.released.connect(button_click)
 
         h_layout.addWidget(self.sound_edit)
         h_layout.addWidget(self.sound_select_button)
@@ -72,30 +81,34 @@ class SoundSelectorWidget(QWidget):
 
         self.setLayout(h_layout)
 
-    def button_click(self):
-        """Called when the sound_select_button is clicked. Open a wave sound file from the file explorer.
+    def load_sound(self, sound_path: str):
+        """Load the given .wave sound file in the application folder
 
         If the file already exist in the sound folder of the app, nothing append.
         If a file with the same name already exist in the sound folder, he is overwritten.
 
-        """
-        new_sound = QFileDialog.getOpenFileName(None, "Select a sound to import", filter="wav (*.wav *.)")[0]
-        if new_sound == '':  # no sound selected
-            logging.debug("abort sound import")
-            return
+        Attributes:
+            sound_path: the full path of the sound file.
 
-        file_name = pathlib.PurePosixPath(new_sound).name  # shutil.copy function requires url path
+        Exceptions:
+            ValueError: If the given sound_path isn't a valid wave sound.
+
+        """
+        if not sound_path or not sound_path.endswith((".wav", ".wave")):
+            raise ValueError("Not a valid wave file")
+
+        file_name = pathlib.PurePosixPath(sound_path).name  # shutil.copy function requires url path
         dest = pathlib.Path(join(src_path, "_clockalarm", "resources", "sounds", file_name)).as_posix()
 
-        logging.debug("import sound src path: " + new_sound)
+        logging.debug("import sound src path: " + sound_path)
         logging.debug("import sound dest path: " + dest)
 
         try:
-            shutil.move(new_sound, dest)
+            shutil.copy(sound_path, dest)
         except shutil.Error:  # file already exist
             logging.debug("the sound file already exist")
 
-        self.set_sound(basename(new_sound))  # sound_name is file name and extension
+        self.set_sound(basename(sound_path))  # sound_name is file name and extension
 
     def set_sound(self, sound: str):
         """Set a new sound

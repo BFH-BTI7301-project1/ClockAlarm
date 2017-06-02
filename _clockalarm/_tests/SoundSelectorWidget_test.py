@@ -1,3 +1,7 @@
+import filecmp
+import os
+from os.path import dirname, join, abspath
+
 import pytest
 from PyQt5.QtWidgets import QApplication, QLineEdit, QPushButton
 
@@ -48,3 +52,33 @@ def test_sound_selector_widget_set_sound():
 
     assert ss_widget.sound_name == "new_sound.wav"
     assert ss_widget.sound_edit.text() == "new_sound.wav"
+
+
+@pytest.mark.test
+def test_sound_selector_widget_load_sound_error():
+    """Tests the :class:`~_clockalarm.UI.SoundSelectorWidget.load_sound` method.
+
+    Corrupted sound_path argument
+
+    """
+    ss_widget = SoundSelectorWidget("mySound.wav")
+    with pytest.raises(ValueError):
+        ss_widget.load_sound(None)
+    with pytest.raises(ValueError):
+        ss_widget.load_sound("incorrect.mp3")
+
+
+@pytest.mark.test
+def test_sound_selector_widget_load_sound():
+    """Tests the :class:`~_clockalarm.UI.SoundSelectorWidget.load_sound` method."""
+    import pathlib
+    ss_widget = SoundSelectorWidget("mySound.wav")
+
+    src_sound_file = join(dirname(abspath(__file__)), "test_sound.wav")
+    dest_sound_path = join(dirname(dirname(abspath(__file__))), "resources", "sounds")
+    ss_widget.load_sound(pathlib.Path(src_sound_file).as_posix())
+
+    assert filecmp.cmp(src_sound_file, join(dest_sound_path, "test_sound.wav"))
+    assert ss_widget.sound_name == "test_sound.wav"
+
+    os.remove(join(dest_sound_path, "test_sound.wav"))
