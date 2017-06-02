@@ -22,7 +22,7 @@ from PyQt5.QtWidgets import QWidget, QPushButton, QLineEdit, QColorDialog, QHBox
 
 
 class ColorSelectorWidget(QWidget):
-    """Costumed widget to selected a color for the notification"""
+    """Custom widget to selected a color for the notification"""
 
     def __init__(self, hex_color=None, parent=None):
         """ColorSelectorWidget default constructor

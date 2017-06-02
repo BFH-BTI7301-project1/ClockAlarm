@@ -117,8 +117,10 @@ def test_alert_collection_edit_wrong_argument(before):
     alert_collection = AlertCollection()
     with pytest.raises(ValueError):
         alert_collection.edit(2, periodicity=0)
-    with pytest.raises(ValueError):
-        alert_collection.edit(2, trigger_time=10)
+
+    tt = alert_collection.alert_list[0].trigger_time
+    alert_collection.edit(2, trigger_time=10)
+    assert alert_collection.alert_list[0].trigger_time == tt
 
     alert_collection.db.close()
 

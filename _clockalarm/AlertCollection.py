@@ -14,6 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import logging
 import time
 
 from tinydb import TinyDB, Query
@@ -90,6 +91,8 @@ class AlertCollection(object):
              trigger_time: int = None, periodicity: int = None):
         """Update an alert with the given modifications
 
+        If the trigger_time is in the past, he won't re updated.
+
         Attributes:
             id_alert(int): The id number of the alert to modify
             notification(Notification, optional): Default is None. The new notification
@@ -99,7 +102,6 @@ class AlertCollection(object):
         Exceptions:
             KeyError: If the alert to edit doesn't exist in the database.
             ValueError: If the periodicity argument is equal or under zero.
-            ValueError: If the trigger_time argument correspond to a date in the past.
 
         """
         try:
@@ -123,11 +125,11 @@ class AlertCollection(object):
                 self.db.update({'periodicity': alert_to_edit.periodicity},
                                eids=[id_alert])
             if trigger_time is not None:
-                if trigger_time < time.time():  # alert can't be triggered in the past
-                    raise ValueError("Trigger time can't be in the past")
-                alert_to_edit.trigger_time = trigger_time
-                self.db.update({'trigger_time': alert_to_edit.trigger_time},
-                               eids=[id_alert])
+                if trigger_time < time.time():
+                    logging.error("alert can't be triggered in the past")
+                else:
+                    alert_to_edit.trigger_time = trigger_time
+                    self.db.update({'trigger_time': alert_to_edit.trigger_time}, eids=[id_alert])
             self.display()
 
     def delete(self, id_alert: int):

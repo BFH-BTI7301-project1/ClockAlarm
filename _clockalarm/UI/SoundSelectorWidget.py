@@ -25,7 +25,7 @@ src_path = dirname(dirname(dirname(abspath(__file__))))
 
 
 class SoundSelectorWidget(QWidget):
-    """Costumed widget to selected a sound
+    """Costum widget to selected a sound
 
     Select a wave file and import it in the application sound folder.
 

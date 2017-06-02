@@ -177,7 +177,7 @@ class MainWindow(QMainWindow):
         self.dialog_widget.show()
 
     def edit_simple_alert(self):
-        """Edits the selcted alert and shows an SimpleAlertEditWidget to the
+        """Edits the selected alert and shows an SimpleAlertEditWidget to the
         user.
         """
 
@@ -200,8 +200,11 @@ class MainWindow(QMainWindow):
                                         sound=dw.sound_edit.sound_name)
             trigger_time = dw.date_time_edit.dateTime().toTime_t()
 
-            self.app.alert_collection.edit(id_alert, notification=notification, trigger_time=trigger_time,
-                                           periodicity=periodicity)
+            try:
+                self.app.alert_collection.edit(id_alert, notification=notification, trigger_time=trigger_time,
+                                               periodicity=periodicity)
+            except KeyError:
+                logging.info("The alert to edit doesn't exist anymore")
             dw.close()
 
         selection = self.alert_list_widget.selectionModel().selectedRows()
