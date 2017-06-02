@@ -25,22 +25,43 @@ src_path = dirname(dirname(dirname(abspath(__file__))))
 
 
 class SoundSelectorWidget(QWidget):
-    def __init__(self, sound_name=None, parent=None):
+    """Costumed widget to selected a sound
+
+    Select a wave file and import it in the application sound folder.
+    """
+
+    def __init__(self, sound_name: str = None, parent=None):
+        """SoundSelectorWidget default constructor
+
+        Attributes:
+            sound_name (str, optional): Default is None. Name of the sound file, with extension.
+            parent (QWidget, optional): Default is None. Parent QWidget.
+
+        Exceptions:
+            ValueError: If the sound_name argument isn't a wave file.
+
+        """
         super(SoundSelectorWidget, self).__init__(parent)
 
-        self.sound_name = sound_name
+        if sound_name and not sound_name.endswith(('.wav', '.wave')):
+            raise ValueError('Sound must be at wave format')
+
+        self.sound_name = sound_name  # not the full path
         self.sound_edit = None
         self.sound_select_button = None
 
         self.init_ui()
 
     def init_ui(self):
-        h_layout = QHBoxLayout()
+        """Initialize the GUI of the QWidget
+
+        """
+        h_layout = QHBoxLayout()  # to line up the widgets
 
         self.sound_edit = QLineEdit()
         self.sound_select_button = QPushButton()
         self.sound_select_button.setIcon(self.style().standardIcon(QStyle.SP_DirIcon))
-        if self.sound_name is not None:
+        if self.sound_name is not None:  # init the sound name is not None
             self.sound_edit.setText(self.sound_name)
         self.sound_select_button.released.connect(self.button_click)
 
@@ -51,12 +72,18 @@ class SoundSelectorWidget(QWidget):
         self.setLayout(h_layout)
 
     def button_click(self):
+        """Called when the sound_select_button is clicked. Open a wave sound file from the file explorer.
+
+        If the file already exist in the sound folder of the app, nothing append.
+        If a file with the same name already exist in the sound folder, he is overwritten.
+
+        """
         new_sound = QFileDialog.getOpenFileName(None, "Select a sound to import", filter="wav (*.wav *.)")[0]
-        if new_sound == '':
+        if new_sound == '':  # no sound selected
             logging.debug("abort sound import")
             return
 
-        file_name = pathlib.PurePosixPath(new_sound).name
+        file_name = pathlib.PurePosixPath(new_sound).name  # shutil.copy function requires url path
         dest = pathlib.Path(join(src_path, "_clockalarm", "resources", "sounds", file_name)).as_posix()
 
         logging.debug("import sound src path: " + new_sound)
@@ -64,14 +91,25 @@ class SoundSelectorWidget(QWidget):
 
         try:
             shutil.move(new_sound, dest)
-        except shutil.Error:
+        except shutil.Error:  # file already exist
             logging.debug("the sound file already exist")
 
-        self.set_sound(basename(new_sound))
+        self.set_sound(basename(new_sound))  # sound_name is file name and extension
 
-    def set_sound(self, sound):
+    def set_sound(self, sound: str):
+        """Set a new sound
+
+        Modify the name and update the edit field.
+
+        Attributes:
+            sound (str): The new sound basename.
+
+        Exceptions:
+            ValueError: If the sound_name argument isn't a wave file.
+
+        """
+        if not sound.endswith(('.wav', '.wave')):
+            raise ValueError('Sound must be at wave format')
+
         self.sound_name = sound
         self.sound_edit.setText(sound)
-
-    def text(self):
-        return self.sound_name

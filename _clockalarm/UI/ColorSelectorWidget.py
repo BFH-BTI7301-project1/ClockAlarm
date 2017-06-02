@@ -22,7 +22,15 @@ from PyQt5.QtWidgets import QWidget, QPushButton, QLineEdit, QColorDialog, QHBox
 
 
 class ColorSelectorWidget(QWidget):
+    """
+
+    """
     def __init__(self, hex_color=None, parent=None):
+        """
+
+        :param hex_color:
+        :param parent:
+        """
         super(ColorSelectorWidget, self).__init__(parent)
 
         self.hex_color = hex_color
@@ -32,6 +40,10 @@ class ColorSelectorWidget(QWidget):
         self.init_ui()
 
     def init_ui(self):
+        """
+
+        :return:
+        """
         h_layout = QHBoxLayout()
 
         self.hex_color_edit = QLineEdit()
@@ -48,6 +60,10 @@ class ColorSelectorWidget(QWidget):
         self.setLayout(h_layout)
 
     def button_click(self):
+        """
+
+        :return:
+        """
         if self.hex_color:
             new_color = QColorDialog.getColor(QColor(self.hex_color))
         else:
@@ -59,15 +75,21 @@ class ColorSelectorWidget(QWidget):
         self.set_hex_color(new_color.name())
 
     def set_hex_color(self, hex_color):
+        """
+
+        :param hex_color:
+        :return:
+        """
         self.hex_color = hex_color
         self.hex_color_edit.setText(hex_color)
         self.color_select_button.setStyleSheet("QPushButton { background-color : " + hex_color + "}")
 
     def change_event(self):
+        """
+
+        :return:
+        """
         current_hex = self.hex_color_edit.text()
         if re.search(r'^#(?:[0-9a-fA-F]{3}){1,2}$', current_hex):
             self.hex_color = current_hex
             self.color_select_button.setStyleSheet("QPushButton { background-color : " + current_hex + "}")
-
-    def text(self):
-        return self.hex_color
