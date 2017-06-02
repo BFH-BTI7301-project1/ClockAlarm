@@ -17,8 +17,8 @@
 import time
 
 from PyQt5.QtCore import QDateTime, QTime
-from PyQt5.QtWidgets import QGridLayout, QWidget, QDateTimeEdit, QLabel, QPushButton, QLineEdit, QGroupBox, QTimeEdit, \
-    QSpinBox
+from PyQt5.QtWidgets import QGridLayout, QWidget, QDateTimeEdit, QLabel, \
+        QPushButton, QLineEdit, QGroupBox, QTimeEdit, QSpinBox
 
 from _clockalarm.SimpleAlert import SimpleAlert
 from _clockalarm.UI.ColorSelectorWidget import ColorSelectorWidget
@@ -26,7 +26,15 @@ from _clockalarm.UI.SoundSelectorWidget import SoundSelectorWidget
 
 
 class SimpleAlertEditWidget(QWidget):
+    """Widget allowing to create or edit a :class:`~_clockalarm.SimpleAlert`.
+
+    Attributes:
+        alert: A :class:`~_clockalarm.SimpleAlert` to edit, default None
+    """
     def __init__(self, alert: SimpleAlert = None):
+        """Default constructor of the
+        :class:`~_clockalarm.UI.SimpleAlertEditWidget` class.
+        """
         super(SimpleAlertEditWidget, self).__init__()
 
         self.alert_message_edit = None
@@ -41,6 +49,11 @@ class SimpleAlertEditWidget(QWidget):
         self.init_ui(alert)
 
     def init_ui(self, alert):
+        """Initialization helper method.
+
+        Attributes:
+            alert: The :class:`~_clockalarm.SimpleAlert` to edit
+        """
         group_box = QGroupBox(self)
         group_box.setTitle('Set up a new Simple Alert')
         date_time = time.time() + 15
