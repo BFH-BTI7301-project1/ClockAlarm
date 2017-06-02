@@ -39,7 +39,7 @@ def test_constructor():
 
 @pytest.mark.test
 def test_constructor_with_alert_list(init_paths):
-    """Test the :class:`~_clockalarm.UI.AlertListWidget` constructor with§ an
+    """Test the :class:`~_clockalarm.UI.AlertListWidget` constructor with an
     alert list.
 
     Also tests the :class:`~_clockalarm.UI.AlertListWidget.actualize` method.
