@@ -1,19 +1,17 @@
 from os.path import join, abspath, dirname
 
 import pytest
-
 from PyQt5 import QtCore
 from PyQt5.Qt import QRect
 from PyQt5.QtCore import QPoint, QSize
-from PyQt5.QtWidgets import QAction, QWidget, QGridLayout, QPushButton, QMenu,\
-        QSystemTrayIcon
 from PyQt5.QtGui import QCloseEvent
+from PyQt5.QtWidgets import QAction, QWidget, QGridLayout, QPushButton, QMenu, \
+    QSystemTrayIcon
 
-from _clockalarm.main import App
 from _clockalarm.Notification import Notification
 from _clockalarm.UI.SimpleAlertEditWidget import SimpleAlertEditWidget
+from _clockalarm.main import App
 from _clockalarm.utils import importExportUtils
-
 
 alert_db_path = join(dirname(abspath(__file__)), "alertsDB_test.json")
 default_config_path = join(dirname(abspath(__file__)), "config_test.cfg")
@@ -154,7 +152,7 @@ def test_delete_alerts(init_paths, qtbot):
 
 
 @pytest.mark.test
-def test_import_json_db(init_paths, caplog, qtbot):
+def test_import_json_db(init_paths, qtbot):
     """Test :class:~_clockalarm.UI.MainWindow.import_json_db method.
 
     Cannot test the behaviour of this method because it is impossible to access

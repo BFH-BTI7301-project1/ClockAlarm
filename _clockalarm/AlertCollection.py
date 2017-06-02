@@ -160,68 +160,63 @@ class AlertCollection(object):
                 if not alert.periodicity:
                     self.delete(alert.get_id())
                 else:
-                    self.edit(alert.get_id(),
-                              trigger_time=alert.get_trigger_time() +
-                                           alert.get_periodicity())
+                    self.edit(alert.get_id(), trigger_time=alert.get_trigger_time() + alert.get_periodicity())
 
     def display(self):
-        """
+        """Actualize the UI alert list display
 
-        :return:
+        If parent is unset, the AlertCollection object isn't link to any QWindow and nothing append
+
         """
         if self.parent:
             self.parent.main_window.alert_list_widget.actualize(self.alert_list)
 
     def load_db(self):
-        """
+        """Fill the AlertCollection with Alerts form the TinyDB database
 
-        :return:
+        Exceptions:
+            IOError: If a required parameter can't be found in the database. The database is probably corrupted.
+
         """
+        self.alert_list = []  # clean the alert list
         for alert in self.db.all():
-            notification = Notification(alert["message"],
-                                        color_hex=alert["color_hex"],
-                                        font_family=alert["font_family"],
-                                        font_size=alert["font_size"],
-                                        sound=alert["sound"])
-            new_alert = SimpleAlert(alert["trigger_time"], notification)
-            if "periodicity" in alert:
+            try:
+                notification = Notification(alert["message"],
+                                            color_hex=alert["color_hex"],
+                                            font_family=alert["font_family"],
+                                            font_size=alert["font_size"],
+                                            sound=alert["sound"])
+                new_alert = SimpleAlert(alert["trigger_time"], notification)
+            except KeyError as e:
+                raise IOError('The alert database seems corrupted' + str(e))
+
+            if "periodicity" in alert:  # periodicity can not appear in db
                 new_alert.periodicity = alert["periodicity"]
-            new_alert.id = alert.eid
+            new_alert.id = alert.eid  # use the TinyDB object eid as alert id
 
             self.alert_list.append(new_alert)
-            if self.parent:
+            if self.parent:  # connect the alert to the GUI
                 new_alert.timeout.connect(self.parent.notification_center.add_to_queue)
 
-    def save_db(self):
-        """
-
-        :return:
-        """
-        self.db.purge()
-        for alert in self.alert_list:
-            self.db.insert({'trigger_time': alert.trigger_time,
-                            'message': alert.get_notification().get_message(),
-                            'font_family': alert.notification.font_family,
-                            'font_size': alert.notification.font_size,
-                            'color_hex': alert.notification.color_hex,
-                            'sound': alert.notification.sound,
-                            'periodicity': alert.periodicity})
-
     def clean_db(self):
+        """Make the TinyDB database consistent
+
+        All the outdated alerts without periodicity are removed.
+        New trigger time is calculated for outdated alerts with periodicity.
+
+        If the db is corrupted, nothing append.
         """
 
-        :return:
-        """
-
-        def operation():
+        def operation():  # to apply on alerts with periodicity
             def transform(element):
-                trig = element['trigger_time']
-                while trig < time.time():
-                    trig += element['periodicity']
-                element['trigger_time'] = trig
+                if element['periodicity']:  # periodicity not None
+                    trig = element['trigger_time']
+                    while trig < time.time():  # add periodicity value to trigger time until the alert occurs in the future
+                        trig += element['periodicity']
+                    element['trigger_time'] = trig
 
             return transform
 
         alert_query = Query()
-        self.db.update(operation(), alert_query.periodicity != None)
-        self.db.remove(alert_query.trigger_time <= time.time())
+        self.db.update(operation(), alert_query.periodicity.exists())  # update trigger time
+        self.db.remove(alert_query.trigger_time <= time.time())  # remove outdated

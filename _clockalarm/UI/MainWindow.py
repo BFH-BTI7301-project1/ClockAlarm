@@ -29,7 +29,7 @@ from _clockalarm.SimpleAlert import SimpleAlert
 from _clockalarm.UI.AlertListWidget import AlertListWidget
 from _clockalarm.UI.SimpleAlertEditWidget import SimpleAlertEditWidget
 from _clockalarm.utils.importExportUtils import export_alerts_file, \
-        import_alerts_file, set_default_config, get_default_config
+    import_alerts_file, set_default_config, get_default_config
 
 
 class MainWindow(QMainWindow):
@@ -41,6 +41,7 @@ class MainWindow(QMainWindow):
         application: The main application
         *args: The parent pointer or window flags
     """
+
     def __init__(self, application, *args):
         """Creates a main window with an Alert list"""
         super(MainWindow, self).__init__(*args)
@@ -146,6 +147,7 @@ class MainWindow(QMainWindow):
         """Creates a :class:`~_clockalarm.UI.SimpleAlertEditWidget`
         and shows it to the user.
         """
+
         def button_clicked():
             dw = self.dialog_widget
             periodicity = QTime(0, 0).secsTo(dw.periodicity_edit.time())
@@ -178,6 +180,7 @@ class MainWindow(QMainWindow):
         """Edits the selcted alert and shows an SimpleAlertEditWidget to the
         user.
         """
+
         def button_clicked():
             dw = self.dialog_widget
             periodicity = QTime(0, 0).secsTo(dw.periodicity_edit.time())
