@@ -68,7 +68,7 @@ Run the tests:
 
 The documentation can either be found under ```docs/pdf/clockalarm_documentation.pdf``` or [clockalarm.readthedocs.io](https://clockalarm.readthedocs.io)
 
-You can also compile it yourself. Make sure that Sphinx (>= 1.6.1) is installed. The simply run ```make html``` in the ```/docs```directory.
+You can also compile it yourself. Make sure that Sphinx (>= 1.6.1) is installed. Then simply run ```make html``` in the ```/docs```directory.
 
 ## Bugs
 
