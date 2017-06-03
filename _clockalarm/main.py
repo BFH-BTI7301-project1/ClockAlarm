@@ -103,7 +103,7 @@ class App(QApplication):
         """Initialisation of the main window GUI
         
         """
-        icon_path = join(dirname(abspath(__file__)), 'resources', 'images', 'bfh_logo.png')
+        icon_path = join(dirname(abspath(__file__)), 'resources', 'images', 'bell-icon.png')
         icon = QIcon(icon_path)
         self.setWindowIcon(icon)  # application icon for OSx and linux
 
