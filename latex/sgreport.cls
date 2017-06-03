@@ -18,8 +18,11 @@
 
 
 %%%%%%%%%% Redefine Header and Footer
+\fancyhead{} % lear all fields
+\fancyhead[RO,LE]{\textsl{\rightmark}}
 \fancyfoot{} % clear all fields
 \fancyfoot[RO,LE]{\thepage}
+\fancyfoot[LO,RE]{\textsl{\leftmark}}
 
 %%%%%%%%%% Under Work /!\ Redefine Chapter Style
 %\titleformat{\chapter}[display]
@@ -65,11 +68,6 @@ not set. Please fix this.}
 \renewcommand*{\maketitle}{%
 \begin{titlepage}
 
-%{
-%\raggedleft%
-%\includegraphics[width=3cm]{example-image-16x9}\par
-%}\vspace{1cm}
-
 \newgeometry{top=3cm, bottom=3cm, left=2cm, right=2cm}
 \vspace*{3cm}
 
@@ -80,10 +78,17 @@ not set. Please fix this.}
 {\scshape\Large\@project\unskip\strut\par}
 \vspace{1.5cm}
 
+{
+\centering%
+\includegraphics[width=4cm]{images/bell-icon.eps}\par
+}\vspace{1cm}
+
 {\huge\bfseries\@title\unskip\strut\par}
 \vspace{2cm}
 
 {\Large\itshape\@author\unskip\strut\par}
+\vspace{4cm}
+
 \vfill
 supervised by\par
 \@supervisor\unskip\strut\par

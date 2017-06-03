@@ -33,3 +33,12 @@ Due to the time constraint the following requirements could not be fulfilled:
 
 
 \end{itemize}
+
+\subsubsection{SimpleAlert class}
+
+The existence of a \texttt{SimpleAlert} and \texttt{Alert} class can seem to be
+unoptimized at first glance. The two classes could have been merged together.
+But in our initial development decisions, we planned to add another class
+extending \texttt{Alert}, namely \texttt{EmailAlert}. We decided to leave the
+design like it is now, so that it is easier to create a custom alert class in
+the future.
