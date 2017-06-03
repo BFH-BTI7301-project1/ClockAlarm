@@ -20,6 +20,8 @@ from PyQt5.QtCore import Qt, pyqtSignal, QRect
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QWidget, QLabel
 
+from _clockalarm.utils.importExportUtils import get_default_config
+
 
 class NotificationWidget(QWidget):
     """Notification widget
@@ -49,24 +51,28 @@ class NotificationWidget(QWidget):
             geom: The position and size of the widget on the screen
         """
         self.setGeometry(geom)
-        self.setAutoFillBackground(True)
-        self.setWindowOpacity(0.8)
+        self.setAttribute(Qt.WA_TranslucentBackground)
         self.setAttribute(Qt.WA_ShowWithoutActivating)
 
         """Background Image"""
+        im_name = get_default_config("WIDGET_FILE_NAME")
         im_path = join(dirname(dirname(abspath(__file__))), 'resources', 'images',
-                       'notification_clock.png')
+                       im_name)
         lbl_im = QLabel(self)
         lbl_im.setPixmap(QPixmap(im_path))
 
         """Notification message"""
         color = self.notification.get_color()
-        alpha = 200
+        alpha = get_default_config("WIDGET_TRANSPARENCY", "int")
         rgba = "{r}, {g}, {b}, {a}".format(r=color.red(), g=color.green(), b=color.blue(), a=alpha)
         lbl = QLabel(self.notification.message, self)
-        lbl.setAlignment(Qt.AlignTop)
+        lbl.setAlignment(Qt.AlignVCenter)
         lbl.setWordWrap(True)
-        lbl.setGeometry(QRect(30, 25, geom.width() - 2 * 28, geom.height() / 2 - 10))
+        padding_top = get_default_config("WIDGET_TEXT_PADDING_TOP", "int")
+        padding_left = get_default_config("WIDGET_TEXT_PADDING_LEFT", "int")
+        text_width = get_default_config("WIDGET_TEXT_WIDTH", "int")
+        text_height = get_default_config("WIDGET_TEXT_HEIGHT", "int")
+        lbl.setGeometry(QRect(padding_left, padding_top, text_width, text_height))
         lbl.setFont(self.notification.get_font())
         lbl.setStyleSheet(
             "QLabel { color : rgba(" + rgba + ")}")

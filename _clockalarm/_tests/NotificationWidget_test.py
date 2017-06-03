@@ -44,9 +44,8 @@ def test_constructor(init_paths):
     assert nw.width() == rect.width()
     assert nw.x() == rect.x()
     assert nw.y() == rect.y()
-    assert nw.windowOpacity() == 0.8
-    assert nw.autoFillBackground()
     assert nw.testAttribute(Qt.WA_ShowWithoutActivating)
+    assert nw.testAttribute(Qt.WA_TranslucentBackground)
 
     children = nw.findChildren(QLabel)
 
@@ -54,7 +53,7 @@ def test_constructor(init_paths):
     assert not children[0].pixmap().isNull()
 
     # Notification message
-    assert children[1].alignment() == Qt.AlignTop
+    assert children[1].alignment() == Qt.AlignVCenter
     assert children[1].wordWrap()
     assert children[1].font().family() == notification.font_family
 

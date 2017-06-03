@@ -39,7 +39,7 @@ def test_notification_center_constructor(before):
     assert len(notification_center._displayed_popups) == 0
     assert notification_center._lock.acquire()
     assert notification_center.ax == 1550
-    assert notification_center.ay == 108
+    assert notification_center.ay == 43
 
     nc = NotificationCenter.NotificationCenter(screen_geometry)
     assert nc.parent is None

@@ -64,8 +64,8 @@ class NotificationCenter(object):
         self._displayed_popups = []
         self._lock = threading.RLock()  # lock to protect the queue
 
-        self.ay = round(self._screen_geometry.height() * 0.1)  # y coordinate of the notification zone in pixels
         self.ax = self._screen_geometry.width() - get_default_config("WIDGET_WIDTH", "int") - 20  # x coordinate of the notification zone in pixels
+        self.ay = round(self._screen_geometry.height() * 0.04)  # y coordinate of the notification zone in pixels
 
     def add_to_queue(self, notification):
         """Add a new notification to the queue
