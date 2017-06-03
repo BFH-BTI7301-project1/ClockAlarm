@@ -4,7 +4,14 @@
 
 ![ClockAlarm](latex/images/main_window.png)
 
-ClockAlarm is a cross-platform (linux, Windows, macOS) alarm manager.
+ClockAlarm is a cross-platform (linux, Windows, macOS) alarm manager that will help you improve your life organization. Define alerts and never miss events again.
+
+### Features
+
+* Simple / Periodic alerts
+* Works on Windows, macOS and Linux 
+* Safe, corrupt-free and humanly readable database
+* Fully customizable alerts (sound, color, font, etc)
 
 ## Content
 
@@ -14,7 +21,6 @@ ClockAlarm is a cross-platform (linux, Windows, macOS) alarm manager.
 * [Development](#development)
 * [Documentation](#documentation)
 * [Bugs](#bugs)
-
 
 ## Installation 
 
@@ -55,13 +61,13 @@ To develop ClockAlarm and run the tests the following packages are necessary:
 Run the following command:
 
 ```bash
-> pip3 install coverage pytest pytest-cov pytest-qt pytest-catchlog coveralls
+> pip3 install -r stable-req.txt
 ```
 
 Run the tests:
 
 ```bash
-> py.test --cov-report term --cov=. _clockalarm/_tests
+> py.test --cov-report term --cov=. _clockalarm/_tests --no-xvfb
 ```
 
 ## Documentation
@@ -72,4 +78,4 @@ You can also compile it yourself. Make sure that Sphinx (>= 1.6.1) is installed.
 
 ## Bugs
 
-Please open a new github issue if you encounter any bugs.
+Please open a new GitHub issue if you encounter any bugs.
