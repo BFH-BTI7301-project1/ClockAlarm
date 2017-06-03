@@ -28,6 +28,7 @@ from _clockalarm.AlertCollection import AlertCollection
 from _clockalarm.NotificationCenter import NotificationCenter
 from _clockalarm.UI.MainWindow import MainWindow
 from _clockalarm.utils import importExportUtils
+from _clockalarm.utils.importExportUtils import get_default_config
 
 EXIT_CODE_REBOOT = -11231351  # error code launch by App in case of reboot
 
@@ -103,7 +104,7 @@ class App(QApplication):
         """Initialisation of the main window GUI
         
         """
-        icon_path = join(dirname(abspath(__file__)), 'resources', 'images', 'bell-icon.png')
+        icon_path = join(dirname(abspath(__file__)), 'resources', 'images', get_default_config("ICON_FILE_NAME"))
         icon = QIcon(icon_path)
         self.setWindowIcon(icon)  # application icon for OSx and linux
 

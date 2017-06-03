@@ -24,9 +24,7 @@ from PyQt5.QtCore import QRect
 
 from _clockalarm.Notification import Notification
 from _clockalarm.UI.NotificationWidget import NotificationWidget
-
-WIDGET_SIZE = (350, 215)  # dimensions of the notification widgets in pixels
-PADDING = 10  # space between the widgets in pixels
+from _clockalarm.utils.importExportUtils import get_default_config
 
 
 class NotificationCenter(object):
@@ -60,14 +58,14 @@ class NotificationCenter(object):
         self.parent = parent
         self._screen_geometry = screen_geometry
         self._max_popups = math.floor((screen_geometry.height() * 0.9) / (
-            WIDGET_SIZE[1] + PADDING))  # number of widget one can display with the given screen geometry
+            get_default_config("WIDGET_HEIGHT", "int") + get_default_config("WIDGET_PADDING", "int")))  # number of widget one can display with the given screen geometry
 
         self._popup_queue = deque([])  # list as a queue
         self._displayed_popups = []
         self._lock = threading.RLock()  # lock to protect the queue
 
-        self.ax = self._screen_geometry.width() - WIDGET_SIZE[0] - 20  # x coordinate of the notification zone in pixels
         self.ay = round(self._screen_geometry.height() * 0.1)  # y coordinate of the notification zone in pixels
+        self.ax = self._screen_geometry.width() - get_default_config("WIDGET_WIDTH", "int") - 20  # x coordinate of the notification zone in pixels
 
     def add_to_queue(self, notification):
         """Add a new notification to the queue
@@ -99,12 +97,15 @@ class NotificationCenter(object):
         if len(self._displayed_popups) >= self._max_popups:  # display zone is full
             return
 
+        WIDGET_HEIGHT = get_default_config("WIDGET_HEIGHT", "int")
+        WIDGET_WIDTH = get_default_config("WIDGET_WIDTH", "int")
+        PADDING = get_default_config("WIDGET_PADDING", "int")
         i = 0  # position of the popup in the display zone
         """Compact the remaining popups"""
         for popup in self._displayed_popups:
             popup.setGeometry(QRect(self.ax,
-                                    self.ay + i * (WIDGET_SIZE[1] + PADDING),
-                                    WIDGET_SIZE[0], WIDGET_SIZE[1]))
+                                    self.ay + i * (WIDGET_HEIGHT + PADDING),
+                                    WIDGET_WIDTH, WIDGET_HEIGHT))
             i += 1
 
         """Add new popups"""
@@ -115,8 +116,8 @@ class NotificationCenter(object):
             new_notification = self._popup_queue.popleft()
             self._lock.release()
             self.display_popup(QRect(self.ax,
-                                     self.ay + i * (WIDGET_SIZE[1] + PADDING),
-                                     WIDGET_SIZE[0], WIDGET_SIZE[1]),
+                                     self.ay + i * (WIDGET_HEIGHT + PADDING),
+                                     WIDGET_WIDTH, WIDGET_HEIGHT),
                                new_notification)
 
     def display_popup(self, geom: QRect, notification):

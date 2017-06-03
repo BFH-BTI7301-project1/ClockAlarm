@@ -56,7 +56,8 @@ class MainWindow(QMainWindow):
         """Init helper method to set up the main window."""
         self.setMinimumSize(QSize(300, 100))  # Set sizes
         self.setWindowTitle("ClockAlarm Manager")  # Set a title
-        self.resize(800, 400)
+        self.resize(get_default_config("MAIN_WINDOW_WIDTH", "int"),
+                    get_default_config("MAIN_WINDOW_HEIGHT", "int"))
 
         import_action = QAction("Import Alerts File", self)
         import_action.triggered.connect(self.import_json_db)
@@ -101,7 +102,7 @@ class MainWindow(QMainWindow):
         grid_layout.addWidget(self.mute_pushbutton, 1, 0, Qt.AlignRight)
 
         # Init QSystemTrayIcon
-        icon_path = join(dirname(dirname(abspath(__file__))), 'resources', 'images', 'bell-icon.png')
+        icon_path = join(dirname(dirname(abspath(__file__))), 'resources', 'images', get_default_config("ICON_FILE_NAME"))
         icon = QIcon(icon_path)
         self.tray_icon = QSystemTrayIcon(self)
         self.tray_icon.setIcon(icon)
