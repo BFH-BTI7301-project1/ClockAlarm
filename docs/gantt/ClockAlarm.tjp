@@ -14,7 +14,7 @@ project clal "ClockAlarm" 2017-02-21 +16w {
   # Use US financial format for currency values. Don't show cents.
   currencyformat "(" ")" "," "." 0
   # Today date
-  now 2017-05-29-08:00
+  now ${today}
   # The currency for all money values is the Euro.
   currency "CHF"
 
@@ -76,53 +76,143 @@ task ClAl "ClockAlarm" {
   task software "Software Development" {
     depends !req
 
-    task req_tsan "Time System and Notifications" {}
+    task req_tsan "Time System and Notifications" {
+      complete 100
+      effort 10d
+      allocate dev
 
-    task req_lcamnl "Launch ClockAlarm manager (no login)" {}
+    }
 
-    task req_pdb "Persistent Database" {}
+    task req_lcamnl "Launch ClockAlarm manager (no login)" {
+      depends !req_tsan
+      complete 100
+      effort 6d
+      allocate dev
 
-    task req_pas "Program Auto Start" {}
+    }
 
-    task req_sanasa "Setup a new alert: Simple alert" {}
+    task req_pdb "Persistent Database" {
+      complete 100
+      effort 12d
+      allocate dev
 
-    task req_daasapa "Delete an alert: Simple and Periodic alert" {}
+    }
 
-    task req_eaasapa "Edit an alert: Simple and Periodic alert" {}
+    task req_pas "Program Auto Start" {
 
-    task req_sanapa "Setup a new alert: Periodic alert" {}
+    }
 
-    task req_sanaes "Setup a new alert: E-mail sender" {}
+    task req_sanasa "Setup a new alert: Simple alert" {
 
-    task req_daaes "Delete an alert: E-mail sender" {}
+    }
 
-    task req_eaaes "Edit an alert: E-mail sender" {}
+    task req_daasapa "Delete an alert: Simple and Periodic alert" {
+      complete 100
 
-    task req_edc "Edit Default Configuration" {}
+    }
 
-    task req_ia "Import Alerts" {}
+    task req_eaasapa "Edit an alert: Simple and Periodic alert" {
+      complete 100
 
-    task req_ea "Export Alerts" {}
+    }
 
-    task req_sanac "Setup a new alert category" {}
+    task req_sanapa "Setup a new alert: Periodic alert" {
+      complete 100
 
-    task req_daac "Delete an alert category" {}
+    }
 
-    task req_eaac "Edit an alert category" {}
+    task req_sanaes "Setup a new alert: E-mail sender" {
+      complete 0
+      journalentry 2017-05-10 "Not implemented" {
+        author gauts1
+        alert yellow
+        summary "Not implemented because outlook and thunderbird plugins exist."
+      }
+    }
 
-    task req_ic "Import Configuration" {}
+    task req_daaes "Delete an alert: E-mail sender" {
+      complete 0
+      journalentry 2017-05-10 "Not implemented" {
+        author gauts1
+        alert yellow
+        summary "Not implemented because outlook and thunderbird plugins exist."
+      }
 
-    task req_ec "Export Configuration" {}
+    }
 
-    task req_smon "Silent mode ON" {}
+    task req_eaaes "Edit an alert: E-mail sender" {
+      complete 0
+      journalentry 2017-05-10 "Not implemented" {
+        author gauts1
+        alert yellow
+        summary "Not implemented because outlook and thunderbird plugins exist."
+      }
 
-    task req_smoff "Silent mode OFF" {}
+    }
 
-    task req_mac "Mute a category" {}
+    task req_edc "Edit Default Configuration" {
 
-    task req_uac "Unmute a category" {}
+    }
 
-    task req_sa "Snooze Alert" {}
+    task req_ia "Import Alerts" {
+
+    }
+
+    task req_ea "Export Alerts" {
+
+    }
+
+    task req_sanac "Setup a new alert category" {
+      complete 0
+    }
+
+    task req_daac "Delete an alert category" {
+      complete 0
+    }
+
+    task req_eaac "Edit an alert category" {
+      complete 0
+    }
+
+    task req_ic "Import Configuration" {
+      complete 100
+    }
+
+    task req_ec "Export Configuration" {
+      complete 100
+    }
+
+    task req_smon "Silent mode ON" {
+      complete 100
+    }
+
+    task req_smoff "Silent mode OFF" {
+      complete 100
+    }
+
+    task req_mac "Mute a category" {
+      complete 0
+      journalentry 2017-06-06 "Not implemented" {
+        author gauts1
+        alert yellow
+      }
+    }
+
+    task req_uac "Unmute a category" {
+      complete 0
+      journalentry 2017-06-06 "Not implemented" {
+        author gauts1
+        alert yellow
+      }
+    }
+
+    task req_sa "Snooze Alert" {
+      complete 0
+      journalentry 2017-06-06 "Not implemented" {
+        author gauts1
+        alert yellow
+      }
+    }
 
   }
 
@@ -144,23 +234,41 @@ task ClAl "ClockAlarm" {
 
     task time_system_notifications "Time System and Notifications" {}
 
-    task persistent_db "Persistent Database" {}
+    task persistent_db "Persistent Database" {
+      depends !time_system_notifications
+    }
 
-    task persistence "Persistence & Start at runtime" {}
+    task persistence "Persistence & Start at runtime" {
+      depends !persistent_db
+    }
 
-    task add_edit_delete_alerts "Add/Delete/Edit Alerts" {}
+    task add_edit_delete_alerts "Add/Delete/Edit Alerts" {
+      depends !persistence
+    }
 
-    task default_conf "Default Configurations & Alerts Management" {}
+    task default_conf "Default Configurations & Alerts Management" {
+      depends !add_edit_delete_alerts
+    }
 
-    task categories "Categories" {}
+    task categories "Categories" {
+      depends !default_conf
+    }
 
-    task import_export_conf_file "Import/Export Configuration File" {}
+    task import_export_conf_file "Import/Export Configuration File" {
+      depends !categories
+    }
 
-    task disable_notifs "Disable Notifications" {}
+    task disable_notifs "Disable Notifications" {
+      depends !import_export_conf_file
+    }
 
-    task snooze_alert "Snooze Alert" {}
+    task snooze_alert "Snooze Alert" {
+      depends !disable_notifs
+    }
 
-    task end "Project end" {}
+    task end "Project end" {
+      end 2017-06-13
+    }
 
   }
 }
