@@ -1,6 +1,6 @@
 \section{Metaclass}
 
-A metaclass issue was discovered when we tried to apply the new python 3 style
+A \gls{metaclass} issue was discovered when we tried to apply the new python 3 style
 for abstract classes. In our case, the \texttt{Alert} class is an abstract class
 that extends \texttt{QObject}. As \texttt{QObject} has its metaclass, pyhton
 could not resolve which metaclass \texttt{Alert} should inherit. Therefore a
