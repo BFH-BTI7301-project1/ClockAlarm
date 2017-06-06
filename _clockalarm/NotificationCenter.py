@@ -70,7 +70,7 @@ class NotificationCenter(object):
     def add_to_queue(self, notification):
         """Add a new notification to the queue
 
-        The notification will wait till there is a free sport in the display zone
+        The notification will wait till there is a free spot in the display zone
 
         Attributes:
             notification (Notification): The notification to add to enqueue
