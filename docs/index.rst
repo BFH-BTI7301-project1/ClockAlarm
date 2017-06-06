@@ -74,8 +74,8 @@ Please use the `GitHub issue tracker <https://github.com/BFH-BTI7301-project1/
 ClockAlarm/issues>`_ to submit bugs or request features.
 
 
-ClockAlarm API
---------------
+ClockAlarm API Documentation
+----------------------------
 
 .. toctree::
    :maxdepth: 4

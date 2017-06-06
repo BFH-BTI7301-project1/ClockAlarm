@@ -50,7 +50,7 @@ class Alert(pyqt.QObject, metaclass=AlertMeta):
         return self.id
 
     def get_trigger_time(self):
-        """Get the Alert trigger time in ???
+        """Get the Alert trigger time in seconds since epoch.
 
         Returns:
             The trigger time
