@@ -15,6 +15,7 @@
 \RequirePackage{fancyhdr}
 \pagestyle{fancy}
 %\RequirePackage[Sonny]{fncychap}
+%\RequirePackage{titlesec}
 
 
 %%%%%%%%%% Redefine Header and Footer
@@ -23,6 +24,11 @@
 \fancyfoot{} % clear all fields
 \fancyfoot[RO,LE]{\thepage}
 \fancyfoot[LO,RE]{\textsl{\leftmark}}
+
+%%%%%%%%%% Redefine chapter title
+%\titleformat{\chapter}[display]
+%  {\normalfont\bfseries}{}{0pt}{\Huge\thechapter.~}
+%
 
 %%%%%%%%%% Under Work /!\ Redefine Chapter Style
 %\titleformat{\chapter}[display]
