@@ -57,15 +57,6 @@ class SoundSelectorWidget(QWidget):
         """Initialize the GUI of the QWidget
 
         """
-
-        def button_click(self):
-            """Called when the sound_select_button is clicked. Get a wave sound file path from the file explorer."""
-            sound_path = QFileDialog.getOpenFileName(None, "Select a sound to import", filter="wav (*.wav *.)")[0]
-            if sound_path == '':  # canceled dialog
-                logging.debug("abort sound import")
-                return
-            self.load_sound(sound_path)
-
         h_layout = QHBoxLayout()  # to line up the widgets
 
         self.sound_edit = QLineEdit()
@@ -73,13 +64,21 @@ class SoundSelectorWidget(QWidget):
         self.sound_select_button.setIcon(self.style().standardIcon(QStyle.SP_DirIcon))
         if self.sound_name is not None:  # init the sound name is not None
             self.sound_edit.setText(self.sound_name)
-        self.sound_select_button.released.connect(button_click)
+        self.sound_select_button.released.connect(self.button_click)
 
         h_layout.addWidget(self.sound_edit)
         h_layout.addWidget(self.sound_select_button)
         h_layout.setContentsMargins(0, 0, 0, 0)
 
         self.setLayout(h_layout)
+
+    def button_click(self):
+        """Called when the sound_select_button is clicked. Get a wave sound file path from the file explorer."""
+        sound_path = QFileDialog.getOpenFileName(None, "Select a sound to import", filter="wav (*.wav *.)")[0]
+        if sound_path == '':  # canceled dialog
+            logging.debug("abort sound import")
+            return
+        self.load_sound(sound_path)
 
     def load_sound(self, sound_path: str):
         """Load the given .wave sound file in the application folder
