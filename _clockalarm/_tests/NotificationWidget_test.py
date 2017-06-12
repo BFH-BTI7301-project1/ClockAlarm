@@ -72,5 +72,5 @@ def test_mousePressedEvent(qtbot, init_paths):
         nw.show()
 
     with qtbot.waitSignal(nw.popup_close, raising=True):
-        qtbot.mouseMove(nw, QPoint(0, 0))
+        qtbot.mouseMove(nw, QPoint(1, 1))
         qtbot.mouseClick(nw, QtCore.Qt.LeftButton)
