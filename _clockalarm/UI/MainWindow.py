@@ -188,8 +188,6 @@ class MainWindow(QMainWindow):
             font_family = dw.font_family_edit.text()
             font_size = dw.font_size_edit.value()
             message = dw.alert_message_edit.text()
-            if periodicity == 0:
-                periodicity = None
             if font_family == '':
                 font_family = None
             if font_size <= 0:

@@ -101,7 +101,7 @@ class AlertCollection(object):
 
         Exceptions:
             KeyError: If the alert to edit doesn't exist in the database.
-            ValueError: If the periodicity argument is equal or under zero.
+            ValueError: If the periodicity argument is under zero.
 
         """
         try:
@@ -119,8 +119,10 @@ class AlertCollection(object):
                                 'font_size': notification.font_size,
                                 'sound': notification.sound}, eids=[id_alert])
             if periodicity is not None:
-                if periodicity <= 0:
+                if periodicity < 0:
                     raise ValueError("Periodicity have to be greater than 0")
+                if periodicity == 0:
+                    periodicity = None
                 alert_to_edit.periodicity = periodicity
                 self.db.update({'periodicity': alert_to_edit.periodicity},
                                eids=[id_alert])
