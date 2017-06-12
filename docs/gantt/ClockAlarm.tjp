@@ -68,7 +68,7 @@ task ClAl "ClockAlarm" {
   responsible proj_supervisor
 
   task req "Requirements" {
-    effort 4d
+    effort 7d
     ${allocate_developers}
     depends !deliveries.start
   }
@@ -78,46 +78,75 @@ task ClAl "ClockAlarm" {
 
     task req_tsan "Time System and Notifications" {
       complete 100
-      effort 10d
-      allocate dev
+
+      task impl_silent "Implementation" {
+        allocate charl1
+        effort 10d
+      }
+      task test_silent "Test"{
+        allocate gauts1
+        effort 4d
+      }
 
     }
 
     task req_lcamnl "Launch ClockAlarm manager (no login)" {
       depends !req_tsan
       complete 100
-      effort 6d
-      allocate dev
+
+      task impl_silent "Implementation" {
+        allocate charl1
+        effort 9d
+      }
+      task test_silent "Test"{
+        allocate gauts1
+        effort 2d
+      }
 
     }
 
     task req_pdb "Persistent Database" {
       complete 100
-      effort 12d
+      effort 17d
       allocate dev
 
     }
 
     task req_pas "Program Auto Start" {
+      complete 0
+      journalentry 2017-06-06 "Not implemented" {
+        author gauts1
+        alert yellow
+      }
 
     }
 
     task req_sanasa "Setup a new alert: Simple alert" {
+      complete 100
+      effort 10d
+      allocate dev
+
 
     }
 
     task req_daasapa "Delete an alert: Simple and Periodic alert" {
       complete 100
+      effort 8d
+      allocate dev
 
     }
 
     task req_eaasapa "Edit an alert: Simple and Periodic alert" {
       complete 100
+      effort 7d
+      allocate dev
 
     }
 
     task req_sanapa "Setup a new alert: Periodic alert" {
       complete 100
+      effort 8d
+      allocate dev
 
     }
 
@@ -151,14 +180,23 @@ task ClAl "ClockAlarm" {
     }
 
     task req_edc "Edit Default Configuration" {
+      complete 100
+      effort 5d
+      allocate dev
 
     }
 
     task req_ia "Import Alerts" {
+      complete 100
+      effort 9d
+      allocate dev
 
     }
 
     task req_ea "Export Alerts" {
+      complete 100
+      effort 8d
+      allocate dev
 
     }
 
@@ -176,18 +214,41 @@ task ClAl "ClockAlarm" {
 
     task req_ic "Import Configuration" {
       complete 100
+      effort 5d
+      allocate dev
     }
 
     task req_ec "Export Configuration" {
       complete 100
+      effort 5d
+      allocate dev
     }
 
     task req_smon "Silent mode ON" {
       complete 100
+
+      task impl_silent "Implementation" {
+        allocate charl1
+        effort 3d
+      }
+      task test_silent "Test"{
+        allocate gauts1
+        effort 1d
+      }
     }
 
     task req_smoff "Silent mode OFF" {
       complete 100
+
+      task impl_silent "Implementation" {
+        allocate charl1
+        effort 3d
+      }
+      task test_silent "Test"{
+        allocate gauts1
+        effort 1d
+      }
+
     }
 
     task req_mac "Mute a category" {
@@ -217,11 +278,11 @@ task ClAl "ClockAlarm" {
   }
 
   task test "Software testing" {
-    depends !software
+    depends !req
   }
 
   task manual "Manual" {
-    effort 2d
+    effort 13d
     ${allocate_developers}
     depends !software
   }
@@ -232,10 +293,16 @@ task ClAl "ClockAlarm" {
       start ${projectstart}
     }
 
-    task time_system_notifications "Time System and Notifications" {}
+    task time_system_notifications "Time System and Notifications" {
+      depends !!software.req_tsan
+    }
+
+    #task proj_doc "Project documentation & developping environement" {
+
+    #}
 
     task persistent_db "Persistent Database" {
-      depends !time_system_notifications
+      depends !time_system_notifications, !!software.req_pdb
     }
 
     task persistence "Persistence & Start at runtime" {
