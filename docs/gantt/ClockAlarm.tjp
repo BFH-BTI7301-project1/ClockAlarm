@@ -78,30 +78,16 @@ task ClAl "ClockAlarm" {
 
     task req_tsan "Time System and Notifications" {
       complete 100
-
-      task impl_silent "Implementation" {
-        allocate charl1
-        effort 10d
-      }
-      task test_silent "Test"{
-        allocate gauts1
-        effort 4d
-      }
+      allocate dev
+      effort 14d
 
     }
 
     task req_lcamnl "Launch ClockAlarm manager (no login)" {
       depends !req_tsan
       complete 100
-
-      task impl_silent "Implementation" {
-        allocate charl1
-        effort 9d
-      }
-      task test_silent "Test"{
-        allocate gauts1
-        effort 2d
-      }
+      allocate dev
+      effort 11d
 
     }
 
@@ -145,7 +131,7 @@ task ClAl "ClockAlarm" {
 
     task req_sanapa "Setup a new alert: Periodic alert" {
       complete 100
-      effort 8d
+      effort 9d
       allocate dev
 
     }
@@ -181,7 +167,7 @@ task ClAl "ClockAlarm" {
 
     task req_edc "Edit Default Configuration" {
       complete 100
-      effort 5d
+      effort 9d
       allocate dev
 
     }
@@ -195,7 +181,7 @@ task ClAl "ClockAlarm" {
 
     task req_ea "Export Alerts" {
       complete 100
-      effort 8d
+      effort 9d
       allocate dev
 
     }
@@ -214,40 +200,27 @@ task ClAl "ClockAlarm" {
 
     task req_ic "Import Configuration" {
       complete 100
-      effort 5d
+      effort 4d
       allocate dev
     }
 
     task req_ec "Export Configuration" {
       complete 100
-      effort 5d
+      effort 4d
       allocate dev
     }
 
     task req_smon "Silent mode ON" {
       complete 100
+      effort 4d
+      allocate dev
 
-      task impl_silent "Implementation" {
-        allocate charl1
-        effort 3d
-      }
-      task test_silent "Test"{
-        allocate gauts1
-        effort 1d
-      }
     }
 
     task req_smoff "Silent mode OFF" {
       complete 100
-
-      task impl_silent "Implementation" {
-        allocate charl1
-        effort 3d
-      }
-      task test_silent "Test"{
-        allocate gauts1
-        effort 1d
-      }
+      effort 4d
+      allocate dev
 
     }
 
@@ -277,14 +250,16 @@ task ClAl "ClockAlarm" {
 
   }
 
-  task test "Software testing" {
-    depends !req
-  }
-
   task manual "Manual" {
-    effort 13d
+    effort 17d
     ${allocate_developers}
     depends !software
+  }
+
+  task presentation "Presentation" {
+    effort 4d
+    ${allocate_developers}
+    depends !manual
   }
 
   task deliveries "Milestones" {
@@ -294,47 +269,37 @@ task ClAl "ClockAlarm" {
     }
 
     task time_system_notifications "Time System and Notifications" {
-      depends !!software.req_tsan
-    }
-
-    #task proj_doc "Project documentation & developping environement" {
-
-    #}
-
-    task persistent_db "Persistent Database" {
-      depends !time_system_notifications, !!software.req_pdb
+      depends !start, !!software.req_tsan
     }
 
     task persistence "Persistence & Start at runtime" {
-      depends !persistent_db
+      depends !time_system_notifications, !!software.req_pdb
     }
 
     task add_edit_delete_alerts "Add/Delete/Edit Alerts" {
-      depends !persistence
+      depends !persistence, !!software.req_sanasa, !!software.req_daasapa,
+      !!software.req_eaasapa, !!software.req_sanapa, !!software.req_sanaes,
+      !!software.req_daaes, !!software.req_eaaes
     }
 
-    task default_conf "Default Configurations & Alerts Management" {
-      depends !add_edit_delete_alerts
+    task default_conf "Default Configurations & Alerts Mngmt" {
+      depends !add_edit_delete_alerts, !!software.req_ia, !!software.req_ea,
+      !!software.req_edc
     }
 
-    task categories "Categories" {
-      depends !default_conf
-    }
-
-    task import_export_conf_file "Import/Export Configuration File" {
-      depends !categories
+    task import_export_conf_file "Import/Export Configurations" {
+      depends !default_conf, !!software.req_ic, !!software.req_ec
     }
 
     task disable_notifs "Disable Notifications" {
-      depends !import_export_conf_file
-    }
-
-    task snooze_alert "Snooze Alert" {
-      depends !disable_notifs
+      depends !import_export_conf_file, !!software.req_smon,
+      !!software.req_smoff
     }
 
     task end "Project end" {
-      end 2017-06-13
+      depends !disable_notifs, !!req, !!software, !!presentation, !!manual
+      #start 2017-06-13
+      #end 2017-06-13
     }
 
   }
