@@ -1,0 +1,35 @@
+\chapter{Conclusion}
+
+As a reminder, the general requirements were that the application should be
+cross-platform, the database stored in a non binary format, the configuration
+and alerts easily transferable, the alerts customisable, classifiable into
+categories, recurrent, delayable, snoozable. Moreover emails should be able to
+be scheduled and sent at a given time.
+
+We did not implement categories nor email that can be scheduled. The former
+because of time constraints and the latter because it already exists as a plugin
+in Mozilla Thunderbird and Outlook. Also we would have been dependent on those
+two clients.
+
+Looking back on choosing Python to develop this project we found out that with
+this programming language, it was easy to quickly get to a reasonable result.
+Many packages in the Python Package Index provide solutions to encountered
+problems. Such as in our case, the sound problem\footnote{See
+Section~\ref{sec:sound} for more information}. One drawback with so many
+existing packages is that a lot are not actively maintained. This leads to
+problems when using a newer version of Python.
+
+Our biggest development challenge was Qt. We found it difficult to work with
+because of its nature: slots and connections with signals have to be set up, two
+subjects that are not easily understandable. Most of the time the documentation
+for Python is not very helpful. Generally we were guided to the original C++
+documentation which provided a far better help.
+
+The actual state of the project allows users to extend the \texttt{Alert} class
+so that new alert types can be implemented. In our view, adding categories would
+be the next most important feature. Improving the console support and
+providing a better installation process (setup.py) could lead this application
+to get into the Python Package Index.
+
+Our final impression is that it is clearly feasible to develop a better, free
+and open source alternative to KAlarm that works on all major platforms.
