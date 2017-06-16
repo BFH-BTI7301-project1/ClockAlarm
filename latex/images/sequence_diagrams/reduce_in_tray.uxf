@@ -4,8 +4,8 @@
   <element>
     <id>UMLActor</id>
     <coordinates>
-      <x>190</x>
-      <y>280</y>
+      <x>430</x>
+      <y>180</y>
       <w>60</w>
       <h>110</h>
     </coordinates>
@@ -15,19 +15,19 @@
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>210</x>
-      <y>370</y>
+      <x>450</x>
+      <y>270</y>
       <w>30</w>
-      <h>340</h>
+      <h>220</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;320.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;200.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>210</x>
-      <y>390</y>
+      <x>450</x>
+      <y>290</y>
       <w>200</w>
       <h>40</h>
     </coordinates>
@@ -38,31 +38,31 @@ closeEvent(event)</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>810</x>
-      <y>290</y>
+      <x>1050</x>
+      <y>190</y>
       <w>130</w>
       <h>40</h>
     </coordinates>
-    <panel_attributes>_icon:_
+    <panel_attributes>_tray_icon:_
 _QSystemTrayIcon_</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>860</x>
-      <y>320</y>
+      <x>1100</x>
+      <y>220</y>
       <w>30</w>
-      <h>300</h>
+      <h>190</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;280.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;170.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>860</x>
-      <y>600</y>
+      <x>1100</x>
+      <y>390</y>
       <w>20</w>
       <h>30</h>
     </coordinates>
@@ -72,8 +72,8 @@ _QSystemTrayIcon_</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>210</x>
-      <y>640</y>
+      <x>450</x>
+      <y>430</y>
       <w>200</w>
       <h>30</h>
     </coordinates>
@@ -83,8 +83,8 @@ _QSystemTrayIcon_</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>340</x>
-      <y>290</y>
+      <x>580</x>
+      <y>190</y>
       <w>130</w>
       <h>40</h>
     </coordinates>
@@ -98,10 +98,10 @@ layer=4</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>390</x>
-      <y>320</y>
+      <x>630</x>
+      <y>300</y>
       <w>20</w>
-      <h>330</h>
+      <h>140</h>
     </coordinates>
     <panel_attributes>layer=0</panel_attributes>
     <additional_attributes/>
@@ -109,20 +109,8 @@ layer=4</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>400</x>
-      <y>460</y>
-      <w>110</w>
-      <h>60</h>
-    </coordinates>
-    <panel_attributes>lt=-&gt;&gt;&gt;
-ignore()</panel_attributes>
-    <additional_attributes>10.0;10.0;40.0;10.0;40.0;40.0;10.0;40.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>400</x>
-      <y>520</y>
+      <x>640</x>
+      <y>320</y>
       <w>90</w>
       <h>60</h>
     </coordinates>
@@ -133,8 +121,8 @@ hide()</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>400</x>
-      <y>590</y>
+      <x>640</x>
+      <y>380</y>
       <w>480</w>
       <h>50</h>
     </coordinates>
@@ -146,23 +134,34 @@ showMessage(title, message, icon, millisecondsTimeoutHint)
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>860</x>
-      <y>620</y>
+      <x>1100</x>
+      <y>410</y>
       <w>30</w>
-      <h>90</h>
+      <h>80</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;70.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;60.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>390</x>
-      <y>640</y>
+      <x>630</x>
+      <y>430</y>
       <w>30</w>
-      <h>70</h>
+      <h>60</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;50.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;40.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>630</x>
+      <y>220</y>
+      <w>30</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;80.0</additional_attributes>
   </element>
 </diagram>
