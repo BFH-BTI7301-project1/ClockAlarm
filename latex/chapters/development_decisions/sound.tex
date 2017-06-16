@@ -3,7 +3,7 @@
 We had an issue on macOS and linux when using PyQt's \texttt{QSound} class.
 \texttt{QSound} uses the default OS specific sound library to play the sound
 (NSSound for macOS and \gls{nasl} for X11 used on linux). The \texttt{wav} file
-only played on Windows but not on macOS nor linux.
+only played on Windows but not on macOS nor Linux.
 
 An easier and much cleaner alternative was found using pygame's \texttt{mixer}.
 
